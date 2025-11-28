@@ -1,0 +1,29 @@
+There is use of RyiSnow's tutorial on YouTube. He does it completely simple and good.
+
+
+
+===== Main =====
+
+1. We want to open a window in java that can display some graphic.
+2. We start by creating a new JFrame objective after importing the package JFrame.
+3. Afterward we add parameters necessary for opening a window with the right preferences.
+
+6. We then add the Game Panel to the window. By creating a GamePanel instance then adding it to the window.
+7. By using .pack we can set the window to our prefences and see the window on screen
+
+
+===== Game Panel =====
+4. We then proceed to create a new Class called GamePanel, to determine the size of the game and tiles, that the game consists of.
+5. Then we add the attributes to the tiles and then to the resolution to the GamePanel.
+
+8. Now we can open the window, but it's mostly static, and since a game usually is running in 60 fps, we gotta get it running.
+9. We start by adding a THREAD called gameThread and Implements "Runnable" in the class.
+10. We then add a startGameThread() method that instantiated the Thread with .this which is our GamePanel class.
+11. Now we start the thread that then calls the implemented run method.
+12. We then wanna keep the thread running and therefor creates a While loop in the run method
+13. In run, we add a while loop that runs as long as there is something to run.
+
+What we want here is two things:
+- Update information... fx. player position and so forth.
+- Draw the game with the updated information. That is pretty cool.
+14. We start by adding two new methods. A method called Update, Then a paintComponent()
