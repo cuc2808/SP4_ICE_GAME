@@ -27,3 +27,17 @@ What we want here is two things:
 - Update information... fx. player position and so forth.
 - Draw the game with the updated information. That is pretty cool.
 14. We start by adding two new methods. A method called Update, Then a paintComponent()
+15. We add these to the Run, so it keeps the methods running.
+16. In paintComponent(), we then a Graphics2D, this makes so we can basically draw like in processing.
+17. Draw like processing with things such as setColor, fillRect. Hell yeah.
+
+
+===== KeyHandler =====
+Now we want to be able to detect keyboard input and chance our shapes position and so on:
+18. Implement KeyListener.
+19.This then asks for other methods to be implented and we allow it. Just this once. I swear.
+20. in the KeyPressed, we add a variable that recieves a number based on the key pressed on the keyboard.
+21. Now we add and if statement so we can make our stuff move. Let's get groovy.
+22. We have booleans for each of our movements and interactions. So if W pressed is True - walk up.
+
+

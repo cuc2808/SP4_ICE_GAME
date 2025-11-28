@@ -58,5 +58,15 @@ public class GamePanel extends JPanel implements Runnable {
         //We have to call the superClass, in this case JFrame.
         super.paintComponent(g);
 
+        Graphics2D g2 = (Graphics2D)g;      //This method has more functions
+
+        //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
+
+        g2.setColor(Color.black);
+
+        g2.fillRect(screenWidth/2, screenLength/2, tileSize,tileSize);
+
+        g2.dispose(); //This is like close writer and such, it's good for saving some memory ;D
+
     }
 }
