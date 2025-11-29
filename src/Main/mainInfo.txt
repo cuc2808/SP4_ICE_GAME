@@ -23,6 +23,8 @@ There is use of RyiSnow's tutorial on YouTube. He does it completely simple and 
 12. We then wanna keep the thread running and therefor creates a While loop in the run method
 13. In run, we add a while loop that runs as long as there is something to run.
 
+23. Now we instanciate the keyHandler.
+
 What we want here is two things:
 - Update information... fx. player position and so forth.
 - Draw the game with the updated information. That is pretty cool.

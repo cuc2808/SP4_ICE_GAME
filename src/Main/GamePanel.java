@@ -19,14 +19,25 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
-    Thread gameThread; // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
-    //This Thread is also a
+    // FPS FRAMES PER SECOND:
+    int FPS = 60;
+
+    KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
+    Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
+
+    //Player starting position:
+    int playerX = screenWidth/2;        //We create a starting value for the player's x coordinate.
+    int playerY = screenLength/2;       //We create a starting value for the player's y coordinate.
+    int movementSpeed = 5;      //The player's set movementSpeed. This will affect the player's position as it moves.
+
 
     //      ===== Constructor =====
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenLength));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
         this.setBackground(Color.LIGHT_GRAY);      //Not all needed, but we get blue background. COLOR. is goated.
         this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
+        this.addKeyListener(keyH);      //We make sure to add the *Specifik KeyListener to the program. Here it's keyH.
+        this.setFocusable(true);        //Basically makes it so it's focused on keyInput.
     }
 
     public void startGameThread() {
@@ -38,6 +49,9 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {         //Runnable adds this methode as it's implemented. And our Thread automatically calls this method when we start the gameThread.
 
+        double drawInterval = 1000000000/FPS;       //We use nanoseconds to limit our Framerate. This is equal to 0.01666 which means it draws 60 times per 1 second.
+        double nextDrawTime = System.nanoTime() + drawInterval;
+
         while (gameThread != null) {
 
 
@@ -47,11 +61,31 @@ public class GamePanel extends JPanel implements Runnable {
             //DRAW: this draws our graphics and information.
             repaint(); //repaint is how you call paintComponent
 
+
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime/1000000;
+                if(remainingTime < 0){
+                    remainingTime = 0;
+                }
+                Thread.sleep((long) remainingTime);
+
+                nextDrawTime += drawInterval;
+            } catch (InterruptedException e) {
+            }
         }
     }
 
     public void update() { //
-
+        if(keyH.upPressed == true) {
+            playerY -= movementSpeed;
+        } else if (keyH.downPressed == true){
+            playerY += movementSpeed;
+        } else if (keyH.leftPressed == true) {
+            playerX -= movementSpeed;
+        } else if (keyH.rightPressed == true){
+            playerX += movementSpeed;
+            }
     }
 
     public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.
@@ -64,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.setColor(Color.black);
 
-        g2.fillRect(screenWidth/2, screenLength/2, tileSize,tileSize);
+        g2.fillRect(playerX, playerY, tileSize,tileSize);
 
         g2.dispose(); //This is like close writer and such, it's good for saving some memory ;D
 
