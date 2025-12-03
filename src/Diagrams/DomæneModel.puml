@@ -1,0 +1,42 @@
+ @startuml
+'https://plantuml.com/class-diagram
+(Tiles)
+(LydSystem)
+(Sprites"Resources")
+(Location)
+
+(GUI)
+(Terræn)
+(Entity)
+(NPC)
+(Player)
+(Controller)
+
+(Sprites"Resources") -- (Tiles)
+(Sprites"Resources") -- (Entity)
+(Sprites"Resources") -- (GUI)
+
+(Entity) -- (GUI)
+(Entity) <-- (Player)
+(Entity) <-- (NPC)
+
+(GUI) -- (Controller)
+(Player) -- (Controller)
+
+(Tiles) <-- (Terræn)
+
+(Location) -- (Tiles)
+(Location) -- (Terræn)
+
+
+(LydSystem) .. (Controller)
+(LydSystem) .. (Location)
+(LydSystem) .. (Entity)
+
+
+
+
+
+
+
+@enduml

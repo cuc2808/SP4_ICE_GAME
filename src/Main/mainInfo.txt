@@ -23,7 +23,10 @@ There is use of RyiSnow's tutorial on YouTube. He does it completely simple and 
 12. We then wanna keep the thread running and therefor creates a While loop in the run method
 13. In run, we add a while loop that runs as long as there is something to run.
 
-23. Now we instanciate the keyHandler.
+23. Now we instantiate the keyHandler.
+24. Then we use it in our Update method, that then updates the position of the player, when a key is pressed.
+25. afterward we make sure the gameThread doesn't update incredibly fast, but merely 60 times per second.
+26. We do this by adding timers and intervals that the while loop has to run through or either sleep until it has reached the desired frames.
 
 What we want here is two things:
 - Update information... fx. player position and so forth.

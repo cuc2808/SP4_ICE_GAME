@@ -1,0 +1,176 @@
+@startuml
+' ==============================
+' Superklasser
+' ==============================
+abstract class GameEngine {
+    -gameState : String
+    -currentMap : Map
+    -entities : List<Entity>
+    -player : Player
+    -gui : GUI
+    +update() : void
+    +handleInput() : void
+    +render() : void
+}
+
+abstract class Tiles {
+    -positionX : int
+    -positionY : int
+    -sprite : Sprite
+    +isWalkable() : boolean
+}
+
+abstract class Entity {
+    -x : int
+    -y : int
+    -speed : int
+    -health : int
+    -damage : int
+    -sprite : Sprite
+    -hitbox : Rectangle
+    -isAlive : boolean
+    +move() : void
+    +takeDamage(int dmg) : void
+}
+
+abstract class SoundSystem {
+    -volume : float
+    +play() : void
+    +stop() : void
+}
+
+' ==============================
+' Tiles Subklasser
+' ==============================
+class TerrainTile {
+    -terrainType : String
+    -isWalkable : boolean
+}
+
+class BackgroundTile {
+    -backgroundType : String
+    -imageFile : String
+}
+
+class AnimatedTile {
+    -animation : Animation
+}
+
+Tiles <|-- TerrainTile
+Tiles <|-- BackgroundTile
+Tiles <|-- AnimatedTile
+
+' ==============================
+' Entity Subklasser
+' ==============================
+class Player {
+    -inventory : Inventory
+    -powerUps : List<PowerUp>
+    -companion : Companion
+    -experience : int
+    -level : int
+}
+
+class Enemy {
+    -aiPattern : String
+    -attackPower : int
+    -loot : List<Item>
+}
+
+class NPC {
+    -dialogue : List<String>
+    -quest : String
+}
+
+class Companion {
+    -type : String
+    -ability : String
+}
+
+Entity <|-- Player
+Entity <|-- Enemy
+Entity <|-- NPC
+Entity <|-- Companion
+
+' ==============================
+' SoundSystem Subklasser
+' ==============================
+class SoundEffect {
+    -filePath : String
+}
+
+class Music {
+    -filePath : String
+    -loop : boolean
+}
+
+SoundSystem <|-- SoundEffect
+SoundSystem <|-- Music
+
+' ==============================
+' Andre klasser
+' ==============================
+class Map {
+    -width : int
+    -height : int
+    -tiles : Tiles[][]
+    -entities : List<Entity>
+    -background : BackgroundTile
+}
+
+class GUI {
+    -healthBar : HealthBar
+    -inventoryScreen : InventoryScreen
+    -dialogBox : DialogBox
+    +draw() : void
+}
+
+class Tutorial {
+    -steps : List<String>
+    +showStep(int step) : void
+}
+
+class Inventory {
+    -items : List<Item>
+    -maxSlots : int
+    +addItem(Item item) : void
+    +removeItem(Item item) : void
+}
+
+class PowerUp {
+    -type : String
+    -value : int
+    -duration : int
+    +apply(Entity e) : void
+}
+
+class BattleSequence {
+    -player : Player
+    -enemy : Enemy
+    -healthBarPlayer : HealthBar
+    -healthBarEnemy : HealthBar
+    +startBattle() : void
+}
+
+class GameOver {
+    +showScreen() : void
+}
+
+class Ending {
+    +showEnding() : void
+}
+
+' ==============================
+' Relationer uden multiplicitetsangivelser
+' ==============================
+GameEngine --> Map
+GameEngine --> GUI
+Map --> Tiles
+Map --> Entity
+Player --> Inventory
+Player --> PowerUp
+Player --> Companion
+BattleSequence --> Player
+BattleSequence --> Enemy
+
+@enduml

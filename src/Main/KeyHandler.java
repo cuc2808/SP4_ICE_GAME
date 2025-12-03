@@ -36,6 +36,11 @@ public class KeyHandler implements KeyListener {
             rightPressed = true;
 
         }
+        if(pressedKeyCode == KeyEvent.VK_W && pressedKeyCode == KeyEvent.VK_A){        //Something happens when any of the keys are pressed. This is repeated for all our wished options to play the game.
+            //WALK UP
+            upPressed = true;
+
+        }
 
         }
 

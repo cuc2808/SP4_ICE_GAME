@@ -50,28 +50,38 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {         //Runnable adds this methode as it's implemented. And our Thread automatically calls this method when we start the gameThread.
 
         double drawInterval = 1000000000/FPS;       //We use nanoseconds to limit our Framerate. This is equal to 0.01666 which means it draws 60 times per 1 second.
-        double nextDrawTime = System.nanoTime() + drawInterval;
+        double delta = 0;
+        long lastTime = System.nanoTime(); //Time of the method called.
+        long currentTime;
+        long timer = 0;
+        int drawCount = 0;
 
         while (gameThread != null) {
 
+            currentTime = System.nanoTime();        //The current time of the while loop.
 
-            //UPDATE: this update information.
-            update();
-
-            //DRAW: this draws our graphics and information.
-            repaint(); //repaint is how you call paintComponent
+            delta += (currentTime - lastTime) / drawInterval;        //delta basically tells us how much time has passed.
+            timer += (currentTime - lastTime);
+            lastTime = currentTime;         //Now we set the current time to the last timne - acts like time, so we can use it again once the loops runs again.
 
 
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime/1000000;
-                if(remainingTime < 0){
-                    remainingTime = 0;
-                }
-                Thread.sleep((long) remainingTime);
+            if(delta >= 1){      //Since we divide the time passed with drawInterval then we end up updating when after a certain time. Here it is 60 FPS.
+                //UPDATE: this update information.
+                update();
 
-                nextDrawTime += drawInterval;
-            } catch (InterruptedException e) {
+                //DRAW: this draws our graphics and information.
+                repaint(); //repaint is how you call paintComponent
+
+                delta--;        //We subtract from delta so it works when we reset or run the loop again.
+                drawCount++;
+            }
+
+            if(timer >= 1000000000){     //Everytime the timer reaches so many nanoseconds, it counts a one second, and there we display the FPS or the drawCount. It should show the given FPS.
+                                         // This also works to see if we update correctly.
+                                         //It's basically an FPS counter.
+                System.out.println("FPS: " + drawCount);
+                drawCount = 0;      //We also have to reset them, so they don't just count upwards for eternity.
+                timer = 0;
             }
         }
     }
