@@ -3,6 +3,7 @@ package entity;
 import Main.GamePanel;
 import Main.KeyHandler;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 
 public class Player extends Entity{
@@ -17,8 +18,8 @@ public class Player extends Entity{
         setDefaultValues();
     }
 public void setDefaultValues(){
-    Xpos = 448;        //We create a starting value for the player's x coordinate.
-    Ypos = 448;       //We create a starting value for the player's y coordinate.
+    Xpos = gp.screenWidth/2;        //We create a starting value for the player's x coordinate.
+    Ypos = gp.screenLength/2;       //We create a starting value for the player's y coordinate.
     movementspeed = 5;      //The player's set movementSpeed. This will affect the player's position as it moves.
 
 }

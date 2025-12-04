@@ -18,8 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
     final int maxScreenCollum = 14; //The amount of tiles * x
     final int maxScreenRow = 14; //The amount of tiles * Y
-    final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
-    final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
+    public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
+    public final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
