@@ -2,6 +2,8 @@ package Main;
 
 import util.SoundSystem;
 
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,14 +14,14 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 32;        //We're making a 2D game and deciding on the size for each Tile: 32x32.
     final int scale = 2;        //As 32x32 pixel isn't much, we upscale it. That's why we create an attribute for it. Here it's: x3.
 
-    final int tileSize = originalTileSize * scale; //Therefor this attribute will be the one we use, as it takes into account the previous.
+    public final int tileSize = originalTileSize * scale; //Therefor this attribute will be the one we use, as it takes into account the previous.
     // ^ 96x96 tiles.
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
     final int maxScreenCollum = 14; //The amount of tiles * x
     final int maxScreenRow = 14; //The amount of tiles * Y
-    final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
-    final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
+    public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
+    public final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
@@ -27,11 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     SoundSystem util = new SoundSystem();
     KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
-
-    //Player starting position:
-    int playerX = screenWidth/2;        //We create a starting value for the player's x coordinate.
-    int playerY = screenLength/2;       //We create a starting value for the player's y coordinate.
-    int movementSpeed = 5;      //The player's set movementSpeed. This will affect the player's position as it moves.
+    Player player = new Player(this,keyH);
 
 
     //      ===== Constructor =====
@@ -90,16 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() { //
-
-        if(keyH.upPressed == true) {
-            playerY -= movementSpeed;
-        } else if (keyH.downPressed == true){
-            playerY += movementSpeed;
-        } else if (keyH.leftPressed == true) {
-            playerX -= movementSpeed;
-        } else if (keyH.rightPressed == true){
-            playerX += movementSpeed;
-            }
+        player.update();
     }
 
     public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.
@@ -109,10 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
-
-        g2.setColor(Color.black);
-
-        g2.fillRect(playerX, playerY, tileSize,tileSize);
+        player.draw(g2);
 
         g2.dispose(); //This is like close writer and such, it's good for saving some memory ;D
 
