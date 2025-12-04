@@ -111,7 +111,8 @@ GamePanel -- KeyHandler
 
 Tiles -- Location
 
-Entity -- GUI
+GUI -- MainEvent
+GUI -- SideEvent
 
 SoundSystem .. Entity
 SoundSystem .. Location
