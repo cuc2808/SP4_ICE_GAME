@@ -1,5 +1,7 @@
 package Main;
 
+import entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -83,39 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() { //
-        if(keyH.upPressed == true) {
-            playerY -= movementSpeed;
-            if (keyH.leftPressed == true) {
-                playerX -= movementSpeed;
-            }
-            if (keyH.rightPressed == true) {
-                playerX += movementSpeed;
-            }
-        } else if (keyH.downPressed == true){
-            playerY += movementSpeed;
-            if (keyH.leftPressed == true) {
-                playerX -= movementSpeed;
-            }
-            if (keyH.rightPressed == true) {
-                playerX += movementSpeed;
-            }
-        } else if (keyH.leftPressed == true) {
-            playerX -= movementSpeed;
-            if (keyH.upPressed == true) {
-                playerY -= movementSpeed;
-            }
-            if (keyH.downPressed == true) {
-                playerY += movementSpeed;
-            }
-        } else if (keyH.rightPressed == true){
-            playerX += movementSpeed;
-            if (keyH.upPressed == true) {
-                playerY -= movementSpeed;
-            }
-            if (keyH.downPressed == true) {
-                playerY += movementSpeed;
-            }
-        }
+        player.update();
     }
 
     public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.

@@ -26,12 +26,36 @@ public void setDefaultValues(){
 public void update(){
     if(keyH.upPressed == true) {
         Ypos -= movementspeed;
+        if (keyH.leftPressed == true) {
+            Xpos -= movementspeed;
+        }
+        if (keyH.rightPressed == true) {
+            Xpos += movementspeed;
+        }
     } else if (keyH.downPressed == true){
         Ypos += movementspeed;
+        if (keyH.leftPressed == true) {
+            Xpos -= movementspeed;
+        }
+        if (keyH.rightPressed == true) {
+            Xpos += movementspeed;
+        }
     } else if (keyH.leftPressed == true) {
         Xpos -= movementspeed;
+        if (keyH.upPressed == true) {
+            Ypos -= movementspeed;
+        }
+        if (keyH.downPressed == true) {
+            Ypos += movementspeed;
+        }
     } else if (keyH.rightPressed == true){
         Xpos += movementspeed;
+        if (keyH.upPressed == true) {
+            Ypos -= movementspeed;
+        }
+        if (keyH.downPressed == true) {
+            Ypos += movementspeed;
+        }
     }
 }
 public void draw(Graphics g2){
