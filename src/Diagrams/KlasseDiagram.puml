@@ -32,11 +32,8 @@ class Tiles{
 - int id
 - int XPos
 - int YPos
-}
-
-class Terrain extends Tiles{
 - boolean isWalkable
-+ void collision()
+
 }
 
 class Entity{
@@ -51,27 +48,34 @@ class GUI{
 - String previousMessage
 + void displayMessage()
 + void previousMessage()
++ void nextMessage()
 + void messageDivider()
 + String getMessage(Entity E, String event)
 }
 
 class Location{
-- int XPos
-- int YPos
+- String locationName
 - int LocationWidth
 - int LocationHeight
++ void update()
++ void draw()
++ void collision()
 + void drawLocation()
 + void getLocation()
 }
 
 class Player extends Entity implements KeyHandler{
-
++ void idleState()
++ void update()
++ void draw()
 }
 
 class NPC extends Entity{
 + boolean hasMainEvent
 + boolean hasSideEvent
 + String NpcMessage
++ void update()
++ void draw()
 + void interact()
 + void unlockMainEvent()
 + void unlockSideEvent()
@@ -89,43 +93,21 @@ class SideEvent{
 }
 
 class SoundSystem{
-- collection<mp3File>
-+ mp3File loadMp3()
-+ void playMusic(mp3File music)
-+ void playSound(mp3File sound)
-}
-
-class Resources{
-- sprite imageID
-- collection<sprite> animation
-+ sprite getSprite()
-+ void drawSprite(sprite sprite, int xPos, int yPos)
-+ void drawSprite(collection<sprite> animation, int xPos, int yPos)
-+ void getImage()
-+ void setImage()
-+ void getAnimation()
-+ void setAnimation()
++ void playTrack(String fileName)
++ void musicBreak(String fileName)
 }
 
 class FileIO{
-+ void loadFile()
 + void loadSprite()
-+ void loadMp3()
-+ void readFile()
-+ void readSprite()
-+ void readMp3()
++ void loadFile()
 }
 
 
 
 Main -- GamePanel
 
-GamePanel -- Resources
 GamePanel -- KeyHandler
 
-Resources -- Tiles
-Resources -- Entity
-Resources -- GUI
 
 Tiles -- Location
 
