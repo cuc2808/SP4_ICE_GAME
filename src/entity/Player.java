@@ -10,58 +10,64 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
 
+        public final int screenX;
+        public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
         name = "player";
         id += 1;
         setDefaultValues();
     }
 public void setDefaultValues(){
-    Xpos = gp.screenWidth/2;        //We create a starting value for the player's x coordinate.
-    Ypos = gp.screenLength/2;       //We create a starting value for the player's y coordinate.
+    worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
+    worldY = gp.tileSize * 15;       //We create a starting value for the player's y coordinate.
     movementspeed = 5;      //The player's set movementSpeed. This will affect the player's position as it moves.
 
 }
 public void update(){
     if(keyH.upPressed == true) {
-        Ypos -= movementspeed;
+        worldY -= movementspeed;
         if (keyH.leftPressed == true) {
-            Xpos -= movementspeed;
+            worldX -= movementspeed;
         }
         if (keyH.rightPressed == true) {
-            Xpos += movementspeed;
+            worldX += movementspeed;
         }
     } else if (keyH.downPressed == true){
-        Ypos += movementspeed;
+        worldY += movementspeed;
         if (keyH.leftPressed == true) {
-            Xpos -= movementspeed;
+            worldX -= movementspeed;
         }
         if (keyH.rightPressed == true) {
-            Xpos += movementspeed;
+            worldX += movementspeed;
         }
     } else if (keyH.leftPressed == true) {
-        Xpos -= movementspeed;
+        worldX -= movementspeed;
         if (keyH.upPressed == true) {
-            Ypos -= movementspeed;
+            worldY -= movementspeed;
         }
         if (keyH.downPressed == true) {
-            Ypos += movementspeed;
+            worldY += movementspeed;
         }
     } else if (keyH.rightPressed == true){
-        Xpos += movementspeed;
+        worldX += movementspeed;
         if (keyH.upPressed == true) {
-            Ypos -= movementspeed;
+            worldY -= movementspeed;
         }
         if (keyH.downPressed == true) {
-            Ypos += movementspeed;
+            worldY += movementspeed;
         }
     }
 }
 public void draw(Graphics g2){
     g2.setColor(Color.black);
 
-    g2.fillRect(Xpos, Ypos, gp.tileSize,gp.tileSize);
+    g2.fillRect(screenX, screenY, gp.tileSize,gp.tileSize);
 }
 
 }

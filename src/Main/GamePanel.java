@@ -23,7 +23,13 @@ public class GamePanel extends JPanel implements Runnable {
     public int maxScreenCollum = 14; //The amount of tiles * x
     public int maxScreenRow = 14; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
-    public final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
+    public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
+
+        //WORLD SETTINGS
+    public final int maxWorldCol = 30;
+    public final int maxWorldRow = 30;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHieght = tileSize * maxWorldRow;
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
@@ -32,12 +38,12 @@ public class GamePanel extends JPanel implements Runnable {
     SoundSystem soundSystem = new SoundSystem(io);
     KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
-    Player player = new Player(this,keyH);
+    public Player player = new Player(this,keyH);
 
 
     //      ===== Constructor =====
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenLength));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
         this.setBackground(Color.LIGHT_GRAY);      //Not all needed, but we get blue background. COLOR. is goated.
         this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
         this.addKeyListener(keyH);      //We make sure to add the *Specifik KeyListener to the program. Here it's keyH.
