@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Scanner;
 
 public class FileIO {
     GamePanel gp;
