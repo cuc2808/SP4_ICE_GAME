@@ -5,8 +5,7 @@ import Main.GamePanel;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class FileIO {
@@ -69,33 +68,34 @@ public class FileIO {
         return Image;
     }
     public int[][] readLocationMapFile(String location) {
-        int row = 0;
-        int collum = 0;
-        int[][] map = new int[collum][row];
-        File file = new File(location);
+        int[][] mapTileNum = new int[gp.maxScreenCollum][gp.maxScreenRow];
+          try {
+               InputStream is = getClass().getResourceAsStream(location);
+               BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-        while (row < gp.maxScreenRow && collum < gp.maxScreenCollum) {
-            try {
-                Scanner scan = new Scanner(file);
-                while (scan.hasNextLine()) {
-                    String line = scan.nextLine();
-                    while (collum < gp.maxScreenCollum) {
-                        String data[] = line.split(" ");
-                        int dataNum = Integer.parseInt(data[collum]);
-                        map[collum][row] = dataNum;
-                        collum++;
+               int col = 0;
+               int row = 0;
+               while (col < gp.maxScreenCollum && row < gp.maxScreenRow) {
+                  String line = br.readLine();
+
+                   while (col < gp.maxScreenCollum) {
+                      String numbers[] = line.split(" ");
+
+                        int num = Integer.parseInt(numbers[col]);
+
+                        mapTileNum[col][row] = num;
+                        col++;
                     }
-                    if (collum == gp.maxScreenCollum) {
-                        collum = 0;
+                    if (col == gp.maxScreenCollum) {
+                        col = 0;
                         row++;
                     }
                 }
-                scan.close();
+                br.close();
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return map;
+
+          }
+        return mapTileNum;
     }
 
 

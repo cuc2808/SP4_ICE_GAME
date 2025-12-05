@@ -1,6 +1,7 @@
 package Tile;
 
 import Main.GamePanel;
+import util.FileIO;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,68 +13,34 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
+    FileIO io;
     Tile[] tile;
     int mapTileNum[][];
 
-    public TileManager(GamePanel gp){
-        this.gp=gp;
+    public TileManager(GamePanel gp, FileIO io){
+        this.io = io;
+        this.gp = gp;
 
         tile = new Tile[10];
         mapTileNum = new int[gp.maxScreenCollum][gp.maxScreenRow];
         getTileImage();
-        loadMap("/maps/map.txt");
+        loadMap("/util/maps/map.txt");
     }
     public void getTileImage(){
 
-        try {
-
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/floor.png"));
+            tile[0].image = io.readImage("/Tiles/floor.png");
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].image = io.readImage("/tiles/wall.png");
 
             tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
-
-            //tile[3] = new Tile();
-            //tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
-
-
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        }
-
-        public void loadMap(String filePath){
-
-        try {
-            InputStream is = getClass().getResourceAsStream(filePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            int col = 0;
-            int row = 0;
-            while(col < gp.maxScreenCollum && row < gp.maxScreenRow){
-                String line = br.readLine();
-
-                while(col < gp.maxScreenCollum){
-                    String numbers[] = line.split(" ");
-
-                    int num = Integer.parseInt(numbers[col]);
-
-                    mapTileNum[col][row] = num;
-                    col++;
-                }
-                if(col == gp.maxScreenCollum){
-                    col = 0;
-                    row++;
-                }
-            }
-            br.close();
-        }catch(Exception e){
+            tile[2].image = io.readImage("/tiles/water.png");
 
         }
+
+        public void loadMap(String filePath) {
+            mapTileNum = io.readLocationMapFile(filePath);
         }
 
 
