@@ -1,5 +1,6 @@
 package Main;
 
+import util.FileIO;
 import util.SoundSystem;
 
 import entity.Player;
@@ -18,15 +19,16 @@ public class GamePanel extends JPanel implements Runnable {
     // ^ 96x96 tiles.
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
-    final int maxScreenCollum = 14; //The amount of tiles * x
-    final int maxScreenRow = 14; //The amount of tiles * Y
+    public final int maxScreenCollum = 14; //The amount of tiles * x
+    public final int maxScreenRow = 14; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
 
-    SoundSystem util = new SoundSystem();
+    FileIO io = new FileIO(this);
+    SoundSystem soundSystem = new SoundSystem(io);
     KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
     Player player = new Player(this,keyH);
@@ -45,6 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         gameThread = new Thread(this); //We're here passing the "GamePanel" class to the thread. So now the thread is instantiated.
         gameThread.start();  //This will call the 'run' method.
+
+        soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
+        soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
     }
 
     @Override

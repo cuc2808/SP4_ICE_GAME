@@ -9,14 +9,6 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        SoundSystem util = new SoundSystem();
-
-
-
-        util.musicBreak("Resources/soundFiles/dry-fart.wav");
-
-        util.playTrack("Resources/musicFiles/mainTheme.wav");
-
 
         // We start using JFrame and set up some parameters:
         JFrame window = new JFrame();       //New instance of our window using JFrame.
