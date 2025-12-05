@@ -32,6 +32,9 @@ public class TileManager {
             tile[2] = new Tile();
             tile[2].image = io.readImage("/tiles/water.png");
 
+            tile[3] = new Tile();
+            tile[3].image = io.readImage("/tiles/grass.png");
+
         }
 
         public void loadMap(String filePath) {
