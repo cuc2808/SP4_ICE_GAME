@@ -1,5 +1,6 @@
 package Main;
 
+import Tile.TileManager;
 import util.SoundSystem;
 
 import entity.Player;
@@ -18,14 +19,14 @@ public class GamePanel extends JPanel implements Runnable {
     // ^ 96x96 tiles.
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
-    final int maxScreenCollum = 14; //The amount of tiles * x
-    final int maxScreenRow = 14; //The amount of tiles * Y
+    public int maxScreenCollum = 14; //The amount of tiles * x
+    public int maxScreenRow = 14; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenLength = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
-
+    TileManager tileM = new TileManager(this);
     SoundSystem util = new SoundSystem();
     KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
@@ -96,6 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
+
+        tileM.draw(g2);
+
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
         player.draw(g2);
