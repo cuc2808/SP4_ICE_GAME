@@ -27,10 +27,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS FRAMES PER SECOND:
     int FPS = 60;
+
+
     TileManager tileM = new TileManager(this);
     FileIO io = new FileIO(this);
     SoundSystem soundSystem = new SoundSystem(io);
-    KeyHandler keyH = new KeyHandler();    //We need to instantiate the Handler to use it.
+    KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
+    public GUI gui = new GUI(this);
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
     Player player = new Player(this,keyH);
 
@@ -108,6 +111,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
         player.draw(g2);
+
+        gui.draw(g2);
 
         g2.dispose(); //This is like close writer and such, it's good for saving some memory ;D
 
