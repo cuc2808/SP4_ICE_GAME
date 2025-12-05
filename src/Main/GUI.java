@@ -20,7 +20,7 @@ public class GUI {
         g2.setFont(fontA40);
         g2.setColor(Color.blue);
         if (hasMessage){
-            g2.drawString(this.getMessage(gp.player),gp.screenWidth/4,gp.screenLength-(gp.tileSize*2)-(gp.tileSize/4));
+            g2.drawString(this.getMessage(gp.player),gp.screenWidth/4,gp.screenHeight-(gp.tileSize*2)-(gp.tileSize/4));
         }
     }
     public String getMessage(Entity entity){
