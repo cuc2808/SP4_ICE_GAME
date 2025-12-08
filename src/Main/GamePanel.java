@@ -1,6 +1,7 @@
 package Main;
 
 import Tile.TileManager;
+import entity.NPC;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -44,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GUI gui = new GUI(this);
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
     public Player player = new Player(this,keyH);
+    public NPC npc = new NPC(this);
 
 
     //      ===== Constructor =====
@@ -106,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() { //
         player.update();
+        npc.update();
     }
 
     public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.
@@ -115,6 +118,9 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
         tileM.draw(g2);
+
+        //NPC
+        npc.draw(g2);
 
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
