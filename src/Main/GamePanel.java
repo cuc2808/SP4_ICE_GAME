@@ -15,14 +15,14 @@ public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS - includes resolution, tile size and so on:
     //                  ===Attributes===
     final int originalTileSize = 32;        //We're making a 2D game and deciding on the size for each Tile: 32x32.
-    final int scale = 2;        //As 32x32 pixel isn't much, we upscale it. That's why we create an attribute for it. Here it's: x3.
+    final int scale = 3;        //As 32x32 pixel isn't much, we upscale it. That's why we create an attribute for it. Here it's: x3.
 
     public final int tileSize = originalTileSize * scale; //Therefor this attribute will be the one we use, as it takes into account the previous.
     // ^ 96x96 tiles.
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
-    public int maxScreenCollum = 14; //The amount of tiles * x
-    public int maxScreenRow = 14; //The amount of tiles * Y
+    public int maxScreenCollum = 9; //The amount of tiles * x
+    public int maxScreenRow = 9; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
