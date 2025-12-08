@@ -27,12 +27,9 @@ class KeyHandler{
 
 
 
-class Tiles{
-- String name
-- int id
-- int XPos
-- int YPos
-- boolean isWalkable
+class Tile extends Entity{
++ BufferedImage image
+- boolean collision
 
 }
 
@@ -53,7 +50,7 @@ class GUI{
 + String getMessage(Entity E, String event)
 }
 
-class Location{
+class TileManager{
 - String locationName
 - int LocationWidth
 - int LocationHeight
@@ -64,7 +61,7 @@ class Location{
 + void getLocation()
 }
 
-class Player extends Entity implements KeyHandler{
+class Player extends Entity {
 + void idleState()
 + void update()
 + void draw()
@@ -103,23 +100,28 @@ class FileIO{
 }
 
 
-
 Main -- GamePanel
 
 GamePanel -- KeyHandler
 
+SoundSystem ..> FileIO
 
-Tiles -- Location
+TileManager ..> GamePanel
+TileManager -- MainEvent
+Tile -- TileManager
 
+Player ..> KeyHandler
+Player ..> GamePanel
+
+MainEvent -- NPC
+SideEvent -- NPC
+
+GUI -- GamePanel
 GUI -- MainEvent
 GUI -- SideEvent
 
-SoundSystem .. Entity
-SoundSystem .. Location
-SoundSystem .. KeyHandler
 
-MainEvent -- Location
-MainEvent -- NPC
-SideEvent -- NPC
+
+
 
 @enduml
