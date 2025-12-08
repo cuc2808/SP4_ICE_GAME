@@ -34,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS FRAMES PER SECOND:
     int FPS = 60;
 
+    public CollisionChecker colCheck = new CollisionChecker(this);
+
 
     TileManager tileM = new TileManager(this);
     FileIO io = new FileIO(this);

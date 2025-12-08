@@ -27,7 +27,14 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
         name = "player";
         id += 1;
+
+        solidArea = new Rectangle();
+        solidArea.x = 20;
+        solidArea.y = 20;
+        solidArea.width = 16;
+        solidArea.height = 44;
         setDefaultValues();
+
     }
 public void setDefaultValues(){
     worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
@@ -35,41 +42,41 @@ public void setDefaultValues(){
     movementspeed = 5;      //The player's set movementSpeed. This will affect the player's position as it moves.
 
 }
-public void update(){
-    if(keyH.upPressed == true) {
-        worldY -= movementspeed;
-        if (keyH.leftPressed == true) {
-            worldX -= movementspeed;
+    public void update() {
+
+        // 1. Find ud af hvilken retning spilleren prøver at gå
+        if (keyH.upPressed) {
+            direction = "up";
         }
-        if (keyH.rightPressed == true) {
-            worldX += movementspeed;
+        else if (keyH.downPressed) {
+            direction = "down";
         }
-    } else if (keyH.downPressed == true){
-        worldY += movementspeed;
-        if (keyH.leftPressed == true) {
-            worldX -= movementspeed;
+        else if (keyH.leftPressed) {
+            direction = "left";
         }
-        if (keyH.rightPressed == true) {
-            worldX += movementspeed;
+        else if (keyH.rightPressed) {
+            direction = "right";
         }
-    } else if (keyH.leftPressed == true) {
-        worldX -= movementspeed;
-        if (keyH.upPressed == true) {
-            worldY -= movementspeed;
+        else {
+            // Ingen knapper = ingen bevægelse
+            return;
         }
-        if (keyH.downPressed == true) {
-            worldY += movementspeed;
-        }
-    } else if (keyH.rightPressed == true){
-        worldX += movementspeed;
-        if (keyH.upPressed == true) {
-            worldY -= movementspeed;
-        }
-        if (keyH.downPressed == true) {
-            worldY += movementspeed;
+
+        // 2. Collision check
+        collisionOn = false;
+        gp.colCheck.checkTile(this);
+
+        // 3. Hvis ingen collision → bevæg spilleren
+        if (!collisionOn) {
+            switch(direction) {
+                case "up":    worldY -= movementspeed; break;
+                case "down":  worldY += movementspeed; break;
+                case "left":  worldX -= movementspeed; break;
+                case "right": worldX += movementspeed; break;
+            }
         }
     }
-}
+
 
 //public BufferedImage animation(){
 //        int i = 0;
