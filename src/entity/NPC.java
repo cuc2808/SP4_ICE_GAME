@@ -38,10 +38,10 @@ public class NPC extends Entity {
     }
     public void draw(Graphics g2){
 
-        BufferedImage playerImage = null;
+        BufferedImage NPCImage = null;
 
         try {
-            playerImage = ImageIO.read(getClass().getResourceAsStream("/playerImages/Flamongo1.png"));
+            NPCImage = ImageIO.read(getClass().getResourceAsStream("/playerImages/Flamongo1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +52,7 @@ public class NPC extends Entity {
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldX + gp.player.screenX) {
-            g2.drawImage(playerImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(NPCImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
 
 
