@@ -2,12 +2,18 @@ package entity;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import util.FileIO;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
 
 public class Player extends Entity{
     GamePanel gp;
+    FileIO util = new FileIO(gp);
     KeyHandler keyH;
 
         public final int screenX;
@@ -64,10 +70,25 @@ public void update(){
         }
     }
 }
-public void draw(Graphics g2){
-    g2.setColor(Color.black);
 
-    g2.fillRect(screenX, screenY, gp.tileSize,gp.tileSize);
+//public BufferedImage animation(){
+//        int i = 0;
+//
+//}
+
+public void draw(Graphics g2){
+
+    BufferedImage playerImage = null;
+
+    try {
+        playerImage = ImageIO.read(getClass().getResourceAsStream("/playerImages/Flamongo1.png"));
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+
+        g2.drawImage(playerImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+
 }
 
 }
