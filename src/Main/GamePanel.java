@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this); //We're here passing the "GamePanel" class to the thread. So now the thread is instantiated.
         gameThread.start();  //This will call the 'run' method.
 
-        soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
+        //soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
         soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
     }
 
