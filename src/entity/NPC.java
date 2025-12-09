@@ -20,19 +20,22 @@ public class NPC extends Entity {
     protected boolean isInteractedWith = true;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
-    protected String currentMessage;
     protected int messageCounter;
     protected ArrayList<String> allMessages;
+    protected String currentMessage;
 
     public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
         this.io = io;
         this.gui = gui;
+        this.messageCounter = 1;
 
         loadNPCImage();
-        setDefaultValues();
         loadMessages("Resources/Files/NPCs/npctalk.csv");
+        setDefaultValues();
+        System.out.println(currentMessage);
         interact();
+        System.out.println(currentMessage);
         unlockMainEvent();
         unlockSideEvent();
     }
@@ -41,6 +44,7 @@ public class NPC extends Entity {
         worldX = gp.screenWidth/4;
         worldY = gp.screenHeight/4;
         movementSpeed = 2;
+        currentMessage = allMessages.get(messageCounter);
 
     }
     public void update(){
@@ -81,7 +85,6 @@ public class NPC extends Entity {
     }
     public void interact(){
         if (isInteractedWith) {
-            currentMessage = allMessages.get(messageCounter);
             gui.getMessage(currentMessage);
             messageCounter++;
         }

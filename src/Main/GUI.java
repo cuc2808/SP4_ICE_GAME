@@ -1,7 +1,5 @@
 package Main;
 
-import entity.Entity;
-
 import java.awt.*;
 
 public class GUI {
@@ -17,21 +15,27 @@ public class GUI {
         fontA40 = new Font("Arial", Font.PLAIN,40);
     }
     public void draw(Graphics2D g2) {
-        actionCounter++;
+
+        int screenX = gp.npc_Flamingo.worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = gp.npc_Flamingo.worldY - gp.player.worldY + gp.player.screenY;
+
         g2.setFont(fontA40);
         g2.setColor(Color.blue);
         if (hasMessage) {
-            actionCounter = 0;
-            while (actionCounter < 120) {
-                g2.drawString(currentMessage, gp.screenWidth / 4, gp.screenHeight - (gp.tileSize * 2) - (gp.tileSize / 4));
-            }
+            g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
         }
-        if (actionCounter == 120){
-            actionCounter = 0;
+    }
+    public void update(){
+        actionCounter++;
+        if (hasMessage) {
+            if (actionCounter == 1000){
+                actionCounter = 0;
+                hasMessage = false;
+            }
         }
     }
     public void getMessage(String message){
-        hasMessage = true;
-        currentMessage = message;
+        this.hasMessage = true;
+        this.currentMessage = message;
     }
 }
