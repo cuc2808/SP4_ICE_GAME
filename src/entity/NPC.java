@@ -1,50 +1,64 @@
 package entity;
 
+import Main.GUI;
 import Main.GamePanel;
+import util.FileIO;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class NPC extends Entity {
     GamePanel gp;
+    FileIO io;
+    GUI gui;
+    public BufferedImage left,right;
+    public String direction;
     protected int actionCounter = 0;
+    protected boolean isInteractedWith;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
+    protected String currentMessage;
+    protected int messageCounter;
+    protected ArrayList<String> allMessages;
 
-    public NPC(GamePanel gp) {
+    public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
+        this.io = io;
+        this.gui = gui;
 
+        loadNPCImage();
         setDefaultValues();
+        interact();
+        unlockMainEvent();
+        unlockSideEvent();
     }
 
     public void setDefaultValues(){
         worldX = gp.screenWidth/4;
         worldY = gp.screenHeight/4;
-        movementSpeed = 5;
+        movementSpeed = 2;
 
     }
     public void update(){
         actionCounter++;
-        if (actionCounter < 21){
+        if (actionCounter < 63){
+            direction = "right";
             worldX += movementSpeed;
         } else {
+            direction = "left";
             worldX -= movementSpeed;
         }
-        if (actionCounter == 40) {
+        if (actionCounter == 120) {
             actionCounter = 0;
         }
     }
+    public void loadNPCImage(){
+       left = io.readImage("/playerImages/Flamongo1.png");
+       right = io.readImage("/playerImages/Flamongo2.png");
+    }
     public void draw(Graphics g2){
 
-        BufferedImage NPCImage = null;
-
-        try {
-            NPCImage = ImageIO.read(getClass().getResourceAsStream("/playerImages/Flamongo1.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -52,18 +66,36 @@ public class NPC extends Entity {
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldX + gp.player.screenX) {
-            g2.drawImage(NPCImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            if (direction.equals("right")) {
+                g2.drawImage(right, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            }
+            if (direction.equals("left")) {
+                g2.drawImage(left, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            }
         }
 
 
     }
     public void interact(){
-
+        if (isInteractedWith) {
+            currentMessage = allMessages.get(messageCounter);
+            gui.getMessage(currentMessage);
+            messageCounter++;
+        }
     }
     public void unlockMainEvent(){
+        if (hasMainEvent) {
+
+        }
 
     }
     public void unlockSideEvent(){
+        if (hasSideEvent){
 
+        }
+
+    }
+    public void setCurrentMessage(String message) {
+        allMessages.add(message);
     }
 }
