@@ -29,10 +29,10 @@ public class Player extends Entity{
         id += 1;
 
         solidArea = new Rectangle();
-        solidArea.x = 20;
-        solidArea.y = 20;
-        solidArea.width = 16;
-        solidArea.height = 44;
+        solidArea.x = 35;
+        solidArea.y = 45;
+        solidArea.width = 25;
+        solidArea.height = 40;
         setDefaultValues();
         loadPlayerImage();
 
