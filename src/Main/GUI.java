@@ -9,7 +9,7 @@ public class GUI {
     GamePanel gp;
     Font fontA40;
     boolean hasMessage = false;
-    int currentMessage;
+    String currentMessage;
 
     public GUI(GamePanel gp){
         this.gp = gp;
@@ -20,10 +20,11 @@ public class GUI {
         g2.setFont(fontA40);
         g2.setColor(Color.blue);
         if (hasMessage){
-            g2.drawString(this.getMessage(gp.player),gp.screenWidth/4,gp.screenHeight-(gp.tileSize*2)-(gp.tileSize/4));
+            g2.drawString(currentMessage,gp.screenWidth/4,gp.screenHeight-(gp.tileSize*2)-(gp.tileSize/4));
         }
     }
-    public String getMessage(Entity entity){
-        return "Test"; // logik til at få besked
+    public void getMessage(String message){
+        hasMessage = true;
+        currentMessage = message;
     }
 }
