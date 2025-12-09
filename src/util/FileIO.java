@@ -58,13 +58,13 @@ public class FileIO {
         return buffer;
     }
     public BufferedImage readImage(String location) {
-        BufferedImage Image = null;
+        BufferedImage image = null;
         try {
-            Image = ImageIO.read(getClass().getResourceAsStream(location));
+            image = ImageIO.read(getClass().getResourceAsStream(location));
         } catch (IOException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return Image;
+        return image;
     }
     public int[][] readLocationMapFile(String location) {
         int[][] mapTileNum = new int[gp.maxScreenCollum][gp.maxScreenRow];
@@ -96,7 +96,6 @@ public class FileIO {
           }
         return mapTileNum;
     }
-
 
 
 }

@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
     //      ===== Constructor =====
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
-        this.setBackground(Color.LIGHT_GRAY);      //Not all needed, but we get blue background. COLOR. is goated.
+        this.setBackground(Color.BLACK);      //Not all needed, but we get blue background. COLOR. is goated.
         this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
         this.addKeyListener(keyH);      //We make sure to add the *Specifik KeyListener to the program. Here it's keyH.
         this.setFocusable(true);        //Basically makes it so it's focused on keyInput.

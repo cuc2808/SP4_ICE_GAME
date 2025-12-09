@@ -22,15 +22,15 @@ public class NPC extends Entity {
     public void setDefaultValues(){
         worldX = gp.screenWidth/4;
         worldY = gp.screenHeight/4;
-        movementspeed = 5;
+        movementSpeed = 5;
 
     }
     public void update(){
         actionCounter++;
         if (actionCounter < 21){
-            worldX += movementspeed;
+            worldX += movementSpeed;
         } else {
-            worldX -= movementspeed;
+            worldX -= movementSpeed;
         }
         if (actionCounter == 40) {
             actionCounter = 0;
