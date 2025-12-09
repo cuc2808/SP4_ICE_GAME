@@ -4,131 +4,119 @@ import Tile.TileManager;
 import entity.NPC;
 import util.FileIO;
 import util.SoundSystem;
-
 import entity.Player;
 
-import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends Canvas implements Runnable {
 
-    //SCREEN SETTINGS - includes resolution, tile size and so on:
-    //                  ===Attributes===
-    final int originalTileSize = 32;        //We're making a 2D game and deciding on the size for each Tile: 32x32.
-    final int scale = 3;        //As 32x32 pixel isn't much, we upscale it. That's why we create an attribute for it. Here it's: x3.
+    // ===== SCREEN SETTINGS =====
+    final int originalTileSize = 32;
+    final int scale = 3;
+    public final int tileSize = originalTileSize * scale;
 
-    public final int tileSize = originalTileSize * scale; //Therefor this attribute will be the one we use, as it takes into account the previous.
-    // ^ 96x96 tiles.
+    public int maxScreenCollum = 9;
+    public int maxScreenRow = 9;
+    public final int screenWidth = tileSize * maxScreenCollum;
+    public final int screenHeight = tileSize * maxScreenRow;
 
-    //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
-    public int maxScreenCollum = 9; //The amount of tiles * x
-    public int maxScreenRow = 9; //The amount of tiles * Y
-    public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
-    public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
-
-        //WORLD SETTINGS
+    // ===== WORLD SETTINGS =====
     public final int maxWorldCol = 30;
     public final int maxWorldRow = 30;
     public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHieght = tileSize * maxWorldRow;
+    public final int worldHeight = tileSize * maxWorldRow;
 
-    // FPS FRAMES PER SECOND:
     int FPS = 60;
 
     public CollisionChecker colCheck = new CollisionChecker(this);
-
-
     TileManager tileM = new TileManager(this);
     FileIO io = new FileIO(this);
     SoundSystem soundSystem = new SoundSystem(io);
-    KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
+    KeyHandler keyH = new KeyHandler();
+
     public GUI gui = new GUI(this);
-    Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
-    public Player player = new Player(this,keyH);
+    Thread gameThread;
+
+    public Player player = new Player(this, keyH);
     public NPC npc = new NPC(this);
 
-
-    //      ===== Constructor =====
+    // ===== Constructor =====
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
-        this.setBackground(Color.BLACK);      //Not all needed, but we get blue background. COLOR. is goated.
-        this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
-        this.addKeyListener(keyH);      //We make sure to add the *Specifik KeyListener to the program. Here it's keyH.
-        this.setFocusable(true);        //Basically makes it so it's focused on keyInput.
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
+        setBackground(Color.BLACK);
+        addKeyListener(keyH);
+        setFocusable(true);
     }
 
     public void startGameThread() {
-
-        gameThread = new Thread(this); //We're here passing the "GamePanel" class to the thread. So now the thread is instantiated.
-        gameThread.start();  //This will call the 'run' method.
-
-        //soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
+        gameThread = new Thread(this);
+        gameThread.start();
         soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
     }
 
     @Override
-    public void run() {         //Runnable adds this methode as it's implemented. And our Thread automatically calls this method when we start the gameThread.
+    public void run() {
 
-        double drawInterval = 1000000000/FPS;       //We use nanoseconds to limit our Framerate. This is equal to 0.01666 which means it draws 60 times per 1 second.
+        createBufferStrategy(2);   // DOUBLE BUFFER STRATEGY
+        BufferStrategy bs = getBufferStrategy();
+
+        double drawInterval = 1000000000.0 / FPS;
         double delta = 0;
-        long lastTime = System.nanoTime(); //Time of the method called.
-        long currentTime;
+        long lastTime = System.nanoTime();
         long timer = 0;
         int drawCount = 0;
 
         while (gameThread != null) {
 
-            currentTime = System.nanoTime();        //The current time of the while loop.
-
-            delta += (currentTime - lastTime) / drawInterval;        //delta basically tells us how much time has passed.
+            long currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);
-            lastTime = currentTime;         //Now we set the current time to the last timne - acts like time, so we can use it again once the loops runs again.
+            lastTime = currentTime;
 
-
-            if(delta >= 1){      //Since we divide the time passed with drawInterval then we end up updating when after a certain time. Here it is 60 FPS.
-                //UPDATE: this update information.
+            if (delta >= 1) {
                 update();
-
-                //DRAW: this draws our graphics and information.
-                repaint(); //repaint is how you call paintComponent
-
-                delta--;        //We subtract from delta so it works when we reset or run the loop again.
+                render(bs);
+                delta--;
                 drawCount++;
             }
 
-            if(timer >= 1000000000){     //Everytime the timer reaches so many nanoseconds, it counts a one second, and there we display the FPS or the drawCount. It should show the given FPS.
-                                         // This also works to see if we update correctly.
-                                         //It's basically an FPS counter.
+            if (timer >= 1000000000) {
                 System.out.println("FPS: " + drawCount);
-                drawCount = 0;      //We also have to reset them, so they don't just count upwards for eternity.
+                drawCount = 0;
                 timer = 0;
             }
         }
     }
 
-    public void update() { //
+    public void update() {
         player.update();
         npc.update();
     }
 
-    public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.
-        //We have to call the superClass, in this case JFrame.
-        super.paintComponent(g);
+    // ===== NEW RENDER METHOD (no screen tearing!) =====
+    private void render(BufferStrategy bs) {
 
-        Graphics2D g2 = (Graphics2D)g;      //This method has more functions
+        do {
+            do {
+                Graphics2D g2 = (Graphics2D) bs.getDrawGraphics();
 
-        tileM.draw(g2);
+                // CLEAR SCREEN
+                g2.clearRect(0, 0, screenWidth, screenHeight);
 
-        //NPC
-        npc.draw(g2);
+                // DRAW GAME
+                tileM.draw(g2);
+                npc.draw(g2);
+                player.draw(g2);
+                gui.draw(g2);
 
+                g2.dispose();
 
-        //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
-        player.draw(g2);
+            } while (bs.contentsRestored());
 
-        gui.draw(g2);
+            bs.show();
+            Toolkit.getDefaultToolkit().sync(); // reduces tearing on some systems
 
-        g2.dispose(); //This is like close writer and such, it's good for saving some memory ;D
-
+        } while (bs.contentsLost());
     }
 }
