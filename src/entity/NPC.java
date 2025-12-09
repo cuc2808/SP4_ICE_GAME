@@ -31,7 +31,7 @@ public class NPC extends Entity {
 
         loadNPCImage();
         setDefaultValues();
-        loadMessages("src/playerImages/npctalk.csv");
+        loadMessages("Resources/Files/NPCs/npctalk.csv");
         interact();
         unlockMainEvent();
         unlockSideEvent();
