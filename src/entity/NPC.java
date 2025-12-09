@@ -6,7 +6,9 @@ import util.FileIO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class NPC extends Entity {
     GamePanel gp;
@@ -15,7 +17,7 @@ public class NPC extends Entity {
     public BufferedImage left,right;
     public String direction;
     protected int actionCounter = 0;
-    protected boolean isInteractedWith;
+    protected boolean isInteractedWith = true;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
     protected String currentMessage;
@@ -29,6 +31,7 @@ public class NPC extends Entity {
 
         loadNPCImage();
         setDefaultValues();
+        loadMessages("src/playerImages/npctalk.csv");
         interact();
         unlockMainEvent();
         unlockSideEvent();
@@ -95,7 +98,21 @@ public class NPC extends Entity {
         }
 
     }
-    public void setCurrentMessage(String message) {
-        allMessages.add(message);
+    public void loadMessages(String location){
+        allMessages = new ArrayList<>();
+        try {
+            File file = new File(location);
+            Scanner scan = new Scanner(file);
+            scan.nextLine(); // skips header
+            while (scan.hasNextLine()){
+                String line = scan.nextLine();
+                String[] array = line.split(",");
+                for (int i = 0; i < array.length; i++){
+                    allMessages.add(array[i]);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
