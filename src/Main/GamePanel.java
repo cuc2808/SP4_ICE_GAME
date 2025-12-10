@@ -133,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (!cutsceneManager.isActive()) {
             player.update();
             npc.update();
-            //gui.update();
+            gui.update();
         } else {
             cutsceneManager.update();
         }
