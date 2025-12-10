@@ -2,6 +2,7 @@ package entity;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import Tile.TileManager;
 import util.FileIO;
 
 import java.awt.*;
@@ -29,8 +30,8 @@ public class Player extends Entity{
         id += 1;
 
         solidArea = new Rectangle();
-        solidArea.x = 30;
-        solidArea.y = 30;
+        solidArea.x = 0;
+        solidArea.y = 0;
         solidArea.width = 20;
         solidArea.height = 60;
         setDefaultValues();

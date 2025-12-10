@@ -1,6 +1,7 @@
 package Tile;
 
 import Main.GamePanel;
+import Main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
+    KeyHandler keyH;
     public Tile[] tile;
     public int mapTileNum[][];
 

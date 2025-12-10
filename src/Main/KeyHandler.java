@@ -1,5 +1,7 @@
 package Main;
 
+import Tile.TileManager;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -38,7 +40,8 @@ public class KeyHandler implements KeyListener {
         if(pressedKeyCode == KeyEvent.VK_SHIFT){
             ShiftPressed = true;
         }
-        }
+
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
