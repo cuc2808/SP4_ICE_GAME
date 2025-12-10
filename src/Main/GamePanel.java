@@ -10,9 +10,8 @@ import entity.Player;
 import javax.swing.*;
 import java.awt.*;
 
-
-
 public class GamePanel extends JPanel implements Runnable {
+
     // Cutscene variables
     boolean isFading = false;
     float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
@@ -34,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
-        //WORLD SETTINGS
+    //WORLD SETTINGS
     public final int maxWorldCol = 30;
     public final int maxWorldRow = 30;
     public final int worldWidth = tileSize * maxWorldCol;
@@ -53,8 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
     public GUI gui = new GUI(this);
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
-    public Player player = new Player(this,keyH);
-    public NPC npc = new NPC(this);
+    public Player player = new Player(this, keyH);
+    public NPC npc = new NPC(this,io,gui);
 
 
     //      ===== Constructor =====
@@ -78,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {         //Runnable adds this methode as it's implemented. And our Thread automatically calls this method when we start the gameThread.
 
-        double drawInterval = 1000000000/FPS;       //We use nanoseconds to limit our Framerate. This is equal to 0.01666 which means it draws 60 times per 1 second.
+        double drawInterval = 1000000000 / FPS;       //We use nanoseconds to limit our Framerate. This is equal to 0.01666 which means it draws 60 times per 1 second.
         double delta = 0;
         long lastTime = System.nanoTime(); //Time of the method called.
         long currentTime;
@@ -94,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;         //Now we set the current time to the last timne - acts like time, so we can use it again once the loops runs again.
 
 
-            if(delta >= 1){      //Since we divide the time passed with drawInterval then we end up updating when after a certain time. Here it is 60 FPS.
+            if (delta >= 1) {      //Since we divide the time passed with drawInterval then we end up updating when after a certain time. Here it is 60 FPS.
                 //UPDATE: this update information.
                 update();
 
@@ -105,9 +104,9 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
 
-            if(timer >= 1000000000){     //Everytime the timer reaches so many nanoseconds, it counts a one second, and there we display the FPS or the drawCount. It should show the given FPS.
-                                         // This also works to see if we update correctly.
-                                         //It's basically an FPS counter.
+            if (timer >= 1000000000) {     //Everytime the timer reaches so many nanoseconds, it counts a one second, and there we display the FPS or the drawCount. It should show the given FPS.
+                // This also works to see if we update correctly.
+                //It's basically an FPS counter.
                 System.out.println("FPS: " + drawCount);
                 drawCount = 0;      //We also have to reset them, so they don't just count upwards for eternity.
                 timer = 0;
@@ -117,8 +116,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() { //
         if (isFading) {
-        System.out.println("fadeAlpha: " + fadeAlpha);
-    }
+            System.out.println("fadeAlpha: " + fadeAlpha);
+        }
 
         // Trigger cutscene if player is at row10 col2 (tree)
         int playerCol = player.worldX / tileSize;
@@ -154,6 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
     }
+
     public void fadeToNewMap(Runnable mapChange) {
         isFading = true;
         fadeAlpha = 0f;
@@ -166,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
         //We have to call the superClass, in this case JFrame.
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D)g;      //This method has more functions
+        Graphics2D g2 = (Graphics2D) g;      //This method has more functions
 
         tileM.draw(g2);
 
@@ -180,7 +180,6 @@ public class GamePanel extends JPanel implements Runnable {
         gui.draw(g2);
 
 
-
         if (isFading) {
             System.out.println("test1");
             Graphics2D g2d = (Graphics2D) g.create(); // Create a copy of g2d
@@ -192,13 +191,5 @@ public class GamePanel extends JPanel implements Runnable {
             this.player.movementSpeed = 20;
         }
         g2.dispose();
-                g2.dispose();
-
-            } while (bs.contentsRestored());
-
-            bs.show();
-            Toolkit.getDefaultToolkit().sync(); // reduces tearing on some systems
-
-        } while (bs.contentsLost());
     }
 }
