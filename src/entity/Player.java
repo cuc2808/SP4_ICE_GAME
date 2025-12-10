@@ -4,6 +4,7 @@ import Main.GamePanel;
 import Main.KeyHandler;
 import Tile.TileManager;
 import util.FileIO;
+import util.SoundSystem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ public class Player extends Entity{
     GamePanel gp;
     FileIO util = new FileIO(gp);
     KeyHandler keyH;
+    SoundSystem sound;
 
         public final int screenX;
         public final int screenY;
@@ -29,11 +31,13 @@ public class Player extends Entity{
         name = "player";
         id += 1;
 
-        solidArea = new Rectangle();
-        solidArea.x = 20;
-        solidArea.y = 20;
-        solidArea.width = 16;
-        solidArea.height = 44;
+        // Hitbox
+    solidArea = new Rectangle();
+    solidArea.x = 32;
+    solidArea.y = 32;
+    solidArea.width = 32;
+    solidArea.height = 32;
+
         setDefaultValues();
         loadPlayerImage();
 
@@ -41,6 +45,8 @@ public class Player extends Entity{
 public void setDefaultValues(){
     worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
     worldY = gp.tileSize * 15;       //We create a starting value for the player's y coordinate.
+
+
     movementSpeed = 0;      //The player's movementSpeed. This will affect how fast the player changes position.
     walkSpeed = 5;      //This is the set walkSpeed, when the player isn't sprinting.
     sprintSpeed = 10; //The player's set sprintSpeed, that activates when pressing shift.
@@ -84,6 +90,11 @@ public void loadPlayerImage(){
             movementSpeed = sprintSpeed;
         } else {
             movementSpeed = walkSpeed;
+        }
+
+        if (keyH.mPressed == true){
+            sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
+            keyH.mPressed = false;
         }
 
         if (keyH.upPressed) {
