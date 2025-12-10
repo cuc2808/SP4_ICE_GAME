@@ -39,7 +39,7 @@ public class GamePanel extends Canvas implements Runnable {
     Thread gameThread;
 
     public Player player = new Player(this, keyH);
-    public NPC npc = new NPC(this);
+    public NPC npc = new NPC(this,io,gui);
 
     // ===== Constructor =====
     public GamePanel() {
