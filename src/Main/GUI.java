@@ -15,20 +15,19 @@ public class GUI {
         fontA40 = new Font("Arial", Font.PLAIN,40);
     }
     public void draw(Graphics2D g2) {
-
-        int screenX = gp.npc_Flamingo.worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = gp.npc_Flamingo.worldY - gp.player.worldY + gp.player.screenY;
-
         g2.setFont(fontA40);
         g2.setColor(Color.blue);
+
         if (hasMessage) {
+            int screenX = gp.npc.worldX- gp.player.worldX + gp.player.screenX;
+            int screenY = gp.npc.worldY - gp.player.worldY + gp.player.screenY;
             g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
         }
     }
     public void update(){
-        actionCounter++;
         if (hasMessage) {
-            if (actionCounter == 1000){
+            actionCounter++;
+            if (actionCounter == 1200){
                 actionCounter = 0;
                 hasMessage = false;
             }

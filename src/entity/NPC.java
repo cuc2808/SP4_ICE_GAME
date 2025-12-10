@@ -33,9 +33,7 @@ public class NPC extends Entity {
         loadNPCImage();
         loadMessages("Resources/Files/NPCs/npctalk.csv");
         setDefaultValues();
-        System.out.println(currentMessage);
         interact();
-        System.out.println(currentMessage);
         unlockMainEvent();
         unlockSideEvent();
     }
