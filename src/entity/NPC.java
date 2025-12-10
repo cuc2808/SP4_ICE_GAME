@@ -17,12 +17,13 @@ public class NPC extends Entity {
     public BufferedImage left,right;
     public String direction;
     protected int actionCounter = 0;
-    protected boolean isInteractedWith = true;
+    protected boolean isInteractedWith;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
     protected int messageCounter;
     protected ArrayList<String> allMessages;
     protected String currentMessage;
+    int screenX,screenY;
 
     public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
@@ -36,23 +37,41 @@ public class NPC extends Entity {
         interact();
         unlockMainEvent();
         unlockSideEvent();
+
+        solidArea = new Rectangle();
+        solidArea.x = worldX;
+        solidArea.y = worldY;
+        solidArea.width = 20;
+        solidArea.height = 60;
     }
 
     public void setDefaultValues(){
-        worldX = gp.screenWidth/4;
-        worldY = gp.screenHeight/4;
+        worldX = 375;
+        worldY = 250;
         movementSpeed = 2;
         currentMessage = allMessages.get(messageCounter);
 
     }
     public void update(){
         actionCounter++;
-        if (actionCounter < 63){
-            direction = "right";
-            worldX += movementSpeed;
+        if (actionCounter < 63) {
+            this.direction = "right";
         } else {
-            direction = "left";
-            worldX -= movementSpeed;
+            this.direction = "left";
+        }
+        collisionOn = false;
+        gp.colCheck.checkTile(this);
+        if (this.collisionOn) {
+            System.out.println(this.collisionOn);
+        }
+        if(!collisionOn) {
+            if (actionCounter < 63) {
+                worldX += movementSpeed;
+                solidArea.x = worldX;
+            } else {
+                worldX -= movementSpeed;
+                solidArea.x = worldX;
+            }
         }
         if (actionCounter == 120) {
             actionCounter = 0;
@@ -64,8 +83,8 @@ public class NPC extends Entity {
     }
     public void draw(Graphics g2){
 
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        screenX = worldX - gp.player.worldX + gp.player.screenX;
+        screenY = worldY - gp.player.worldY + gp.player.screenY;
 
         if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
