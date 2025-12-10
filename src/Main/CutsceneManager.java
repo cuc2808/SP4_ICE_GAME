@@ -20,6 +20,8 @@ public class CutsceneManager {
 
         // Stop player movement
         gp.player.movementSpeed = 0;
+        gp.fadeToNewMap(() -> gp.loadLavaMap());
+
     }
 
     public void update() {
@@ -31,15 +33,13 @@ public class CutsceneManager {
             case 0:
                 // Example: NPC walks towards player
                 gp.npc.worldX -= 2;
-                if (cutsceneTimer > 60) { // wait 1 second
                     cutsceneStep++;
                     cutsceneTimer = 0;
-                }
                 break;
             case 1:
                 // Example: Display message
                 gp.gui.hasMessage = true;
-                if (cutsceneTimer > 120) { // 2 seconds
+                if (cutsceneTimer > 60) { // 1 seconds
                     cutsceneStep++;
                     cutsceneTimer = 0;
                     gp.gui.hasMessage = false;
@@ -57,4 +57,3 @@ public class CutsceneManager {
         return cutsceneActive;
     }
 }
-

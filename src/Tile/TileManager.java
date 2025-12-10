@@ -50,6 +50,9 @@
                 tile[5] = new Tile();
                 tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road.png"));
 
+            tile[6] = new Tile();
+            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
+
 
 
             }catch(IOException e){

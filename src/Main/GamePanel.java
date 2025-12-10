@@ -115,9 +115,11 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() { //
+
         if (isFading) {
             System.out.println("fadeAlpha: " + fadeAlpha);
         }
+
 
         // Trigger cutscene if player is at row10 col2 (tree)
         int playerCol = player.worldX / tileSize;
@@ -131,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (!cutsceneManager.isActive()) {
             player.update();
             npc.update();
+            //gui.update();
         } else {
             cutsceneManager.update();
         }
@@ -153,6 +156,14 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
     }
+    public void loadLavaMap() {
+        tileM.loadMap("/util/maps/lavaMap.txt");
+
+        // Set player spawn in the lava map
+        player.worldX = 5 * tileSize;
+        player.worldY = 5 * tileSize;
+    }
+
 
     public void fadeToNewMap(Runnable mapChange) {
         isFading = true;
@@ -166,7 +177,7 @@ public class GamePanel extends JPanel implements Runnable {
         //We have to call the superClass, in this case JFrame.
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;      //This method has more functions
+        Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
         tileM.draw(g2);
 
@@ -178,6 +189,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         gui.draw(g2);
+
 
 
         if (isFading) {

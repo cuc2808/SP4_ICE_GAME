@@ -21,7 +21,8 @@ public class GUI {
         if (hasMessage) {
             int screenX = gp.npc.worldX- gp.player.worldX + gp.player.screenX;
             int screenY = gp.npc.worldY - gp.player.worldY + gp.player.screenY;
-            g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
+            //g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
+
         }
     }
     public void update(){

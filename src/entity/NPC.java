@@ -17,7 +17,7 @@ public class NPC extends Entity {
     public BufferedImage left,right;
     public String direction;
     protected int actionCounter = 0;
-    protected boolean isInteractedWith;
+    protected boolean isInteractedWith = false;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
     protected int messageCounter;
