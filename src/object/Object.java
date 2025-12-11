@@ -23,6 +23,7 @@ public class Object {
 
     }
     public void setDefaultValues(){
+
     }
     public void loadImage(){
         image = io.readImage("Resouces/Files/ObjectImages/"+name+".png");
