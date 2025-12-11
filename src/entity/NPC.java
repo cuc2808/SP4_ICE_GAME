@@ -15,7 +15,6 @@ public class NPC extends Entity {
     FileIO io;
     GUI gui;
     public BufferedImage left,right;
-    public String direction;
     protected int actionCounter = 0;
     protected boolean isInteractedWith = false;
     protected boolean hasMainEvent;
@@ -40,32 +39,34 @@ public class NPC extends Entity {
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize/20;
-        worldY = gp.tileSize/20;
+        worldX = gp.tileSize*3;
+        worldY = gp.tileSize*3;
+        direction = "right";
         movementSpeed = 2;
         currentMessage = allMessages.get(messageCounter);
 
     }
     public void update(){
         actionCounter++;
-        if (actionCounter < 63) {
-            this.direction = "right";
-        } else {
-            this.direction = "left";
-        }
         collisionOn = false;
         gp.colCheck.checkTile(this);
         if (this.collisionOn) {
             System.out.println(this.collisionOn);
         }
         if(!collisionOn) {
-            if (actionCounter < 63) {
+            if (direction == "right"){
                 worldX += movementSpeed;
-            } else {
+            }
+            if (direction == "left"){
                 worldX -= movementSpeed;
             }
         }
         if (actionCounter == 120) {
+            if (direction == "right"){
+                direction = "left";
+            } else if (direction == "left"){
+                direction = "right";
+            }
             actionCounter = 0;
         }
     }
