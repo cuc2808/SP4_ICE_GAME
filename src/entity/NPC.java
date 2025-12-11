@@ -37,17 +37,11 @@ public class NPC extends Entity {
         interact();
         unlockMainEvent();
         unlockSideEvent();
-
-        solidArea = new Rectangle();
-        solidArea.x = worldX;
-        solidArea.y = worldY;
-        solidArea.width = 20;
-        solidArea.height = 60;
     }
 
     public void setDefaultValues(){
-        worldX = 375;
-        worldY = 250;
+        worldX = gp.tileSize/20;
+        worldY = gp.tileSize/20;
         movementSpeed = 2;
         currentMessage = allMessages.get(messageCounter);
 
@@ -67,10 +61,8 @@ public class NPC extends Entity {
         if(!collisionOn) {
             if (actionCounter < 63) {
                 worldX += movementSpeed;
-                solidArea.x = worldX;
             } else {
                 worldX -= movementSpeed;
-                solidArea.x = worldX;
             }
         }
         if (actionCounter == 120) {
