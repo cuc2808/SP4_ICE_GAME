@@ -13,6 +13,7 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
 
     // Cutscene variables
+
     boolean isFading = false;
     float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
     float fadeSpeed = 0.02f; // Adjust for speed
@@ -42,22 +43,27 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS FRAMES PER SECOND:
     int FPS = 60;
 
-    public CollisionChecker colCheck = new CollisionChecker(this);
-    public CutsceneManager cutsceneManager = new CutsceneManager(this);
-
-
-    TileManager tileM = new TileManager(this);
-    FileIO io = new FileIO(this);
-    SoundSystem soundSystem = new SoundSystem(io);
-    KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
-    public GUI gui = new GUI(this);
+    public CutsceneManager cutsceneManager;
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
+
+    public TileManager tileM = new TileManager(this);
+    public FileIO io = new FileIO(this);
+    public SoundSystem soundSystem = new SoundSystem(io);
+    public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
+    public CollisionChecker colCheck = new CollisionChecker(this);
+    public GUI gui = new GUI(this);
     public Player player = new Player(this, keyH);
     public NPC npc = new NPC(this,io,gui);
 
 
+
+
     //      ===== Constructor =====
     public GamePanel() {
+
+        cutsceneManager = new CutsceneManager(this);
+
+
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
         this.setBackground(Color.BLACK);      //Not all needed, but we get blue background. COLOR. is goated.
         this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
@@ -114,62 +120,18 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void update() { //
 
-        if (isFading) {
-            System.out.println("fadeAlpha: " + fadeAlpha);
-        }
+    public void update() {
 
-
-        // Trigger cutscene if player is at row10 col2 (tree)
-        int playerCol = player.worldX / tileSize;
-        int playerRow = player.worldY / tileSize;
-
-        if (!cutsceneManager.isActive() && playerCol == 2 && playerRow == 9) {
-            cutsceneManager.startCutscene();
-        }
-
-        // Only update entities if cutscene is not active
-        if (!cutsceneManager.isActive()) {
-            player.update();
-            npc.update();
-            gui.update();
-        } else {
+        if (cutsceneManager.isActive()) {
             cutsceneManager.update();
-        }
-        if (isFading) {
-            if (fadeOut) {
-                fadeAlpha += fadeSpeed;
-                if (fadeAlpha >= 1f) {
-                    fadeAlpha = 1f;
-                    fadeOut = false; // Next phase: fade in
-                    if (fadeCallback != null) fadeCallback.run(); // Trigger map change
-                }
-            } else {
-                fadeAlpha -= fadeSpeed;
-                if (fadeAlpha <= 0f) {
-                    fadeAlpha = 0f;
-                    isFading = false; // Fade complete
-                }
-            }
-
+            return; // Stop normal game update mens cutscene kører
         }
 
-    }
-    public void loadLavaMap() {
-        tileM.loadMap("/util/maps/lavaMap.txt");
-
-        // Set player spawn in the lava map
-        player.worldX = 5 * tileSize;
-        player.worldY = 5 * tileSize;
-    }
-
-
-    public void fadeToNewMap(Runnable mapChange) {
-        isFading = true;
-        fadeAlpha = 0f;
-        fadeOut = true;
-        fadeCallback = mapChange;
+        // Almindelig update
+        player.update();
+        npc.update();
+        gui.update();
     }
 
 
@@ -190,18 +152,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         gui.draw(g2);
 
-
-
-        if (isFading) {
-            System.out.println("test1");
-            Graphics2D g2d = (Graphics2D) g.create(); // Create a copy of g2d
-
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
-            g2d.setColor(Color.BLACK);
-            g2d.fillRect(0, 0, screenWidth, screenHeight);
-            g2d.dispose();
-            this.player.movementSpeed = 20;
-        }
+        cutsceneManager.draw(g2);
         g2.dispose();
     }
 }

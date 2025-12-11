@@ -17,13 +17,16 @@
         public Tile[] tile;
         public int mapTileNum[][];
 
+
+        public String mapName = "/util/maps/worldMap.txt";
+
         public TileManager(GamePanel gp){
             this.gp=gp;
 
             tile = new Tile[10];
             mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
             getTileImage();
-            loadMap("/util/maps/worldMap.txt");
+            loadMap(mapName);
         }
         public void getTileImage(){
             System.out.println("Image loading stated");
@@ -53,6 +56,8 @@
             tile[6] = new Tile();
             tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
 
+            tile[7] = new Tile();
+            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
 
 
             }catch(IOException e){
@@ -89,6 +94,12 @@
 
             }
                 System.out.println("Image loading finished");
+            }
+
+
+            public void changeMap(String newMapName){
+             mapName = newMapName;
+             loadMap(mapName);
             }
 
 

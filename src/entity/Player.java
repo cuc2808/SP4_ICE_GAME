@@ -2,6 +2,7 @@ package entity;
 
 import Main.GamePanel;
 import Main.KeyHandler;
+import Tile.Tile;
 import Tile.TileManager;
 import util.FileIO;
 import util.SoundSystem;
@@ -37,6 +38,7 @@ public class Player extends Entity{
     solidArea.y = 32;
     solidArea.width = 32;
     solidArea.height = 32;
+
 
         setDefaultValues();
         loadPlayerImage();
@@ -157,6 +159,22 @@ public void loadPlayerImage(){
                     worldX += movementSpeed;
                     break;
             }
+
+        }
+
+        collisionOn = false;
+        gp.colCheck.checkTile(this);
+
+        // === CUTSCENE TILE TRIGGER ===
+        // Looks for the tile player is on
+        int playerCol = worldX / gp.tileSize;
+        int playerRow = worldY / gp.tileSize;
+        int tileStandingOn = gp.tileM.mapTileNum[playerCol][playerRow];
+
+        // The tile id that can trigger cutscene
+        if (tileStandingOn == 7 && !gp.cutsceneManager.isActive()) {
+            gp.cutsceneManager.startCutscene(true);
+
         }
 
         //      ===== Sprite Counter and Number changer - so we can tell what sprite the painter should paint.

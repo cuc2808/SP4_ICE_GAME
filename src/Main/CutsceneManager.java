@@ -4,56 +4,92 @@ import java.awt.*;
 public class CutsceneManager {
 
     GamePanel gp;
+
     boolean cutsceneActive = false;
-    int cutsceneStep = 0;
+
+    // Flyttet fra GamePanel
+    public static boolean change = false;
+    public boolean cutsceneDone = false;
+    boolean isFading = false;
+    float fadeAlpha = 0.0f;
+    float fadeSpeed = 0.02f;
+
+    public int cutsceneStep = 0;
     int cutsceneTimer = 0;
 
     public CutsceneManager(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void startCutscene() {
-        gp.isFading = true;
+    public void startCutscene(boolean needChange) {
+        change = needChange;
         cutsceneActive = true;
+        isFading = true;
+        fadeAlpha = 0;
         cutsceneStep = 0;
         cutsceneTimer = 0;
 
-        // Stop player movement
-        gp.player.movementSpeed = 0;
-        gp.fadeToNewMap(() -> gp.loadLavaMap());
-
-    }
-
-    public void update() {
-        if (!cutsceneActive) return;
-
-        cutsceneTimer++;
-
-        switch (cutsceneStep) {
-            case 0:
-                // Example: NPC walks towards player
-                gp.npc.worldX -= 2;
-                    cutsceneStep++;
-                    cutsceneTimer = 0;
-                break;
-            case 1:
-                // Example: Display message
-                gp.gui.hasMessage = true;
-                if (cutsceneTimer > 60) { // 1 seconds
-                    cutsceneStep++;
-                    cutsceneTimer = 0;
-                    gp.gui.hasMessage = false;
-                }
-                break;
-            case 2:
-                // End cutscene
-                cutsceneActive = false;
-                gp.player.movementSpeed = gp.player.walkSpeed;
-                break;
-        }
+        gp.player.movementSpeed = 0; // Freeze
     }
 
     public boolean isActive() {
         return cutsceneActive;
+    }
+
+    public void update() {
+
+        if (!cutsceneActive) return;
+
+        switch (cutsceneStep) {
+
+            case 0: // Fade ind
+                fadeAlpha += fadeSpeed;
+                if (fadeAlpha >= 1) {
+                    fadeAlpha = 1;
+                    cutsceneTimer = 0;
+                    cutsceneStep++;
+                }
+                break;
+
+            case 1: // NPC snakker
+                cutsceneTimer++;
+                if (cutsceneTimer == 60) {
+                    //gp.npcManager.getNpc(0).speak();
+                }
+                if (cutsceneTimer > 180) {
+                    cutsceneTimer = 0;
+                    cutsceneStep++;
+                }
+                break;
+
+            case 2: // Fade ud
+                    cutsceneDone = true;
+                    if(gp.cutsceneManager.cutsceneDone  == true && change == true) {
+                    gp.tileM.changeMap("/util/maps/lavaMap.txt");
+                    change = false;
+                }
+                fadeAlpha -= fadeSpeed;
+                if (fadeAlpha <= 0) {
+                    fadeAlpha = 0;
+
+                    // Reset efter cutscene
+                    isFading = false;
+                    gp.player.movementSpeed = gp.player.walkSpeed;
+                    cutsceneActive = false;
+                }
+                break;
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        if (!cutsceneActive) return;
+
+        if (isFading) {
+            Graphics2D g2d = (Graphics2D) g2.create();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+            g2d.dispose();
+        }
     }
 }
