@@ -12,7 +12,7 @@ public class Entity {
     public int walkSpeed;
     public int sprintSpeed;
     double diagonalMultiplier = 1.414; //For when going diagonally. We need to divide alle the instances of moving by 1.414
-    public Rectangle solidArea = new Rectangle(0,0,32,32);
+    public Rectangle solidArea = new Rectangle(0,0,64,64);
     public boolean collisionOn = false;
     public String direction = "idle";
     public int spriteCounter = 0;    //Counter we need to switch to the next sprite in an animation.
