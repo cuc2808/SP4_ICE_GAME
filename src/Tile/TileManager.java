@@ -20,10 +20,10 @@
         public TileManager(GamePanel gp){
             this.gp=gp;
 
-            tile = new Tile[10];
+            tile = new Tile[20];
             mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
             getTileImage();
-            loadMap("/util/maps/worldMap.txt");
+            loadMap("/util/maps/levelOne.txt");
         }
         public void getTileImage(){
             System.out.println("Image loading stated");
@@ -52,6 +52,21 @@
 
             tile[6] = new Tile();
             tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
+
+                tile[7] = new Tile();
+                tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
+
+                tile[8] = new Tile();
+                tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-2.png"));
+
+                tile[9] = new Tile();
+                tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_0.png"));
+
+                tile[10] = new Tile();
+                tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_1.png"));
+
+                tile[11] = new Tile();
+                tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_2.png"));
 
 
 
