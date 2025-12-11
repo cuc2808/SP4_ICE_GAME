@@ -50,9 +50,6 @@ public class NPC extends Entity {
         actionCounter++;
         collisionOn = false;
         gp.colCheck.checkTile(this);
-        if (this.collisionOn) {
-            System.out.println(this.collisionOn);
-        }
         if(!collisionOn) {
             if (direction == "right"){
                 worldX += movementSpeed;
