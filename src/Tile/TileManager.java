@@ -53,26 +53,26 @@
                 tile[5] = new Tile();
                 tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road.png"));
 
-            tile[6] = new Tile();
-            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
+                tile[6] = new Tile();
+                tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
 
                 tile[7] = new Tile();
-                tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
+                tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
 
                 tile[8] = new Tile();
-                tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
+                tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-2.png"));
 
                 tile[9] = new Tile();
-                tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-2.png"));
+                tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_0.png"));
 
                 tile[10] = new Tile();
-                tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_0.png"));
+                tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_1.png"));
 
                 tile[11] = new Tile();
-                tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_1.png"));
+                tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_2.png"));
 
                 tile[12] = new Tile();
-                tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_2.png"));
+                tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
 
 
 

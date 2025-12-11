@@ -2,6 +2,8 @@ package Main;
 
 import Tile.TileManager;
 import entity.NPC;
+import object.ObjManager;
+import object.Object;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -51,9 +53,11 @@ public class GamePanel extends JPanel implements Runnable {
     public SoundSystem soundSystem = new SoundSystem(io);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
     public CollisionChecker colCheck = new CollisionChecker(this);
+    public ObjManager objManager = new ObjManager(this,io);
     public GUI gui = new GUI(this);
     public Player player = new Player(this, keyH);
     public NPC npc = new NPC(this,io,gui);
+    public Object objArray[] = new Object[10];
 
 
 
