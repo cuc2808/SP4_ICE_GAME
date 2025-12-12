@@ -18,12 +18,12 @@
         public int mapTileNum[][];
 
 
-        public String mapName = "/util/maps/levelOne.txt";
+        public String mapName = "/util/maps/levelTwo.txt";
 
         public TileManager(GamePanel gp){
             this.gp=gp;
 
-            tile = new Tile[20];
+            tile = new Tile[31];
             mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
             getTileImage();
             loadMap(mapName);
@@ -57,13 +57,15 @@
                 tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
 
                 tile[7] = new Tile();
-                tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
+                tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_49.png"));
 
                 tile[8] = new Tile();
-                tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-2.png"));
+                tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_34.png"));
+                tile[8].collision = true;
 
                 tile[9] = new Tile();
                 tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_0.png"));
+                tile[9].collision = true;
 
                 tile[10] = new Tile();
                 tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_1.png"));
@@ -72,7 +74,62 @@
                 tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_2.png"));
 
                 tile[12] = new Tile();
-                tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
+                tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_0.png"));
+
+                tile[13] = new Tile();
+                tile[13].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_1.png"));
+
+                tile[14] = new Tile();
+                tile[14].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_3_0.png"));
+
+                tile[15] = new Tile();
+                tile[15].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_2_3.png"));
+
+                tile[16] = new Tile();
+                tile[16].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_2.png"));
+
+                tile[17] = new Tile();
+                tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_0_3.png"));
+
+                tile[18] = new Tile();
+                tile[18].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_1_1.png"));
+
+                tile[19] = new Tile();
+                tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_3_1.png"));
+
+                tile[20] = new Tile();
+                tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_3_2.png"));
+
+                tile[21] = new Tile();
+                tile[21].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_3_3.png"));
+
+                tile[22] = new Tile();
+                tile[22].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_9.png"));
+                tile[22].collision = true;
+
+                tile[23] = new Tile();
+                tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_10_3.png"));
+                tile[23].collision = true;
+
+                tile[24] = new Tile();
+                tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_13_1.png"));
+
+                tile[25] = new Tile();
+                tile[25].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_16_1.png"));
+                tile[25].collision = true;
+
+                tile[26] = new Tile();
+                tile[26].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_28_7.png"));
+
+                tile[27] = new Tile();
+                tile[27].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_30.png"));
+
+                tile[28] = new Tile();
+                tile[28].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_31.png"));
+
+
+                tile[30] = new Tile();
+                tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
 
 
 

@@ -172,7 +172,7 @@ public void loadPlayerImage(){
         int tileStandingOn = gp.tileM.mapTileNum[playerCol][playerRow];
 
         // The tile id that can trigger cutscene
-        if (tileStandingOn == 12 && !gp.cutsceneManager.isActive()) {
+        if (tileStandingOn == 30 && !gp.cutsceneManager.isActive()) {
             gp.cutsceneManager.startCutscene(true);
 
         }
