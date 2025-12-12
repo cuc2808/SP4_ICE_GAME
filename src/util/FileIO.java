@@ -62,7 +62,7 @@ public class FileIO {
         try {
             image = ImageIO.read(getClass().getResourceAsStream(location));
         } catch (IOException e){
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return image;
     }

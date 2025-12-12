@@ -1,14 +1,11 @@
 package Main;
 
-import Tile.TileManager;
-import util.FileIO;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, ShiftPressed, mPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, ShiftPressed, ePressed;
 
     @Override
     public void keyTyped(KeyEvent e) { //Might be unused....
@@ -41,8 +38,8 @@ public class KeyHandler implements KeyListener {
         if(pressedKeyCode == KeyEvent.VK_SHIFT){
             ShiftPressed = true;
         }
-        if(pressedKeyCode == KeyEvent.VK_M){
-            mPressed = true;
+        if(pressedKeyCode == KeyEvent.VK_E){
+            ePressed = true;
         }
 
     }
@@ -74,8 +71,8 @@ public class KeyHandler implements KeyListener {
         if(releasedKeyCode == KeyEvent.VK_SHIFT){
             ShiftPressed = false;
         }
-        if(releasedKeyCode == KeyEvent.VK_M){
-            mPressed = false;
+        if(releasedKeyCode == KeyEvent.VK_E){
+            ePressed = false;
         }
 
     }

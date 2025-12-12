@@ -3,7 +3,7 @@ package Main;
 import Tile.TileManager;
 import entity.NPC;
 import object.ObjManager;
-import object.Object;
+import object.superObject;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -14,13 +14,6 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    // Cutscene variables
-
-    boolean isFading = false;
-    float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
-    float fadeSpeed = 0.02f; // Adjust for speed
-    boolean fadeOut = true;  // true = fading to black, false = fading in
-    Runnable fadeCallback;   // What to do when fade finishes
 
     //SCREEN SETTINGS - includes resolution, tile size and so on:
     //                  ===Attributes===
@@ -45,6 +38,14 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS FRAMES PER SECOND:
     int FPS = 60;
 
+    // Cutscene variables
+
+    boolean isFading = false;
+    float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
+    float fadeSpeed = 0.02f; // Adjust for speed
+    boolean fadeOut = true;  // true = fading to black, false = fading in
+    Runnable fadeCallback;   // What to do when fade finishes
+
     public CutsceneManager cutsceneManager;
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
 
@@ -57,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GUI gui = new GUI(this);
     public Player player = new Player(this, keyH);
     public NPC npc = new NPC(this,io,gui);
-    public Object objArray[] = new Object[10];
+    public superObject objArray[] = new superObject[10];
 
 
 
@@ -73,6 +74,12 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);       //It helps with rendering/faster load. Basically it draws the program in another window we can't see before getting displayed.
         this.addKeyListener(keyH);      //We make sure to add the *Specifik KeyListener to the program. Here it's keyH.
         this.setFocusable(true);        //Basically makes it so it's focused on keyInput.
+    }
+
+    public void setupGame(){
+
+        objManager.setObject();
+
     }
 
     public void startGameThread() {
@@ -136,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.update();
         npc.update();
         gui.update();
+
     }
 
 
@@ -146,6 +154,13 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
         tileM.draw(g2);
+
+
+        for(int i = 0;  i < objArray.length; i++){
+            if(objArray[i] != null){
+                objArray[i].draw(g2,this);
+            }
+        }
 
         //NPC
         npc.draw(g2);
