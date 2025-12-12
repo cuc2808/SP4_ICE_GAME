@@ -65,7 +65,7 @@ public class CutsceneManager {
             case 2: // Fade ud
                     cutsceneDone = true;
                     if(gp.cutsceneManager.cutsceneDone  == true && change == true) {
-                    gp.tileM.changeMap("/util/maps/levelThree.txt");
+                    gp.tileM.changeMap("/util/maps/leveltwo.txt");
                     change = false;
                 }
                 fadeAlpha -= fadeSpeed;

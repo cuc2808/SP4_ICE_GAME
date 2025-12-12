@@ -18,7 +18,7 @@
         public int mapTileNum[][];
 
 
-        public String mapName = "/util/maps/levelTwo.txt";
+        public String mapName = "/util/maps/levelOne.txt";
 
         public TileManager(GamePanel gp){
             this.gp=gp;
