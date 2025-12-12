@@ -1,7 +1,7 @@
 package Main;
 
 import Tile.TileManager;
-import entity.NPC;
+import entity.NPCs.NPC;
 import object.ObjManager;
 import object.Object;
 import util.FileIO;
