@@ -141,7 +141,7 @@ public class NPC extends Entity {
             scan.nextLine(); // skips header
             while (scan.hasNextLine()){
                 String line = scan.nextLine();
-                String[] array = line.split(",");
+                String[] array = line.split(";");
                 for (int i = 0; i < array.length; i++){
                     allMessages.add(array[i]);
                 }
