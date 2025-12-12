@@ -2,21 +2,25 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
-import entity.Entity;
+import object.OBJ_Dust;
 import util.FileIO;
 
-import java.awt.*;
+public class NPCManager {
 
-public class NPC extends Entity {
     GamePanel gp;
     FileIO io;
     GUI gui;
 
-    public NPC(GamePanel gp, FileIO io, GUI gui) {
+    public NPCManager(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
         this.io = io;
         this.gui = gui;
+
     }
-    public void update(){}
-    public void draw(Graphics g2){}
+    public void setNPC (){
+
+        gp.npcArray[0] = new NPC_Flamingo(gp,io,gui);
+
+    }
 }
+

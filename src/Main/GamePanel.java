@@ -2,6 +2,8 @@ package Main;
 
 import Tile.TileManager;
 import entity.NPCs.NPC;
+import entity.NPCs.NPCManager;
+import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
 import object.Object;
 import util.FileIO;
@@ -52,11 +54,12 @@ public class GamePanel extends JPanel implements Runnable {
     public FileIO io = new FileIO(this);
     public SoundSystem soundSystem = new SoundSystem(io);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
-    public CollisionChecker colCheck = new CollisionChecker(this);
-    public ObjManager objManager = new ObjManager(this,io);
     public GUI gui = new GUI(this);
+    public CollisionChecker colCheck = new CollisionChecker(this);
+    public NPCManager npcManager = new NPCManager(this,io,gui);
+    public ObjManager objManager = new ObjManager(this,io);
     public Player player = new Player(this, keyH);
-    public NPC npc = new NPC(this,io,gui);
+    public NPC npcArray[] = new NPC[10];
     public Object objArray[] = new Object[10];
 
 
@@ -82,6 +85,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         //soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
         soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
+    }
+    public void setUpGame(){
+        //objManager.setObject();
+        npcManager.setNPC();
     }
 
     @Override
@@ -134,7 +141,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Almindelig update
         player.update();
-        npc.update();
+
+        //NPCs
+        for (int i = 0; i < npcArray.length; i++) {
+            if (npcArray[i] != null) {
+                npcArray[i].update();
+            }
+        }
+
         gui.update();
     }
 
@@ -148,7 +162,11 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(g2);
 
         //NPC
-        npc.draw(g2);
+        for (int i = 0; i < npcArray.length; i++) {
+            if (npcArray[i] != null) {
+                npcArray[i].draw(g2);
+            }
+        }
 
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)

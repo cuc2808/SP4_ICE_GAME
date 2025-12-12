@@ -20,8 +20,8 @@ public class GUI {
         g2.setColor(Color.blue);
 
         if (hasMessage && currentMessage != null) {
-            int screenX = gp.npc.worldX- gp.player.worldX + gp.player.screenX;
-            int screenY = gp.npc.worldY - gp.player.worldY + gp.player.screenY;
+            int screenX = gp.npcArray[0].worldX- gp.player.worldX + gp.player.screenX;
+            int screenY = gp.npcArray[0].worldY - gp.player.worldY + gp.player.screenY;
             displayingMessage = true;
             g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
 

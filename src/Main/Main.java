@@ -18,6 +18,9 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        //setup Game
+        gamePanel.setUpGame();
+
         // Start game loop
         gamePanel.startGameThread();
     }
