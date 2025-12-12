@@ -17,7 +17,7 @@ public class Player extends Entity{
 
     GamePanel gp;
     FileIO util = new FileIO(gp);
-    KeyHandler keyH;
+    public KeyHandler keyH;
     SoundSystem sound;
 
         public final int screenX;

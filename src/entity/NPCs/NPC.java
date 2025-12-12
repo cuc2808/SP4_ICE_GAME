@@ -1,7 +1,8 @@
-package entity;
+package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
+import entity.Entity;
 import util.FileIO;
 
 import java.awt.*;
