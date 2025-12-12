@@ -17,7 +17,7 @@ public class Player extends Entity {
 
     GamePanel gp;
     FileIO util = new FileIO(gp);
-    KeyHandler keyH;
+    public KeyHandler keyH;
     SoundSystem sound;
 
     public final int screenX;
@@ -192,6 +192,7 @@ public class Player extends Entity {
 
         if (tileStandingOn == 12 && !gp.cutsceneManager.isActive()) {
             gp.cutsceneManager.startCutscene(true);
+
         }
 
         //      ===== Sprite Counter and Number changer - so we can tell what sprite the painter should paint.

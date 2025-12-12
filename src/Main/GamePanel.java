@@ -1,9 +1,11 @@
 package Main;
 
 import Tile.TileManager;
-import entity.NPC;
+import entity.NPCs.NPC;
+import entity.NPCs.NPCManager;
+import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
-import object.superObject;
+import object.Object;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -14,6 +16,13 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    // Cutscene variables
+
+    boolean isFading = false;
+    float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
+    float fadeSpeed = 0.02f; // Adjust for speed
+    boolean fadeOut = true;  // true = fading to black, false = fading in
+    Runnable fadeCallback;   // What to do when fade finishes
 
     //SCREEN SETTINGS - includes resolution, tile size and so on:
     //                  ===Attributes===
@@ -53,11 +62,12 @@ public class GamePanel extends JPanel implements Runnable {
     public FileIO io = new FileIO(this);
     public SoundSystem soundSystem = new SoundSystem(io);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
-    public CollisionChecker colCheck = new CollisionChecker(this);
-    public ObjManager objManager = new ObjManager(this,io);
     public GUI gui = new GUI(this);
+    public CollisionChecker colCheck = new CollisionChecker(this);
+    public NPCManager npcManager = new NPCManager(this,io,gui);
+    public ObjManager objManager = new ObjManager(this,io);
     public Player player = new Player(this, keyH);
-    public NPC npc = new NPC(this,io,gui);
+    public NPC npcArray[] = new NPC[10];
     public superObject objArray[] = new superObject[10];
 
 
@@ -79,6 +89,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame(){
 
         objManager.setObject();
+        //objManager.setObject();
+        npcManager.setNPC();
 
     }
 
@@ -141,7 +153,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Almindelig update
         player.update();
-        npc.update();
+
+        //NPCs
+        for (int i = 0; i < npcArray.length; i++) {
+            if (npcArray[i] != null) {
+                npcArray[i].update();
+            }
+        }
+
         gui.update();
 
     }
@@ -163,7 +182,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         //NPC
-        npc.draw(g2);
+        for (int i = 0; i < npcArray.length; i++) {
+            if (npcArray[i] != null) {
+                npcArray[i].draw(g2);
+            }
+        }
 
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
