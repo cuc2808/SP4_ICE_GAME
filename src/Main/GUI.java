@@ -9,6 +9,7 @@ public class GUI {
     boolean hasMessage = false;
     String currentMessage;
     int actionCounter = 0;
+    public boolean displayingMessage;
 
     public GUI(GamePanel gp){
         this.gp = gp;
@@ -21,6 +22,7 @@ public class GUI {
         if (hasMessage && currentMessage != null) {
             int screenX = gp.npc.worldX- gp.player.worldX + gp.player.screenX;
             int screenY = gp.npc.worldY - gp.player.worldY + gp.player.screenY;
+            displayingMessage = true;
             g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
 
         }
@@ -28,8 +30,9 @@ public class GUI {
     public void update(){
         if (hasMessage) {
             actionCounter++;
-            if (actionCounter == 1200){
+            if (actionCounter == 120){
                 actionCounter = 0;
+                displayingMessage = false;
                 hasMessage = false;
             }
         }

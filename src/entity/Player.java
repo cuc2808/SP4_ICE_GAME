@@ -96,7 +96,7 @@ public void loadPlayerImage(){
 
         if (keyH.mPressed == true){
             sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
-            keyH.mPressed = false;
+            //keyH.mPressed = false;
         }
 
         if (keyH.upPressed) {
