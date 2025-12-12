@@ -2,17 +2,15 @@ package entity;
 
 import Main.GamePanel;
 import Main.KeyHandler;
-import Tile.Tile;
-import Tile.TileManager;
 import util.FileIO;
 import util.SoundSystem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends Entity{
+public class Player extends Entity {
 
-    public BufferedImage up1,up2,up3,down1,down2,down3,left1,left2,left3,right1,right2,right3;
+    public BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
     public BufferedImage idle;
 
     GamePanel gp;
@@ -20,68 +18,70 @@ public class Player extends Entity{
     KeyHandler keyH;
     SoundSystem sound;
 
-        public final int screenX;
-        public final int screenY;
+    public final int screenX;
+    public final int screenY;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
         name = "player";
         id += 1;
 
         // Hitbox
-    solidArea = new Rectangle();
-    solidArea.x = 32;
-    solidArea.y = 32;
-    solidArea.width = 32;
-    solidArea.height = 32;
+        solidArea = new Rectangle();
+        solidArea.x = 32;
+        solidArea.y = 32;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
 
         setDefaultValues();
         loadPlayerImage();
 
     }
-public void setDefaultValues(){
-    worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
-    worldY = gp.tileSize * 15;       //We create a starting value for the player's y coordinate.
+
+    public void setDefaultValues() {
+        worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
+        worldY = gp.tileSize * 15;       //We create a starting value for the player's y coordinate.
 
 
-    movementSpeed = 0;      //The player's movementSpeed. This will affect how fast the player changes position.
-    walkSpeed = 5;      //This is the set walkSpeed, when the player isn't sprinting.
-    sprintSpeed = 10; //The player's set sprintSpeed, that activates when pressing shift.
+        movementSpeed = 0;      //The player's movementSpeed. This will affect how fast the player changes position.
+        walkSpeed = 5;      //This is the set walkSpeed, when the player isn't sprinting.
+        sprintSpeed = 10; //The player's set sprintSpeed, that activates when pressing shift.
 
-}
-
-public void loadPlayerImage(){
-
-
-    try {
-        idle = util.readImage("/playerImages/Player1IdleDown.png");
-
-        up1 = util.readImage("/playerImages/walk/Player1WalkUP1.png");
-        up2 = util.readImage("/playerImages/walk/Player1WalkUP3.png");
-        up3 = util.readImage("/playerImages/walk/Player1WalkUP2.png");
-
-        down1 = util.readImage("/playerImages/walk/Player1WalkDown1.png");
-        down2 = util.readImage("/playerImages/walk/Player1WalkDown2.png");
-        down3 = util.readImage("/playerImages/walk/Player1WalkDown3.png");
-
-        left1 = util.readImage("/playerImages/walk/Player1WalkLeft1.png");
-        left2 = util.readImage("/playerImages/walk/Player1WalkLeft2.png");
-        left3 = util.readImage("/playerImages/walk/Player1WalkLeft3.png");
-
-        right1 = util.readImage("/playerImages/walk/Player1WalkRight1.png");
-        right2 = util.readImage("/playerImages/walk/Player1WalkRight2.png");
-        right3 = util.readImage("/playerImages/walk/Player1WalkRight3.png");
-
-    } catch (Exception e) {
-        throw new RuntimeException(e);
     }
-}
 
+    public void loadPlayerImage() {
+
+
+        try {
+            idle = util.readImage("/playerImages/Player1IdleDown.png");
+
+            up1 = util.readImage("/playerImages/walk/Player1WalkUP1.png");
+            up2 = util.readImage("/playerImages/walk/Player1WalkUP3.png");
+            up3 = util.readImage("/playerImages/walk/Player1WalkUP2.png");
+
+            down1 = util.readImage("/playerImages/walk/Player1WalkDown1.png");
+            down2 = util.readImage("/playerImages/walk/Player1WalkDown2.png");
+            down3 = util.readImage("/playerImages/walk/Player1WalkDown3.png");
+
+            left1 = util.readImage("/playerImages/walk/Player1WalkLeft1.png");
+            left2 = util.readImage("/playerImages/walk/Player1WalkLeft2.png");
+            left3 = util.readImage("/playerImages/walk/Player1WalkLeft3.png");
+
+            right1 = util.readImage("/playerImages/walk/Player1WalkRight1.png");
+            right2 = util.readImage("/playerImages/walk/Player1WalkRight2.png");
+            right3 = util.readImage("/playerImages/walk/Player1WalkRight3.png");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public void update() {
@@ -94,9 +94,9 @@ public void loadPlayerImage(){
             movementSpeed = walkSpeed;
         }
 
-        if (keyH.mPressed == true){
+        if (keyH.ePressed == true) {
             sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
-            keyH.mPressed = false;
+            keyH.ePressed = false;
         }
 
         if (keyH.upPressed) {
@@ -165,23 +165,38 @@ public void loadPlayerImage(){
         collisionOn = false;
         gp.colCheck.checkTile(this);
 
-        // === CUTSCENE TILE TRIGGER ===
-        // Looks for the tile player is on
-        int playerCol = worldX / gp.tileSize;
-        int playerRow = worldY / gp.tileSize;
-        int tileStandingOn = gp.tileM.mapTileNum[playerCol][playerRow];
+        // === CUTSCENE TILE TRIGGER (FINAL PATCH) ===
+        Entity p = gp.player;
 
-        // The tile id that can trigger cutscene
+        // Beregn centerpunkt af spillerens solidArea
+        int centerX = p.worldX + p.solidArea.x + p.solidArea.width / 2;
+        int centerY = p.worldY + p.solidArea.y + p.solidArea.height / 2;
+
+        // Brug floorDiv for korrekt resultat selv ved negative worldX/worldY
+        int playerCol = Math.floorDiv(centerX, gp.tileSize);
+        int playerRow = Math.floorDiv(centerY, gp.tileSize);
+
+        // Clamp så vi aldrig går udenfor map
+        playerCol = Math.max(0, Math.min(playerCol, gp.maxWorldCol - 1));
+        playerRow = Math.max(0, Math.min(playerRow, gp.maxWorldRow - 1));
+
+        int tileStandingOn = gp.tileM.mapTileNum[playerRow][playerCol];
+
+        // Debug print (valgfri)
+//        System.out.println(
+//                "CENTER=(" + centerX + "," + centerY + ")  TILE=(" +
+//                        playerRow + "," + playerCol + ")  ID=" + tileStandingOn
+//        );
+
         if (tileStandingOn == 12 && !gp.cutsceneManager.isActive()) {
             gp.cutsceneManager.startCutscene(true);
-
         }
 
         //      ===== Sprite Counter and Number changer - so we can tell what sprite the painter should paint.
 
-        if(!keyH.ShiftPressed) {
+        if (!keyH.ShiftPressed) {
             spriteCounter++;
-        } else if (keyH.ShiftPressed){
+        } else if (keyH.ShiftPressed) {
             spriteCounter++;
             spriteCounter++;
             spriteCounter++;
@@ -191,74 +206,80 @@ public void loadPlayerImage(){
         if (spriteCounter >= 8) {
             spriteNumber++;
             spriteCounter = 0;
-            if(spriteNumber >= 4){
+            if (spriteNumber >= 4) {
                 spriteNumber = 1;
             }
         }
     }
 
-    public BufferedImage drawPlayerDirection(){
+    public BufferedImage drawPlayerDirection() {
 
         BufferedImage playerImage = idle;
 
-        switch(direction) {
-            default: playerImage = idle;
-            break;
-            case "up","upLeft","upRight": if(spriteNumber == 1) {
-                playerImage = up1;
-            } else if (spriteNumber == 2){
-                playerImage = up2;
-            } else if (spriteNumber == 3){
-                playerImage = up3;
-            } else if (spriteNumber == 4){
-                playerImage = up2;
-            }
-            break;
-            case "down","downLeft","downRight": if(spriteNumber == 1) {
-                playerImage = down1;
-            } else if (spriteNumber == 2){
-                playerImage = down2;
-            } else if (spriteNumber == 3){
-                playerImage = down3;
-            }else if (spriteNumber == 4) {
-                playerImage = down2;
-            }
+        switch (direction) {
+            default:
+                playerImage = idle;
                 break;
-            case "left": if(spriteNumber == 1) {
-                playerImage = left1;
-            } else if (spriteNumber == 2){
-                playerImage = left2;
-            } else if (spriteNumber == 3){
-                playerImage = left3;
-            }else if (spriteNumber == 4) {
-                playerImage = left2;
-            }
+            case "up", "upLeft", "upRight":
+                if (spriteNumber == 1) {
+                    playerImage = up1;
+                } else if (spriteNumber == 2) {
+                    playerImage = up2;
+                } else if (spriteNumber == 3) {
+                    playerImage = up3;
+                } else if (spriteNumber == 4) {
+                    playerImage = up2;
+                }
                 break;
-            case "right": if(spriteNumber == 1) {
-                playerImage = right1;
-            } else if (spriteNumber == 2){
-                playerImage = right2;
-            } else if (spriteNumber == 3){
-                playerImage = right3;
-            }else if (spriteNumber == 4) {
-                playerImage = right2;
-            }
+            case "down", "downLeft", "downRight":
+                if (spriteNumber == 1) {
+                    playerImage = down1;
+                } else if (spriteNumber == 2) {
+                    playerImage = down2;
+                } else if (spriteNumber == 3) {
+                    playerImage = down3;
+                } else if (spriteNumber == 4) {
+                    playerImage = down2;
+                }
                 break;
-            case "idle":  playerImage = idle;
-            break;
+            case "left":
+                if (spriteNumber == 1) {
+                    playerImage = left1;
+                } else if (spriteNumber == 2) {
+                    playerImage = left2;
+                } else if (spriteNumber == 3) {
+                    playerImage = left3;
+                } else if (spriteNumber == 4) {
+                    playerImage = left2;
+                }
+                break;
+            case "right":
+                if (spriteNumber == 1) {
+                    playerImage = right1;
+                } else if (spriteNumber == 2) {
+                    playerImage = right2;
+                } else if (spriteNumber == 3) {
+                    playerImage = right3;
+                } else if (spriteNumber == 4) {
+                    playerImage = right2;
+                }
+                break;
+            case "idle":
+                playerImage = idle;
+                break;
         }
         return playerImage;
     }
 
-public void draw(Graphics g2){
+    public void draw(Graphics g2) {
 
 
-    g2.drawImage(drawPlayerDirection(),screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(drawPlayerDirection(), screenX, screenY, gp.tileSize, gp.tileSize, null);
 
 
         //g2.drawImage(playerImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
 
-}
+    }
 
 }
