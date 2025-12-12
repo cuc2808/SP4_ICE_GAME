@@ -97,8 +97,8 @@ public class Player extends Entity {
         }
 
         if (keyH.ePressed == true) {
-            sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
-            keyH.ePressed = false;
+            //sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
+            //keyH.ePressed = false;
         }
 
         if (keyH.upPressed) {
@@ -190,7 +190,7 @@ public class Player extends Entity {
 //                        playerRow + "," + playerCol + ")  ID=" + tileStandingOn
 //        );
 
-        if (tileStandingOn == 12 && !gp.cutsceneManager.isActive()) {
+        if (tileStandingOn == 30 && !gp.cutsceneManager.isActive()) {
             gp.cutsceneManager.startCutscene(true);
 
         }

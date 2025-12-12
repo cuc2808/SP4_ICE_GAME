@@ -164,6 +164,8 @@
 
     public void changeMap(String mapName) {
         this.mapName = mapName;
+        loadMap(mapName);
+
     }
 
 

@@ -5,7 +5,7 @@ import entity.NPCs.NPC;
 import entity.NPCs.NPCManager;
 import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
-import object.Object;
+import object.superObject;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -15,14 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-
-    // Cutscene variables
-
-    boolean isFading = false;
-    float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
-    float fadeSpeed = 0.02f; // Adjust for speed
-    boolean fadeOut = true;  // true = fading to black, false = fading in
-    Runnable fadeCallback;   // What to do when fade finishes
 
     //SCREEN SETTINGS - includes resolution, tile size and so on:
     //                  ===Attributes===

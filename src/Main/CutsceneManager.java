@@ -1,5 +1,6 @@
 package Main;
 import java.awt.*;
+import java.util.Objects;
 
 public class CutsceneManager {
 
@@ -65,9 +66,14 @@ public class CutsceneManager {
             case 2: // Fade ud
                     cutsceneDone = true;
                     if(gp.cutsceneManager.cutsceneDone  == true && change == true) {
-                    gp.tileM.changeMap("/util/maps/leveltwo.txt");
-                    change = false;
-                }
+                        if (!Objects.equals(gp.tileM.mapName, "/util/maps/levelTwo.txt")) {
+                            gp.tileM.changeMap("/util/maps/levelTwo.txt");
+                            change = false;
+                        } else if (gp.tileM.mapName.equals("/util/maps/levelTwo.txt")) {
+                            gp.tileM.changeMap("/util/maps/levelThree.txt");
+                            change = false;
+                        }
+                    }
                 fadeAlpha -= fadeSpeed;
                 if (fadeAlpha <= 0) {
                     fadeAlpha = 0;

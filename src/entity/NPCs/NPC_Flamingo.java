@@ -70,11 +70,11 @@ public class NPC_Flamingo extends NPC {
             gp.player.worldY < aroundNPCPositiveY &&
             gp.player.worldY > aroundNPCNegativeY) {
             // check om M key er pressed
-            if (gp.player.keyH.mPressed == true && gp.gui.displayingMessage == false) {
+            if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
                 // display msg på skærm
                 dspNPCMsg();
                 // ikke spamable eller holdt inde
-                gp.player.keyH.mPressed = false;
+                gp.player.keyH.ePressed = false;
             }
         }
     }
@@ -90,7 +90,7 @@ public class NPC_Flamingo extends NPC {
         if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.tileSize < gp.player.worldX + gp.player.screenX) {
+                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             if (direction.equals("right")) {
                 g2.drawImage(right, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
