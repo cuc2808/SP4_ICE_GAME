@@ -1,5 +1,7 @@
 package Main;
 
+import entity.Entity;
+
 import java.awt.*;
 
 public class GUI {
@@ -10,6 +12,7 @@ public class GUI {
     String currentMessage;
     int actionCounter = 0;
     public boolean displayingMessage;
+    Entity entity;
 
     public GUI(GamePanel gp){
         this.gp = gp;
@@ -20,8 +23,8 @@ public class GUI {
         g2.setColor(Color.blue);
 
         if (hasMessage && currentMessage != null) {
-            int screenX = gp.npcArray[0].worldX- gp.player.worldX + gp.player.screenX;
-            int screenY = gp.npcArray[0].worldY - gp.player.worldY + gp.player.screenY;
+            int screenX = this.entity.worldX- gp.player.worldX + gp.player.screenX;
+            int screenY = this.entity.worldY - gp.player.worldY + gp.player.screenY;
             displayingMessage = true;
             g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
 
@@ -37,8 +40,12 @@ public class GUI {
             }
         }
     }
-    public void getMessage(String message){
+    public void getMessage(Entity entity,String message){
+        //besked modtaget fra entity
+        this.entity = entity;
+        //modtaget en besked
         this.hasMessage = true;
+        //besked sat til curretnMessage
         this.currentMessage = message;
     }
 }

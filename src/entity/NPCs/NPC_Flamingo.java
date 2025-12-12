@@ -105,7 +105,7 @@ public class NPC_Flamingo extends NPC {
         //set current message
         currentMessage = allMessages.get(messageCounter);
         // giv current message til GUI
-        gui.getMessage(currentMessage);
+        gui.getMessage(this,currentMessage);
         //tæl message counter op
         messageCounter++;
 
