@@ -21,7 +21,6 @@ public class NPC_Panda extends NPC{
     protected ArrayList<String> allMessages;
     protected String currentMessage;
     int screenX,screenY;
-    int directionCounter;
 
     public NPC_Panda(GamePanel gp, FileIO io, GUI gui) {
         super(gp, io, gui);
@@ -77,6 +76,17 @@ public class NPC_Panda extends NPC{
                 gp.player.keyH.ePressed = false;
             }
         }
+        //spriteCounter også brugt i player
+        if ((actionCounter%2)==0) {
+            spriteCounter++;
+        }
+        if (spriteCounter == 8) {
+            spriteNumber++;
+            spriteCounter = 0;
+            if (spriteNumber == 5) {
+                spriteNumber = 1;
+            }
+        }
     }
     public void loadNPCImage(){
         //loading Front
@@ -105,15 +115,9 @@ public class NPC_Panda extends NPC{
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
-            if (direction.equals("right")) {
-                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            }
-            if (direction.equals("left")) {
-                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            }
+            System.out.println(spriteNumber);
+            g2.drawImage(drawNPCDirection(),screenX,screenY,gp.tileSize,gp.tileSize,null);
         }
-
-
     }
     public void dspNPCMsg() {
         //set current message
@@ -157,5 +161,63 @@ public class NPC_Panda extends NPC{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public BufferedImage drawNPCDirection() {
+
+        BufferedImage npcImage = null;
+
+        switch (direction) {
+            default:
+                npcImage = null;
+                break;
+            case "up", "upLeft", "upRight":
+                if (spriteNumber == 1) {
+                    npcImage = front_left;
+                } else if (spriteNumber == 2) {
+                    npcImage = front_right;
+                } else if (spriteNumber == 3) {
+                    npcImage = front_left;
+                } else if (spriteNumber == 4) {
+                    npcImage = front_right;
+                }
+                break;
+            case "down", "downLeft", "downRight":
+                if (spriteNumber == 1) {
+                    npcImage = away_left;
+                } else if (spriteNumber == 2) {
+                    npcImage = away_right;
+                } else if (spriteNumber == 3) {
+                    npcImage = away_left;
+                } else if (spriteNumber == 4) {
+                    npcImage = away_right;
+                }
+                break;
+            case "left":
+                if (spriteNumber == 1) {
+                    npcImage = left_left;
+                } else if (spriteNumber == 2) {
+                    npcImage = left_right;
+                } else if (spriteNumber == 3) {
+                    npcImage = left_left;
+                } else if (spriteNumber == 4) {
+                    npcImage = left_right;
+                }
+                break;
+            case "right":
+                if (spriteNumber == 1) {
+                    npcImage = right_left;
+                } else if (spriteNumber == 2) {
+                    npcImage = right_right;
+                } else if (spriteNumber == 3) {
+                    npcImage = right_left;
+                } else if (spriteNumber == 4) {
+                    npcImage = right_right;
+                }
+                break;
+            case "idle":
+                npcImage = null;
+                break;
+        }
+        return npcImage;
     }
 }
