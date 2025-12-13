@@ -10,8 +10,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NPC_Flamingo extends NPC {
-    public BufferedImage left,right;
+public class NPC_Panda extends NPC{
+    public BufferedImage front_idle,front_left,front_right,
+            away_idle,away_left,away_right,left_idle,left_left,left_right,
+            right_idle,right_left,right_right;
     protected int actionCounter = 0;
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
@@ -20,17 +22,13 @@ public class NPC_Flamingo extends NPC {
     protected String currentMessage;
     int screenX,screenY;
 
-    public NPC_Flamingo(GamePanel gp, FileIO io, GUI gui) {
-        super(gp,io,gui);
+    public NPC_Panda(GamePanel gp, FileIO io, GUI gui) {
+        super(gp, io, gui);
         this.messageCounter = 0;
 
         loadNPCImage();
-        loadMessages("Resources/Files/NPCs/FlamingoMessages.csv");
-        setDefaultValues();
-        unlockMainEvent();
-        unlockSideEvent();
-    }
 
+    }
     public void setDefaultValues(){
         worldX = gp.tileSize*4;
         worldY = gp.tileSize*3;
@@ -66,9 +64,9 @@ public class NPC_Flamingo extends NPC {
 
         //match med player
         if (gp.player.worldX < aroundNPCPositiveX &&
-            gp.player.worldX > aroundNPCNegativeX &&
-            gp.player.worldY < aroundNPCPositiveY &&
-            gp.player.worldY > aroundNPCNegativeY) {
+                gp.player.worldX > aroundNPCNegativeX &&
+                gp.player.worldY < aroundNPCPositiveY &&
+                gp.player.worldY > aroundNPCNegativeY) {
             // check om M key er pressed
             if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
                 // display msg på skærm
@@ -79,8 +77,22 @@ public class NPC_Flamingo extends NPC {
         }
     }
     public void loadNPCImage(){
-       left = io.readImage("/entity/NPCs/NPCImages/Flamingo/Flamongo1.png");
-       right = io.readImage("/entity/NPCs/NPCImages/Flamingo/Flamongo2.png");
+        //loading Front
+        front_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front.png");
+        front_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front_Lfoot.png");
+        front_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front_Rfoot.png");
+        //loading look away
+        away_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away.png");
+        away_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away_Lfoot.png");
+        away_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away_Rfoot.png");
+        //loading left
+        left_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left.png");
+        left_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left_Lfoot.png");
+        left_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left_Rfoot.png");
+        //loading right
+        right_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right.png");
+        right_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right_Lfoot.png");
+        right_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right_Rfoot.png");
     }
     public void draw(Graphics g2){
 
@@ -92,10 +104,10 @@ public class NPC_Flamingo extends NPC {
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             if (direction.equals("right")) {
-                g2.drawImage(right, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
             if (direction.equals("left")) {
-                g2.drawImage(left, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
         }
 

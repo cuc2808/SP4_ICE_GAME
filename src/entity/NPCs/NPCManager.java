@@ -19,7 +19,11 @@ public class NPCManager {
     }
     public void setNPC (){
 
+        //Flamingo
         gp.npcArray[0] = new NPC_Flamingo(gp,io,gui);
+
+        //Panda
+        gp.npcArray[1] = new NPC_Panda(gp,io,gui);
 
     }
 }
