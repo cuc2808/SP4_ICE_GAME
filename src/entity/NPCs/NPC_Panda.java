@@ -21,6 +21,7 @@ public class NPC_Panda extends NPC{
     protected ArrayList<String> allMessages;
     protected String currentMessage;
     int screenX,screenY;
+    int directionCounter;
 
     public NPC_Panda(GamePanel gp, FileIO io, GUI gui) {
         super(gp, io, gui);
@@ -105,10 +106,10 @@ public class NPC_Panda extends NPC{
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             if (direction.equals("right")) {
-                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
             if (direction.equals("left")) {
-                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
         }
 
