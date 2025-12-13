@@ -127,6 +127,9 @@
                 tile[28] = new Tile();
                 tile[28].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_31.png"));
 
+                tile[29] = new Tile();
+                tile[29].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
+
 
                 tile[30] = new Tile();
                 tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));

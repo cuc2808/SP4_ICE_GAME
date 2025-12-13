@@ -16,6 +16,12 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    //BATTLE-SEQUENCE STUFF
+    public GameState gameState = GameState.PLAY;
+    public BattleManager battleManager;
+    boolean battleTriggered = false;
+
+
     //SCREEN SETTINGS - includes resolution, tile size and so on:
     //                  ===Attributes===
     final int originalTileSize = 32;        //We're making a 2D game and deciding on the size for each Tile: 32x32.
@@ -42,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Cutscene variables
 
     boolean isFading = false;
-    float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
+   public float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
     float fadeSpeed = 0.02f; // Adjust for speed
     boolean fadeOut = true;  // true = fading to black, false = fading in
     Runnable fadeCallback;   // What to do when fade finishes
@@ -67,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //      ===== Constructor =====
     public GamePanel() {
-
+        battleManager = new BattleManager(this);
         cutsceneManager = new CutsceneManager(this);
 
 
@@ -94,7 +100,19 @@ public class GamePanel extends JPanel implements Runnable {
         //soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
         soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
     }
+    public int getPlayerTile() {
 
+        int centerX = player.worldX + player.solidArea.x + player.solidArea.width / 2;
+        int centerY = player.worldY + player.solidArea.y + player.solidArea.height / 2;
+
+        int col = Math.floorDiv(centerX, tileSize);
+        int row = Math.floorDiv(centerY, tileSize);
+
+        col = Math.max(0, Math.min(col, maxWorldCol - 1));
+        row = Math.max(0, Math.min(row, maxWorldRow - 1));
+
+        return tileM.mapTileNum[row][col];
+    }
     @Override
     public void run() {         //Runnable adds this methode as it's implemented. And our Thread automatically calls this method when we start the gameThread.
 
@@ -135,32 +153,69 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void startFade(Runnable callback){
+        isFading = true;
+        fadeAlpha = 0f;
+        fadeCallback = callback;
+    }
 
     public void update() {
 
-        if (cutsceneManager.isActive()) {
-            cutsceneManager.update();
-            return; // Stop normal game update mens cutscene kører
+        if (gameState == GameState.BATTLE) {
+            battleManager.update();
+            return;
         }
 
-        // Almindelig update
+        if (gameState == GameState.CUTSCENE) {
+            cutsceneManager.update();
+            return;
+        }
+
+        // ===== PLAY STATE =====
         player.update();
 
-        //NPCs
-        for (int i = 0; i < npcArray.length; i++) {
-            if (npcArray[i] != null) {
-                npcArray[i].update();
+        //BATTLETRIGGER
+        int centerX = player.worldX + player.solidArea.x + player.solidArea.width / 2;
+        int centerY = player.worldY + player.solidArea.y + player.solidArea.height / 2;
+
+        int col = centerX / tileSize;
+        int row = centerY / tileSize;
+
+        int tileStandingOn = tileM.mapTileNum[row][col];
+
+        // BATTLETRIGGER ON TILE 22
+        if (tileStandingOn == 29 && !battleTriggered) {
+            battleTriggered = true;
+            startFade(() -> {
+                battleManager.startBattle();
+                gameState = GameState.BATTLE;
+            });
+        }
+    // BATTLETRIGGER RESET
+        if(tileStandingOn !=29){
+            battleTriggered = false;
+        }
+        if(isFading){
+            fadeAlpha += fadeSpeed;
+            if(fadeAlpha >= 1){
+                fadeAlpha = 1;
+                isFading = false;
+                if(fadeCallback != null){
+                    fadeCallback.run();
+                }
             }
+            return;
         }
 
         gui.update();
-
-    }
+}
 
 
     public void paintComponent(Graphics g) { //This is a method by Java in the JFrame package, it draws graphics.
         //We have to call the superClass, in this case JFrame.
+
         super.paintComponent(g);
+
 
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
@@ -179,7 +234,18 @@ public class GamePanel extends JPanel implements Runnable {
                 npcArray[i].draw(g2);
             }
         }
-
+        if(gameState == GameState.BATTLE){
+            battleManager.draw(g2);
+            g2.dispose();
+            return;
+        }
+        if(fadeAlpha > 0){
+            Graphics2D g2d = (Graphics2D) g2.create();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(0, 0, screenWidth, screenHeight);
+            g2d.dispose();
+        }
 
         //It works a lot like processing... (very nice, it takes me back a whole 2 months !!!)
         player.draw(g2);
