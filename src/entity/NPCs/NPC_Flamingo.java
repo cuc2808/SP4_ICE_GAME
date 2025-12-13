@@ -79,8 +79,8 @@ public class NPC_Flamingo extends NPC {
         }
     }
     public void loadNPCImage(){
-       left = io.readImage("/playerImages/Flamongo1.png");
-       right = io.readImage("/playerImages/Flamongo2.png");
+       left = io.readImage("/entity/NPCs/NPCImages/Flamingo/Flamongo1.png");
+       right = io.readImage("/entity/NPCs/NPCImages/Flamingo/Flamongo2.png");
     }
     public void draw(Graphics g2){
 
