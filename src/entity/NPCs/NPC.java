@@ -11,6 +11,8 @@ public class NPC extends Entity {
     GamePanel gp;
     FileIO io;
     GUI gui;
+    String npcIdleMessage = "Interact with E";
+    public boolean playerAroundNPC;
 
     public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;

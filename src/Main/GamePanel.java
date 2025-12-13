@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public FileIO io = new FileIO(this);
     public SoundSystem soundSystem = new SoundSystem(io);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
-    public GUI gui = new GUI(this);
+    public GUI gui = new GUI(this, io);
     public CollisionChecker colCheck = new CollisionChecker(this);
     public NPCManager npcManager = new NPCManager(this,io,gui);
     public ObjManager objManager = new ObjManager(this,io);
