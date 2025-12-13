@@ -27,11 +27,12 @@ public class NPC_Panda extends NPC{
         this.messageCounter = 0;
 
         loadNPCImage();
+        setDefaultValues();
 
     }
     public void setDefaultValues(){
-        worldX = gp.tileSize*4;
-        worldY = gp.tileSize*3;
+        worldX = gp.tileSize*15;
+        worldY = gp.tileSize*18;
         direction = "right";
         movementSpeed = 2;
 
@@ -78,21 +79,21 @@ public class NPC_Panda extends NPC{
     }
     public void loadNPCImage(){
         //loading Front
-        front_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front.png");
-        front_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front_Lfoot.png");
-        front_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_front_Rfoot.png");
+        front_idle = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_front.png");
+        front_left = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_front_Lfoot.png");
+        front_right = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_front_Rfoot.png");
         //loading look away
-        away_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away.png");
-        away_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away_Lfoot.png");
-        away_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_away_Rfoot.png");
+        away_idle = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_away.png");
+        away_left = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_away_Lfoot.png");
+        away_right = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_away_Rfoot.png");
         //loading left
-        left_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left.png");
-        left_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left_Lfoot.png");
-        left_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_left_Rfoot.png");
+        left_idle = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_left.png");
+        left_left = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_left_Lfoot.png");
+        left_right = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_left_Rfoot.png");
         //loading right
-        right_idle = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right.png");
-        right_left = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right_Lfoot.png");
-        right_right = io.readImage("entity/NPCs/NPCImages/Panda/Panda_right_Rfoot.png");
+        right_idle = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_right.png");
+        right_left = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_right_Lfoot.png");
+        right_right = io.readImage("/entity/NPCs/NPCImages/Panda/Panda_right_Rfoot.png");
     }
     public void draw(Graphics g2){
 
@@ -104,10 +105,10 @@ public class NPC_Panda extends NPC{
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             if (direction.equals("right")) {
-                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
             if (direction.equals("left")) {
-                g2.drawImage(left_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(right_idle, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
         }
 
