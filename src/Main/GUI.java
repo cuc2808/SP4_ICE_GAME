@@ -25,7 +25,7 @@ public class GUI {
         this.io = io;
         fontA40 = new Font("Arial", Font.BOLD,32);
 
-        loadImage();
+        loadTextBox();
     }
     public void draw(Graphics2D g2) {
         g2.setFont(fontA40);
@@ -67,7 +67,7 @@ public class GUI {
     public void setNPC(NPC_Flamingo npc){
         this.npc = npc;
     }
-    public void loadImage(){
+    public void loadTextBox(){
         textBox = io.readImage("/playerImages/TextBox2.png");
     }
     public void drawTextBox(Graphics2D g2, String message){

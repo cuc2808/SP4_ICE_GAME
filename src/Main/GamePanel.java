@@ -172,6 +172,13 @@ public class GamePanel extends JPanel implements Runnable {
         // ===== PLAY STATE =====
         player.update();
 
+        //NPC
+        for (int i = 0; i < npcArray.length; i++) {
+            if (npcArray[i] != null) {
+                npcArray[i].update();
+            }
+        }
+
         //BATTLETRIGGER
         int centerX = player.worldX + player.solidArea.x + player.solidArea.width / 2;
         int centerY = player.worldY + player.solidArea.y + player.solidArea.height / 2;
