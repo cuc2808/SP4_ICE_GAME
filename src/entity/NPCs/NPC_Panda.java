@@ -51,16 +51,7 @@ public class NPC_Panda extends NPC{
             actionCounter = 0;
         }
         //check player er 2 tiles inden for player
-        int aroundNPCPositiveX = this.worldX + 2*gp.tileSize;
-        int aroundNPCNegativeX = this.worldX - 2*gp.tileSize;
-        int aroundNPCPositiveY = this.worldY + 2*gp.tileSize;
-        int aroundNPCNegativeY = this.worldY - 2*gp.tileSize;
-
-        //match med player
-        if (gp.player.worldX < aroundNPCPositiveX &&
-                gp.player.worldX > aroundNPCNegativeX &&
-                gp.player.worldY < aroundNPCPositiveY &&
-                gp.player.worldY > aroundNPCNegativeY) {
+        if (checkPlayerAroundNpc()){
             // check om M key er pressed
             if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
                 // display msg på skærm

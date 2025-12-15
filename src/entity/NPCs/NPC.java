@@ -25,7 +25,10 @@ public class NPC extends Entity {
         this.gp = gp;
         this.io = io;
         this.gui = gui;
+
+        dspIdleMsg();
     }
+    public void setDefaultValues(){}
     public void update(){}
     public void draw(Graphics g2){}
     public boolean isNpcOnScreen(){
@@ -56,6 +59,11 @@ public class NPC extends Entity {
         allMessages = new ArrayList<>();
         allMessages = io.getMessagesNPC(location);
     }
+    public void dspIdleMsg(){
+        if (isNpcOnScreen()) {
+            gui.getMessage(this, npcIdleMessage);
+        }
+    }
     public void dspNPCMsg() {
         //set current message
         currentMessage = allMessages.get(messageCounter);
@@ -69,8 +77,23 @@ public class NPC extends Entity {
             messageCounter = 0;
         }
     }
+    public boolean checkPlayerAroundNpc(){
+        int aroundNPCPositiveX = this.worldX + 2*gp.tileSize;
+        int aroundNPCNegativeX = this.worldX - 2*gp.tileSize;
+        int aroundNPCPositiveY = this.worldY + 2*gp.tileSize;
+        int aroundNPCNegativeY = this.worldY - 2*gp.tileSize;
 
+        //match med player
+        if (gp.player.worldX < aroundNPCPositiveX &&
+                gp.player.worldX > aroundNPCNegativeX &&
+                gp.player.worldY < aroundNPCPositiveY &&
+                gp.player.worldY > aroundNPCNegativeY) {
+            return true;
+        }
+        return false;
+    }
     public String getNpcIdleMessage() {
         return npcIdleMessage;
     }
+
 }

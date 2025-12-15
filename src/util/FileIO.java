@@ -108,7 +108,7 @@ public class FileIO {
                 String line = scan.nextLine();
                 String[] array = line.split(";");
                 for (int i = 0; i < array.length; i++){
-                    arrayList.add(line);
+                    arrayList.add(array[i]);
                 }
             }
         } catch (Exception e) {
