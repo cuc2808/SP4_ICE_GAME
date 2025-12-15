@@ -10,7 +10,9 @@ public class OBJ_Dust extends superObject {
         this.name = "dust";
         loadImage(this.name);
 
+        canPickUp = true;
         collision = true;
+        cleanable = true;
 
     }
 }

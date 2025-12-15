@@ -105,30 +105,98 @@ public class CollisionChecker {
                 case "up":
                     entity.solidArea.y -= entity.movementSpeed;
                     if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                        System.out.println("up collision!");
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
                     }
+                    break;
+                case "upLeft":
+                    entity.solidArea.y -= entity.movementSpeed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
+                    }
+                case "upRight":
+                    entity.solidArea.y -= entity.movementSpeed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
                 case "down":
                     entity.solidArea.y -= entity.movementSpeed;
                     if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                        System.out.println("down collision!");
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
                     }
+                    break;
+                case "downLeft":
+                    entity.solidArea.y -= entity.movementSpeed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
+                case "downRight":
+                    entity.solidArea.y -= entity.movementSpeed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
+                    }
+                    break;
                 case "left":
                     entity.solidArea.y -= entity.movementSpeed;
                     if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                        System.out.println("left collision!");
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
                     }
+                    break;
                 case "right":
                     entity.solidArea.y -= entity.movementSpeed;
                     if(entity.solidArea.intersects(gp.objArray[i].solidArea)) {
-                        System.out.println("right collision!");
+                        if(gp.objArray[i].collision == true){
+                            entity.collisionOn = true;
+                        }
+                        if(player == true) {
+                            index = i;
+                        }
                     }
+                    break;
             }
             entity.solidArea.x = entity.solidAreaDefaultX;
             entity.solidArea.y = entity.solidAreaDefaultY;
+            gp.objArray[i].solidArea.x = gp.objArray[i].solidAreaDefaultX;
+            gp.objArray[i].solidArea.y = gp.objArray[i].solidAreaDefaultY;
         }
     }
 
     return index;
     }
-
 }

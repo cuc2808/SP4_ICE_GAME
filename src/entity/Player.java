@@ -1,9 +1,14 @@
 package entity;
 
+import Main.GUI;
 import Main.GamePanel;
 import Main.KeyHandler;
 import Tile.Tile;
 import Tile.TileManager;
+import object.OBJ_Clean;
+import object.OBJ_Dust;
+import object.ObjManager;
+import object.superObject;
 import util.FileIO;
 import util.SoundSystem;
 
@@ -19,9 +24,14 @@ public class Player extends Entity {
     FileIO util = new FileIO(gp);
     public KeyHandler keyH;
     SoundSystem sound;
+    GUI gui = new GUI(gp,util);
 
     public final int screenX;
     public final int screenY;
+
+    public static int pickUps = 0;
+
+    public static int objectsCleaned = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -167,6 +177,12 @@ public class Player extends Entity {
         collisionOn = false;
         gp.colCheck.checkTile(this);
 
+        //Check object collision
+        int objIndex = gp.colCheck.checkObject(this, true);
+        cleanUpObjects(objIndex);
+        pickUpObjects(objIndex);
+
+
         // === CUTSCENE TILE TRIGGER (FINAL PATCH) ===
         Entity p = gp.player;
 
@@ -274,8 +290,36 @@ public class Player extends Entity {
         return playerImage;
     }
 
+    public void pickUpObjects(int i){
+
+        if(i != 999 && gp.objArray[i].canPickUp){
+            gp.objArray[i]= null;
+        }
+    }
+
+    public void cleanUpObjects(int i){
+
+        if(i != 999 && gp.objArray[i].cleanable){
+            int objX = 0;
+            int objY = 0;
+            int currentObject = 0;
+            currentObject = i;
+            objX = gp.objArray[i].worldX;
+            objY = gp.objArray[i].worldY;
+
+            gp.objArray[i] = null;
+
+            gp.objArray[currentObject] = new OBJ_Clean(gp,util);
+            gp.objArray[currentObject].worldX = objX;
+            gp.objArray[currentObject].worldY = objY;
+
+            objectsCleaned++;
+        }
+    }
+
     public void draw(Graphics g2) {
 
+        //gui.drawCounter((Graphics2D) g2);
 
         g2.drawImage(drawPlayerDirection(), screenX, screenY, gp.tileSize, gp.tileSize, null);
 

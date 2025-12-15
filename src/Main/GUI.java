@@ -2,10 +2,13 @@ package Main;
 
 import entity.Entity;
 import entity.NPCs.NPC_Flamingo;
+import entity.Player;
 import util.FileIO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import static entity.Player.objectsCleaned;
 
 public class GUI {
 
@@ -19,6 +22,7 @@ public class GUI {
     Entity entity;
     NPC_Flamingo npc;
     BufferedImage textBox;
+    Player p;
 
     public GUI(GamePanel gp, FileIO io){
         this.gp = gp;
@@ -45,6 +49,9 @@ public class GUI {
             g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
 
         }
+
+        // PLAYER INTERFACE GUI
+        drawCounter(g2);
     }
     public void update(){
         if (hasMessage) {
@@ -95,5 +102,13 @@ public class GUI {
 
         //tegner String på skærm
         g2.drawString(string,x,y);
+    }
+
+
+    // PLAYER GUI
+
+    public void drawCounter(Graphics2D g2){
+        g2.drawString(toString().valueOf(objectsCleaned), 70, 70);
+
     }
 }

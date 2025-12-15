@@ -17,14 +17,24 @@ public class NPCManager {
         this.gui = gui;
 
     }
-    public void setNPC (){
+    public void setNPC (String mapName){
 
-        //Flamingo
-        gp.npcArray[0] = new NPC_Flamingo(gp,io,gui);
 
-        //Panda
-        gp.npcArray[1] = new NPC_Panda(gp,io,gui);
+        if(mapName == "util/maps/levelOne.txt") {
+            //Flamingo
+            gp.npcArray[0] = new NPC_Flamingo(gp, io, gui);
 
+            //Panda
+            gp.npcArray[1] = new NPC_Panda(gp, io, gui);
+
+        }
+    }
+
+    public void resetAllNPCs(){
+        for(int i = 0; i < gp.npcArray.length; i++){
+            gp.npcArray[i] = null;
+        }
     }
 }
+
 

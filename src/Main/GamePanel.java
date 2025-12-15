@@ -3,11 +3,9 @@ package Main;
 import Tile.TileManager;
 import entity.NPCs.NPC;
 import entity.NPCs.NPCManager;
-import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
 import object.superObject;
 import util.FileIO;
-import util.SoundSystem;
 
 import entity.Player;
 
@@ -32,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
     public int maxScreenCollum = 9; //The amount of tiles * x
-    public int maxScreenRow = 9; //The amount of tiles * Y
+    public int maxScreenRow = 8; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
@@ -83,11 +81,18 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);        //Basically makes it so it's focused on keyInput.
     }
 
-    public void setupGame(){
+    public void startUpGame(){
+        tileM.changeMap("util/maps/levelOne.txt", "Resources/musicFiles/mainTheme.wav");
+    }
 
-        objManager.setObject();
+    public void setupLevel(String mapName){
+
+
+        objManager.resetAllObjects();
+        objManager.setObject(mapName);
         //objManager.setObject();
-        npcManager.setNPC();
+        npcManager.resetAllNPCs();
+        npcManager.setNPC(mapName);
 
     }
 
@@ -158,6 +163,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+
+
+        //objManager.updateObjects();
 
         if (gameState == GameState.BATTLE) {
             battleManager.update();

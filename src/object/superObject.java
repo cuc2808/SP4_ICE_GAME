@@ -14,6 +14,8 @@ public class superObject {
 
     public String name = "dust";
     public boolean collision = false;
+    public boolean canPickUp = false;
+    public boolean cleanable = false;
     public int worldX,worldY;
     public Rectangle solidArea = new Rectangle(0,0,64,64);
     public int solidAreaDefaultX = 0;
@@ -42,6 +44,8 @@ public class superObject {
 
         g2.drawImage(image, screenX, screenY + 28, gp.tileSize, gp.tileSize, null);
     }
+
+
 
 
 }

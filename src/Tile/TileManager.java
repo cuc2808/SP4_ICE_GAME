@@ -176,6 +176,7 @@
             this.mapName = mapName;
             this.mapMusic = mapMusic;
             loadMap(mapName);
+            gp.setupLevel(mapName);
 
     }
 

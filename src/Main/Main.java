@@ -18,9 +18,10 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.setupGame();
+        gamePanel.startUpGame();
+
+        gamePanel.startGameThread();
 
         // Start game loop
-        gamePanel.startGameThread();
     }
 }
