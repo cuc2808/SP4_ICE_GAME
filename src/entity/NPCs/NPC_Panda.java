@@ -2,6 +2,7 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
+import Main.GameState;
 import util.FileIO;
 
 import java.awt.*;
@@ -21,6 +22,8 @@ public class NPC_Panda extends NPC{
         loadNPCImage();
         loadMessages("Resources/Files/NPCs/PandaMessages.csv");
         setDefaultValues();
+        unlockMainEvent();
+        unlockSideEvent();
 
     }
     public void setDefaultValues(){
@@ -31,6 +34,16 @@ public class NPC_Panda extends NPC{
 
     }
     public void update(){
+        dspIdleMsg();
+        if (checkPlayerAroundNpc()){
+            if(gp.player.keyH.ePressed) {
+                if (gp.gameState != GameState.INTERACT) {
+                    gp.gameState = GameState.INTERACT;
+                    dspNPCMsg();
+                    gp.player.keyH.ePressed = false;
+                }
+            }
+        }
         actionCounter++;
         collisionOn = false;
         gp.colCheck.checkTile(this);
@@ -50,16 +63,8 @@ public class NPC_Panda extends NPC{
             }
             actionCounter = 0;
         }
-        //check player er 2 tiles inden for player
-        if (checkPlayerAroundNpc()){
-            // check om M key er pressed
-            if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
-                // display msg på skærm
-                dspNPCMsg();
-                // ikke spamable eller holdt inde
-                gp.player.keyH.ePressed = false;
-            }
-        }
+
+
         //spriteCounter også brugt i player
         if ((actionCounter%2)==0) {
             spriteCounter++;

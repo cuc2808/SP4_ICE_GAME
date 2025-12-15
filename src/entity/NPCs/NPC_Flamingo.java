@@ -2,6 +2,7 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
+import Main.GameState;
 import util.FileIO;
 
 import java.awt.*;
@@ -23,13 +24,23 @@ public class NPC_Flamingo extends NPC {
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize*4;
-        worldY = gp.tileSize*3;
+        worldX = gp.tileSize*15;
+        worldY = gp.tileSize*21;
         direction = "right";
         movementSpeed = 2;
 
     }
     public void update(){
+        dspIdleMsg();
+        if (checkPlayerAroundNpc()){
+            if(gp.player.keyH.ePressed) {
+                if (gp.gameState != GameState.INTERACT) {
+                    gp.gameState = GameState.INTERACT;
+                    dspNPCMsg();
+                    gp.player.keyH.ePressed = false;
+                }
+            }
+        }
         actionCounter++;
         collisionOn = false;
         gp.colCheck.checkTile(this);
@@ -48,20 +59,6 @@ public class NPC_Flamingo extends NPC {
                 direction = "right";
             }
             actionCounter = 0;
-        }
-        //check player er 2 tiles inden for player
-        if (checkPlayerAroundNpc()){
-            playerAroundNPC = true;
-            gui.setNPC(this);
-            // check om M key er pressed
-            if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
-                // display msg på skærm
-                dspNPCMsg();
-                // ikke spamable eller holdt inde
-                gp.player.keyH.ePressed = false;
-            }
-        } else  {
-            playerAroundNPC = false;
         }
     }
     public void loadNPCImage(){

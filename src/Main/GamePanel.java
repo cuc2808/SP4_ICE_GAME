@@ -3,9 +3,11 @@ package Main;
 import Tile.TileManager;
 import entity.NPCs.NPC;
 import entity.NPCs.NPCManager;
+import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
 import object.superObject;
 import util.FileIO;
+import util.SoundSystem;
 
 import entity.Player;
 
@@ -30,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //We now have a size for our building blocks, now we decide on how many building blocks our game can contain.
     public int maxScreenCollum = 9; //The amount of tiles * x
-    public int maxScreenRow = 8; //The amount of tiles * Y
+    public int maxScreenRow = 9; //The amount of tiles * Y
     public final int screenWidth = tileSize * maxScreenCollum; //Screen width. 1536 Pixels.
     public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
@@ -167,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         //objManager.updateObjects();
 
+
         if (gameState == GameState.BATTLE) {
             battleManager.update();
             return;
@@ -176,6 +179,22 @@ public class GamePanel extends JPanel implements Runnable {
             cutsceneManager.update();
             return;
         }
+        if (gameState == GameState.INTERACT) {
+            if (this.player.keyH.downPressed ||
+                    this.player.keyH.upPressed ||
+                    this.player.keyH.leftPressed ||
+                    this.player.keyH.rightPressed){
+                this.gameState = GameState.PLAY;
+                for (int i = 0; i < npcArray.length; i++){
+                    if (npcArray[i] != null) {
+                        gui.currentMessage = npcArray[i].npcIdleMessage;
+                    }
+                }
+                this.player.keyH.ePressed = false;
+            }
+            return;
+        }
+
 
         // ===== PLAY STATE =====
         player.update();
