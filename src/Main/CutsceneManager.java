@@ -23,6 +23,7 @@ public class CutsceneManager {
     }
 
     public void startCutscene(boolean needChange) {
+        gp.gameState = GameState.CUTSCENE;
         change = needChange;
         cutsceneActive = true;
         isFading = true;
@@ -82,6 +83,8 @@ public class CutsceneManager {
                     isFading = false;
                     gp.player.movementSpeed = gp.player.walkSpeed;
                     cutsceneActive = false;
+
+                    gp.gameState = GameState.PLAY;
                 }
                 break;
         }
