@@ -52,7 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TileManager tileM = new TileManager(this);
     public FileIO io = new FileIO(this);
-    public SoundSystem soundSystem = new SoundSystem(io);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
     public GUI gui = new GUI(this);
     public CollisionChecker colCheck = new CollisionChecker(this);
@@ -92,7 +91,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();  //This will call the 'run' method.
 
         //soundSystem.musicBreak("Resources/soundFiles/dry-fart.wav");
-        soundSystem.playTrack("Resources/musicFiles/mainTheme.wav");
     }
 
     @Override

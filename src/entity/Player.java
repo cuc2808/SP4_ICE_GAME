@@ -97,7 +97,7 @@ public class Player extends Entity {
         }
 
         if (keyH.ePressed == true) {
-            //sound.playTrack("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
+            //sound.play("Resources/soundFiles/dry-fart.wav");       //Idea for when interacting needs a sound.
             //keyH.ePressed = false;
         }
 

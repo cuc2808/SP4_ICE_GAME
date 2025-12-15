@@ -2,6 +2,8 @@
 
     import Main.GamePanel;
     import Main.KeyHandler;
+    import util.FileIO;
+    import util.SoundSystem;
 
     import javax.imageio.ImageIO;
     import java.awt.*;
@@ -13,12 +15,14 @@
     public class TileManager {
 
         GamePanel gp;
+        FileIO util = new FileIO(gp);
         KeyHandler keyH;
         public Tile[] tile;
         public int mapTileNum[][];
 
 
     public String mapName = "/util/maps/levelOne.txt";
+    public String mapMusic = "Resources/musicFiles/mainTheme.wav";
 
         public TileManager(GamePanel gp){
             this.gp=gp;
@@ -160,11 +164,15 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
+        SoundSystem.play(mapMusic);
     }
 
-    public void changeMap(String mapName) {
-        this.mapName = mapName;
-        loadMap(mapName);
+    public void changeMap(String mapName, String mapMusic) {
+
+            SoundSystem.stop();
+            this.mapName = mapName;
+            this.mapMusic = mapMusic;
+            loadMap(mapName);
 
     }
 

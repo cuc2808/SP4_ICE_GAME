@@ -12,15 +12,14 @@ public class FileIO {
     public FileIO(GamePanel gp) {
         this.gp = gp;
     }
-
-    public byte[] readWAVFile(String location) {
+    public void readWAVFile(String location) {
         byte[] buffer = new byte[4096];
+
         try {
             File file = new File(location);
             AudioInputStream originalStream = AudioSystem.getAudioInputStream(file);
             AudioFormat originalFormat = originalStream.getFormat();
 
-            // Konverter til 16-bit PCM
             AudioFormat targetFormat = new AudioFormat(
                     AudioFormat.Encoding.PCM_SIGNED,
                     originalFormat.getSampleRate(),
@@ -31,17 +30,29 @@ public class FileIO {
                     false
             );
 
-            AudioInputStream convertedStream = AudioSystem.getAudioInputStream(targetFormat, originalStream);
+            AudioInputStream convertedStream =
+                    AudioSystem.getAudioInputStream(targetFormat, originalStream);
 
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, targetFormat);
+            SourceDataLine line = (SourceDataLine) AudioSystem.getLine(
+                    new DataLine.Info(SourceDataLine.class, targetFormat)
+            );
 
-            SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
             line.open(targetFormat);
             line.start();
 
-            buffer = new byte[4096];
             int bytesRead;
             while ((bytesRead = convertedStream.read(buffer)) != -1) {
+
+                // VIGTIGT: STOP HER
+                if (Thread.currentThread().isInterrupted()) {
+                    line.stop();
+                    line.flush();
+                    line.close();
+                    convertedStream.close();
+                    originalStream.close();
+                    return;
+                }
+
                 line.write(buffer, 0, bytesRead);
             }
 
@@ -51,12 +62,12 @@ public class FileIO {
             convertedStream.close();
             originalStream.close();
 
-
         } catch (Exception e) {
-            e.printStackTrace();
+            // Thread blev afbrudt
         }
-        return buffer;
     }
+
+
     public BufferedImage readImage(String location) {
         BufferedImage image = null;
         try {
