@@ -60,13 +60,17 @@ public class NPC_Flamingo extends NPC {
             gp.player.worldX > aroundNPCNegativeX &&
             gp.player.worldY < aroundNPCPositiveY &&
             gp.player.worldY > aroundNPCNegativeY) {
+            playerAroundNPC = true;
+            gui.setNPC(this);
             // check om M key er pressed
-            if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
-                // display msg på skærm
-                dspNPCMsg();
-                // ikke spamable eller holdt inde
-                gp.player.keyH.ePressed = false;
-            }
+//            if (gp.player.keyH.ePressed == true && gp.gui.displayingMessage == false) {
+//                // display msg på skærm
+//                dspNPCMsg();
+//                // ikke spamable eller holdt inde
+//                gp.player.keyH.ePressed = false;
+//            }
+        } else  {
+            playerAroundNPC = false;
         }
     }
     public void loadNPCImage(){

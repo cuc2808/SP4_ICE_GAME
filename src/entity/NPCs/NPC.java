@@ -18,6 +18,8 @@ public class NPC extends Entity {
     protected ArrayList<String> allMessages;
     protected String currentMessage;
     protected int messageCounter;
+    String npcIdleMessage = "Interact with E!";
+    public boolean playerAroundNPC;
 
     public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
@@ -66,5 +68,9 @@ public class NPC extends Entity {
         if (messageCounter > allMessages.size()){
             messageCounter = 0;
         }
+    }
+
+    public String getNpcIdleMessage() {
+        return npcIdleMessage;
     }
 }
