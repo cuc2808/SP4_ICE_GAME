@@ -6,6 +6,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileIO {
     GamePanel gp;
@@ -95,6 +97,24 @@ public class FileIO {
 
           }
         return mapTileNum;
+    }
+    public ArrayList<String> getMessagesNPC(String location){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            File file = new File(location);
+            Scanner scan = new Scanner(file);
+            scan.nextLine(); // skips header
+            while (scan.hasNextLine()){
+                String line = scan.nextLine();
+                String[] array = line.split(";");
+                for (int i = 0; i < array.length; i++){
+                    arrayList.add(line);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return arrayList;
     }
 
 
