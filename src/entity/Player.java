@@ -19,7 +19,6 @@ public class Player extends Entity {
     FileIO util = new FileIO(gp);
     public KeyHandler keyH;
     SoundSystem sound;
-
     public final int screenX;
     public final int screenY;
 

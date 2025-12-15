@@ -159,6 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+
         if (gameState == GameState.BATTLE) {
             battleManager.update();
             return;
@@ -168,6 +169,22 @@ public class GamePanel extends JPanel implements Runnable {
             cutsceneManager.update();
             return;
         }
+        if (gameState == GameState.INTERACT) {
+            if (this.player.keyH.downPressed ||
+                    this.player.keyH.upPressed ||
+                    this.player.keyH.leftPressed ||
+                    this.player.keyH.rightPressed){
+                this.gameState = GameState.PLAY;
+                for (int i = 0; i < npcArray.length; i++){
+                    if (npcArray[i] != null) {
+                        gui.currentMessage = npcArray[i].npcIdleMessage;
+                    }
+                }
+                this.player.keyH.ePressed = false;
+            }
+            return;
+        }
+
 
         // ===== PLAY STATE =====
         player.update();

@@ -1,7 +1,6 @@
 package Main;
 
-import entity.Entity;
-import entity.NPCs.NPC_Flamingo;
+import entity.NPCs.NPC;
 import util.FileIO;
 
 import java.awt.*;
@@ -14,10 +13,8 @@ public class GUI {
     Font fontA40;
     boolean hasMessage = false;
     String currentMessage;
-    int actionCounter = 0;
     public boolean displayingMessage;
-    Entity entity;
-    NPC_Flamingo npc;
+    NPC npc;
     BufferedImage textBox;
 
     public GUI(GamePanel gp, FileIO io){
@@ -31,60 +28,60 @@ public class GUI {
         g2.setFont(fontA40);
         g2.setColor(Color.white);
 
-        if (npc != null && npc.playerAroundNPC) {
-            String npcIdleMessage = npc.getNpcIdleMessage();
-            drawTextBox(g2,npcIdleMessage);
+        if (gp.gameState != GameState.INTERACT && hasMessage && currentMessage != null) {
+            drawMsgOnNpc(g2);
         }
 
-
-
-        if (hasMessage && currentMessage != null) {
-            int screenX = this.entity.worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = this.entity.worldY - gp.player.worldY + gp.player.screenY;
-            displayingMessage = true;
-            g2.drawString(currentMessage, screenX, screenY + (gp.tileSize * 2) - (gp.tileSize / 4));
-
+        if (gp.gameState == GameState.INTERACT && currentMessage != null) {
+            if (gp.player.keyH.ePressed) {
+                npc.dspNPCMsg();
+                gp.player.keyH.ePressed = false;
+            }
+            drawTextBoxWithMessage(g2, currentMessage);
+        }
+        if (gp.gameState != GameState.INTERACT) {
+            resetMessageAndNPC();
         }
     }
     public void update(){
-        if (hasMessage) {
-            actionCounter++;
-            if (actionCounter == 120){
-                actionCounter = 0;
-                displayingMessage = false;
-                hasMessage = false;
-            }
-        }
     }
-    public void getMessage(Entity entity,String message){
+    public void getMessage(NPC npc,String message){
         //besked modtaget fra entity
-        this.entity = entity;
+        this.npc = npc;
         //modtaget en besked
         this.hasMessage = true;
         //besked sat til currentMessage
         this.currentMessage = message;
     }
-    public void setNPC(NPC_Flamingo npc){
-        this.npc = npc;
-    }
     public void loadTextBox(){
         textBox = io.readImage("/playerImages/TextBox2.png");
     }
-    public void drawTextBox(Graphics2D g2, String message){
+    public void drawTextBoxWithMessage(Graphics2D g2, String message){
         String string = message;
 
         //Billedet lavet til at passe til skærm, så kan sætte det i x = 0, y = 0
         g2.drawImage(textBox,0,0,null);
 
-        //instansiere x til midten af skærmen, y til midten af textBox
+        //instansiere x til midten af skærmen
         int x = gp.screenWidth/2;
+        //sætter postionen optimalt i forhold til Message længde
+        x = calculatatorXForMessage(x,message);
+        //y til midten af textBox
         int y = gp.screenHeight/2+gp.tileSize*3;
+
+
+
+        //tegner String på skærm
+        g2.drawString(string,x,y);
+    }
+    public int calculatatorXForMessage(int x,String message){
+        //instansiere x til midten af skærmen
 
         //convert font size til pixels
         int fontSize = fontA40.getSize()/2;
 
         //Halvdelen af Stringens længde ganget med størrelse for hvert bogstav
-        int halfOfStringLength = (string.length()/2)*fontSize;
+        int halfOfStringLength = (message.length()/2)*fontSize;
 
         //lægger en fontSize til x fordi den starter i 0
         x = x+fontSize;
@@ -92,8 +89,20 @@ public class GUI {
         //trækker halfdelen af antallet af bogstaver fra x, så det står i midten
         //lige gyldigt antallet af bogstaver
         x = x-halfOfStringLength;
+        return x;
+    }
+    public void drawMsgOnNpc(Graphics g2){
+        int screenX = this.npc.worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = this.npc.worldY - gp.player.worldY + gp.player.screenY;
+        displayingMessage = true;
 
-        //tegner String på skærm
-        g2.drawString(string,x,y);
+        //calculater i forhold til currentMessage Længde
+        screenX = calculatatorXForMessage(screenX, currentMessage);
+        g2.drawString(currentMessage, 50+screenX, screenY);
+    }
+    public void resetMessageAndNPC(){
+        this.npc = null;
+        this.hasMessage = false;
+        this.currentMessage = null;
     }
 }

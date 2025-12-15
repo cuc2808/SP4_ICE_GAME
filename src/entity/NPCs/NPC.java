@@ -2,6 +2,7 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
+import Main.GameState;
 import entity.Entity;
 import util.FileIO;
 
@@ -16,20 +17,18 @@ public class NPC extends Entity {
     protected boolean hasMainEvent;
     protected boolean hasSideEvent;
     protected ArrayList<String> allMessages;
-    protected String currentMessage;
-    protected int messageCounter;
-    String npcIdleMessage = "Interact with E!";
-    public boolean playerAroundNPC;
+    public String currentMessage;
+    public int messageCounter;
+    public String npcIdleMessage = "Interact with E!";
 
     public NPC(GamePanel gp, FileIO io, GUI gui) {
         this.gp = gp;
         this.io = io;
         this.gui = gui;
-
-        dspIdleMsg();
     }
     public void setDefaultValues(){}
-    public void update(){}
+    public void update(){
+    }
     public void draw(Graphics g2){}
     public boolean isNpcOnScreen(){
         screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -60,7 +59,7 @@ public class NPC extends Entity {
         allMessages = io.getMessagesNPC(location);
     }
     public void dspIdleMsg(){
-        if (isNpcOnScreen()) {
+        if (checkPlayerAroundNpc()) {
             gui.getMessage(this, npcIdleMessage);
         }
     }
@@ -73,7 +72,7 @@ public class NPC extends Entity {
         messageCounter++;
 
         //hvis messageCounter er længere end arraylisten start forfra
-        if (messageCounter > allMessages.size()){
+        if (messageCounter >= allMessages.size()){
             messageCounter = 0;
         }
     }
@@ -92,8 +91,4 @@ public class NPC extends Entity {
         }
         return false;
     }
-    public String getNpcIdleMessage() {
-        return npcIdleMessage;
-    }
-
 }
