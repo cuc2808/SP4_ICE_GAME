@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Cutscene variables
 
     boolean isFading = false;
-   public float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
+    public float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
     float fadeSpeed = 0.02f; // Adjust for speed
     boolean fadeOut = true;  // true = fading to black, false = fading in
     Runnable fadeCallback;   // What to do when fade finishes
@@ -219,7 +219,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileM.draw(g2);
 
-
+        // OBJECTS
         for(int i = 0;  i < objArray.length; i++){
             if(objArray[i] != null){
                 objArray[i].draw(g2,this);
