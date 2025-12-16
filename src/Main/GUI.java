@@ -139,7 +139,11 @@ public class GUI {
         if(p.showObjectsCleaned) {
             g2.setFont(ArcadeFont);
 
-            g2.drawString(toString().valueOf(objectsCleaned), 70+ gp.tileSize, 50 + gp.tileSize/2 + 20);
+            if(objectsCleaned < 9) {
+                g2.drawString(toString().valueOf(objectsCleaned + "/9"), 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20);
+            } else if (objectsCleaned == 9){
+                g2.drawString(toString().valueOf("COMPLETE"), 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20);
+            }
 
             try {
                 cleanUpIcon = io.readImage("/GUI_Images/trashbinIcon.png");

@@ -3,6 +3,7 @@ package entity;
 import Main.*;
 import Tile.Tile;
 import Tile.TileManager;
+import battle.BattleManager;
 import object.OBJ_Clean;
 import object.OBJ_Dust;
 import object.ObjManager;
@@ -348,7 +349,7 @@ public class Player extends Entity {
 
                 // Start the battle
                 battleManager.defeatedEnemyIndex = i;
-                battleManager.startBattle();
+                battleManager.startBattle(1);
         }
     }
 

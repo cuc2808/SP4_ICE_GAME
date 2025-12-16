@@ -24,8 +24,8 @@ public class NPC_Flamingo extends NPC {
     }
 
     public void setDefaultValues(){
-        worldX = gp.tileSize*5;
-        worldY = gp.tileSize*5;
+        worldX = gp.tileSize*30;
+        worldY = gp.tileSize*10;
         direction = "right";
         movementSpeed = 2;
 
