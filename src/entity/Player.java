@@ -227,7 +227,7 @@ public class Player extends Entity {
             if(objectsCleaned == 9 && enemyCounter == enemyCounterNeeded) {
                 gp.cutsceneManager.startCutscene(true);
                 switch(enemyCounterNeeded){
-                    case 0: enemyCounterNeeded = 1;
+                    case 0: enemyCounterNeeded = 2;
                     break;
                     case 2: enemyCounterNeeded = 4;
                     break;

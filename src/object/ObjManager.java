@@ -58,6 +58,10 @@ public class ObjManager {
             gp.objArray[1].worldX = 3 * gp.tileSize;
             gp.objArray[1].worldY = 32 * gp.tileSize;
 
+            gp.objArray[2] = new OBJ_ENEMY(gp,io);
+            gp.objArray[2].worldX = 3 * gp.tileSize;
+            gp.objArray[2].worldY = 32 * gp.tileSize;
+
         }
 
 

@@ -23,6 +23,8 @@ public class GUI {
     public boolean displayingMessage;
     NPC npc;
     Player p;
+    public static int dustNeedRemoved = 9;
+    public static int enemyNeedRemoved = 1;
 
     //Resources for the GUI
     public Font fontA40;
@@ -167,8 +169,12 @@ public class GUI {
 
         g2.setFont(ArcadeFont);
 
-        g2.drawString(toString().valueOf(enemyCounter), 70+ gp.tileSize, 50 + gp.tileSize/2 + 20 + 150);
+        if(enemyCounter != enemyNeedRemoved) {
+            g2.drawString(toString().valueOf(enemyCounter) + "/" + enemyNeedRemoved, 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20 + 150);
 
+        } else if (enemyCounter == enemyNeedRemoved){
+            g2.drawString(toString().valueOf("COMPLETE"), 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20 + 150);
+        }
     }
 
     public class FontLoader {

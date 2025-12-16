@@ -4,6 +4,8 @@ import entity.Player;
 import java.awt.*;
 import java.util.Objects;
 
+import static entity.Player.showVirusRemoved;
+
 public class CutsceneManager {
     Color cutsceneTextColor = Color.WHITE;
     String cutsceneText ="";
@@ -80,6 +82,7 @@ public class CutsceneManager {
                         if (Objects.equals(gp.tileM.mapName, "/tile/maps/levelOne.txt")) {
                             gp.tileM.changeMap("/tile/maps/BlueMap", "Resources/musicFiles/Untitled - 13_12_2025, 13.30.wav");
                             change = false;
+                            showVirusRemoved = true;
                         } else if (gp.tileM.mapName.equals("/tile/maps/BlueMap")) {
                             gp.tileM.changeMap("/tile/maps/levelThree.txt", "Resources/musicFiles/lavaWorld_1.wav");
                             change = false;
