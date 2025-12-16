@@ -1,8 +1,6 @@
 package entity;
 
-import Main.GUI;
-import Main.GamePanel;
-import Main.KeyHandler;
+import Main.*;
 import Tile.Tile;
 import Tile.TileManager;
 import object.OBJ_Clean;
@@ -25,6 +23,7 @@ public class Player extends Entity {
     public KeyHandler keyH;
     SoundSystem sound;
     GUI gui = new GUI(gp,util);
+    public BattleManager battleManager;
 
     public final int screenX;
     public final int screenY;
@@ -39,6 +38,9 @@ public class Player extends Entity {
     public static int enemyCounterNeeded = 0;
 
 
+    //Player enemy interaction
+    public static int enemiesSLainBeforeBattle = 0;
+
     //What player GUI needs to show?
     public static boolean showObjectsCleaned = true;
     public static boolean showVirusRemoved = false;
@@ -51,6 +53,9 @@ public class Player extends Entity {
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
         name = "player";
         id += 1;
+
+        //BattleManager:
+        battleManager = gp.battleManager;
 
         // Hitbox
         solidArea = new Rectangle();
@@ -68,8 +73,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 15;        //We create a starting value for the player's x coordinate.
-        worldY = gp.tileSize * 15;       //We create a starting value for the player's y coordinate.
+        worldX = gp.tileSize * 38;        //We create a starting value for the player's x coordinate. 23
+        worldY = gp.tileSize * 10;       //We create a starting value for the player's y coordinate. 29
 
 
         movementSpeed = 0;      //The player's movementSpeed. This will affect how fast the player changes position.
@@ -191,6 +196,7 @@ public class Player extends Entity {
         int objIndex = gp.colCheck.checkObject(this, true);
         cleanUpObjects(objIndex);
         pickUpObjects(objIndex);
+        enemyDefeated(objIndex);
 
 
         // === CUTSCENE TILE TRIGGER (FINAL PATCH) ===
@@ -216,13 +222,13 @@ public class Player extends Entity {
 //                        playerRow + "," + playerCol + ")  ID=" + tileStandingOn
 //        );
 
-        if (tileStandingOn == 30 && !gp.cutsceneManager.isActive()) {
-            if(objectsCleaned == 4 && enemyCounter == enemyCounterNeeded) {
+        if ((tileStandingOn == 30 && !gp.cutsceneManager.isActive()) || (tileStandingOn == 131 && !gp.cutsceneManager.isActive())) {
+            if(objectsCleaned == 9 && enemyCounter == enemyCounterNeeded) {
                 gp.cutsceneManager.startCutscene(true);
                 switch(enemyCounterNeeded){
                     case 0: enemyCounterNeeded = 1;
                     break;
-                    case 1: enemyCounterNeeded = 4;
+                    case 2: enemyCounterNeeded = 4;
                     break;
                 }
             }
@@ -334,6 +340,18 @@ public class Player extends Entity {
             objectsCleaned++;
         }
     }
+
+    public void enemyDefeated(int i){
+        if(i != 999 && gp.objArray[i].evil && !gp.objArray[i].dead){
+                // Store which enemy we're fighting
+                enemiesSLainBeforeBattle = enemyCounter;
+
+                // Start the battle
+                battleManager.defeatedEnemyIndex = i;
+                battleManager.startBattle();
+        }
+    }
+
 
     public void draw(Graphics g2) {
 

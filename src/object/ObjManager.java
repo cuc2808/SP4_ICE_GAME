@@ -32,6 +32,32 @@ public class ObjManager {
         gp.objArray[3] = new OBJ_Dust(gp,io);
         gp.objArray[3].worldX = 19 * gp.tileSize;
         gp.objArray[3].worldY = 17 * gp.tileSize;
+
+            gp.objArray[4] = new OBJ_Dust(gp,io);
+            gp.objArray[4].worldX = 21 * gp.tileSize;
+            gp.objArray[4].worldY = 17 * gp.tileSize;
+
+            gp.objArray[5] = new OBJ_Dust(gp,io);
+            gp.objArray[5].worldX = 17 * gp.tileSize;
+            gp.objArray[5].worldY = 15 * gp.tileSize;
+
+            gp.objArray[6] = new OBJ_Dust(gp,io);
+            gp.objArray[6].worldX = 15 * gp.tileSize;
+            gp.objArray[6].worldY = 21 * gp.tileSize;
+
+            gp.objArray[7] = new OBJ_Dust(gp,io);
+            gp.objArray[7].worldX = 11 * gp.tileSize;
+            gp.objArray[7].worldY = 17 * gp.tileSize;
+
+            gp.objArray[8] = new OBJ_Dust(gp,io);
+            gp.objArray[8].worldX = 20 * gp.tileSize;
+            gp.objArray[8].worldY = 20 * gp.tileSize;
+            //2nd map
+        } else if(mapName == "/util/maps/BlueMap"){
+            gp.objArray[1] = new OBJ_ENEMY(gp,io);
+            gp.objArray[1].worldX = 3 * gp.tileSize;
+            gp.objArray[1].worldY = 32 * gp.tileSize;
+
         }
 
 

@@ -40,8 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; //Screen length. 1152 Pixels.
 
     //WORLD SETTINGS
-    public final int maxWorldCol = 30;
-    public final int maxWorldRow = 30;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHieght = tileSize * maxWorldRow;
 
@@ -77,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         battleManager = new BattleManager(this);
         cutsceneManager = new CutsceneManager(this);
+        player.battleManager = battleManager;
 
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));        //this =  is our Class, that we then get the size with Height * Length. We also use a new command Java just imports called Dimension = (H x L).
