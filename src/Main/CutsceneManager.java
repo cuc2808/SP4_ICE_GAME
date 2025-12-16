@@ -69,13 +69,11 @@ public class CutsceneManager {
             case 2: // Fade ud
                     cutsceneDone = true;
                     if(gp.cutsceneManager.cutsceneDone  == true && change == true) {
-                        if (!Objects.equals(gp.tileM.mapName, "/util/maps/levelTwo.txt")) {
-                            gp.tileM.changeMap("/util/maps/levelTwo.txt", "Resources/musicFiles/Untitled - 13_12_2025, 13.30.wav");
-                            Player.showVirusRemoved = true;
+                        if (Objects.equals(gp.tileM.mapName, "/util/maps/levelOne.txt")) {
+                            gp.tileM.changeMap("/util/maps/BlueMap", "Resources/musicFiles/Untitled - 13_12_2025, 13.30.wav");
                             change = false;
-                        } else if (gp.tileM.mapName.equals("/util/maps/levelTwo.txt")) {
+                        } else if (gp.tileM.mapName.equals("/util/maps/BlueMap")) {
                             gp.tileM.changeMap("/util/maps/levelThree.txt", "Resources/musicFiles/lavaWorld_1.wav");
-                            Player.showObjectsCleaned = false;
                             change = false;
                         }
                     }

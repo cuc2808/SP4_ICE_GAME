@@ -16,6 +16,8 @@ public class superObject {
     public boolean collision = false;
     public boolean canPickUp = false;
     public boolean cleanable = false;
+    public boolean evil = false;
+    public boolean dead = true;
     public int worldX,worldY;
     public Rectangle solidArea = new Rectangle(0,0,64,64);
     public int solidAreaDefaultX = 0;

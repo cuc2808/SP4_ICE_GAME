@@ -11,6 +11,9 @@
     import java.io.IOException;
     import java.io.InputStream;
     import java.io.InputStreamReader;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Objects;
 
     public class TileManager {
 
@@ -19,46 +22,67 @@
         KeyHandler keyH;
         public Tile[] tile;
         public int mapTileNum[][];
+        ArrayList<String> fileNames = new ArrayList<>();
+        ArrayList<String> collisionStatus = new ArrayList<>();
 
 
-    public String mapName = "/util/maps/levelOne.txt";
+
+
+    public String mapName = "/util/maps/BlueMap";
     public String mapMusic = "Resources/musicFiles/mainTheme.wav";
 
-        public TileManager(GamePanel gp){
+    public TileManager(GamePanel gp){
             this.gp=gp;
+            
+//        //If we wanna read files and data from maps:
+//        InputStream is = getClass().getResourceAsStream("/util/maps/Blue_map_dat");
+//        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//
+//        //We import tiledata into file:
+//        String line;
+//            try{
+//                while((line = br.readLine()) != null) {
+//                    fileNames.add(line);
+//                    collisionStatus.add(br.readLine());
+//                }
+//                br.close();
+//        }   catch (IOException e) {
+//                e.printStackTrace();
+//        }
 
-        tile = new Tile[31];
-        mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];   // RIGTIG ORIENTERING
-
+        tile = new Tile[132];
         getTileImage();
-        loadMap(mapName);
+
+        mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];   // RIGTIG ORIENTERING
     }
 
     public void getTileImage() {
-        try {
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/floor.png"));
 
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-            tile[1].collision = true;
+        if(!Objects.equals(mapName, "/util/maps/BlueMap")) {
+            try {
+                tile[0] = new Tile();
+                tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/floor.png"));
 
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
-            tile[2].collision = true;
+                tile[1] = new Tile();
+                tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+                tile[1].collision = true;
 
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+                tile[2] = new Tile();
+                tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+                tile[2].collision = true;
 
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
-            tile[4].collision = true;
+                tile[3] = new Tile();
+                tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
 
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road.png"));
+                tile[4] = new Tile();
+                tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+                tile[4].collision = true;
 
-            tile[6] = new Tile();
-            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
+                tile[5] = new Tile();
+                tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/road.png"));
+
+                tile[6] = new Tile();
+                tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/lavaGulv.png"));
 
                 tile[7] = new Tile();
                 tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_49.png"));
@@ -132,49 +156,87 @@
                 tile[28].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tile_31.png"));
 
                 tile[29] = new Tile();
-                tile[29].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+                tile[29].image = ImageIO.read(getClass().getResourceAsStream("/tiles/virus.png"));
 
 
                 tile[30] = new Tile();
                 tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+                tile[34] = new Tile();
+                tile[34].image = ImageIO.read(getClass().getResourceAsStream("/Tiles/blueMapTiles/103.png"));
+                tile[34].collision = true;
 
-
-    public void loadMap(String filePath) {
-
-        try {
-            InputStream is = getClass().getResourceAsStream(filePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            int row = 0;
-
-            while (row < gp.maxWorldRow) {
-                String line = br.readLine();
-                String[] numbers = line.split(" ");
-
-                for (int col = 0; col < gp.maxWorldCol; col++) {
-                    int num = Integer.parseInt(numbers[col]);
-                    mapTileNum[row][col] = num;     // RIGTIG ORIENTERING
-                }
-                row++;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        } else if (mapName.equals("/util/maps/BlueMap")){
 
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            ArrayList solidBlocks = new ArrayList<>();
+            solidBlocks.addAll(Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40));
+            solidBlocks.addAll(Arrays.asList(47,48,49,50,57,58,87,88,100,101,102,103,104,105,106,110,111,112,113,114,115,116,120,121,122,123,124,125,126));
+
+            for(int i = 0; i < 130; i++) {
+
+
+                if (!solidBlocks.contains(i)) {
+                    try {
+                        tile[i] = new Tile();
+                        tile[i].image = ImageIO.read(getClass().getResourceAsStream("/Tiles/blueMapTiles/" + i + ".png"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }   else if (solidBlocks.contains(i)){
+                    try {
+                        tile[i] = new Tile();
+                        tile[i].image = ImageIO.read(getClass().getResourceAsStream("/Tiles/blueMapTiles/" + i + ".png"));
+                        tile[i].collision = true;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            try {
+                tile[131] = new Tile();
+                tile[131].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
+
+        public void loadMap(String filePath) {
+            try {
+                InputStream is = getClass().getResourceAsStream(filePath);
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+                String line;
+                int row = 0;
+
+                while (row < gp.maxWorldRow && (line = br.readLine()) != null) {
+                    String[] numbers = line.trim().split("\\s+");
+
+                    for (int col = 0; col < gp.maxWorldCol; col++) {
+                        mapTileNum[row][col] = Integer.parseInt(numbers[col]);
+                    }
+                    row++;
+                }
+
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
     public void changeMap(String mapName, String mapMusic) {
 
             SoundSystem.stop();
             this.mapName = mapName;
             this.mapMusic = mapMusic;
+
+            getTileImage();
             loadMap(mapName);
+
             SoundSystem.play(mapMusic);
             gp.setupLevel(mapName);
 

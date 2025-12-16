@@ -4,6 +4,8 @@ import Main.battle.BattleMonster;
 import Main.battle.BattlePlayer;
 import Main.BattleState;
 import entity.Player;
+import object.OBJ_Clean;
+import util.FileIO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,9 +16,10 @@ public class BattleManager {
     GamePanel gp;
     BattlePlayer player;
     BattleMonster monster;
+    FileIO io;
 
     // Battle settings
-    BattleState battleState = BattleState.INTRO;
+    public static BattleState battleState = BattleState.INTRO;
     int timer = 0;
 
     // Action system
@@ -33,8 +36,14 @@ public class BattleManager {
 
     BufferedImage battleBackground;
 
+    //if enemy is object attribute:
+    public int defeatedEnemyIndex = -1;
+
+
+
     public BattleManager(GamePanel gp) {
         this.gp = gp;
+        this.io = gp.io;
         try {
             battleBackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelTwoBackGround.png"));
         } catch (IOException e) {
@@ -82,7 +91,7 @@ public class BattleManager {
 
                     switch (selectedAction) {
                         case ATTACK:
-                            int dmg = 10 + (int)(Math.random() * 11); // 10-20 damage
+                            int dmg = 10 + (int) (Math.random() * 11); // 10-20 damage
                             if (Math.random() < 0.1) dmg *= 2; // 10% crit
                             if (Math.random() < 0.05) dmg = 0; // 5% miss
                             monster.hp -= dmg;
@@ -91,7 +100,7 @@ public class BattleManager {
                             break;
 
                         case HEAL:
-                            int heal = 15 + (int)(Math.random() * 11); // 15-25 heal
+                            int heal = 15 + (int) (Math.random() * 11); // 15-25 heal
                             player.hp += heal;
                             if (player.hp > player.maxHp) player.hp = player.maxHp;
                             break;
@@ -101,7 +110,7 @@ public class BattleManager {
                             break;
 
                         case SPECIAL:
-                            int specialDmg = 25 + (int)(Math.random() * 11); // high risk
+                            int specialDmg = 25 + (int) (Math.random() * 11); // high risk
                             monster.hp -= specialDmg;
                             monsterHpFlashing = true;
                             monsterHpAlpha = 1.0f;
@@ -128,7 +137,7 @@ public class BattleManager {
 
                 if (timer > 60) {
                     // Monster attack
-                    int enemyDmg = 5 + (int)(Math.random() * 16); // 5-20 damage
+                    int enemyDmg = 5 + (int) (Math.random() * 16); // 5-20 damage
                     if (playerDefending) enemyDmg /= 2;
                     player.hp -= enemyDmg;
                     if (player.hp < 0) player.hp = 0;
@@ -161,7 +170,6 @@ public class BattleManager {
         }
 
 
-
         // Only set battleState if it's still in battle
         if ((player.hp <= 0 || monster.hp <= 0) &&
                 battleState != BattleState.VICTORY && battleState != BattleState.DEFEAT) {
@@ -178,20 +186,28 @@ public class BattleManager {
         if (battleState == BattleState.VICTORY || battleState == BattleState.DEFEAT) {
             timer++;
             if (timer > 120) { // 2 seconds at 60 FPS
-                if(battleState == BattleState.VICTORY){
+                if (battleState == BattleState.VICTORY && timer == 121) {
                     Player.enemyCounter++;
                     gp.flamingoBattleTriggered = true;
-                } else if(battleState == BattleState.DEFEAT) {
-                    gp.flamingoBattleTriggered = false;
-                }
-                endBattle();    // go back to normal play state
 
+                    // Mark the enemy as defeated and replace with clean object
+                    if (defeatedEnemyIndex != -1 && gp.objArray[defeatedEnemyIndex] != null) {
+                        int objX = gp.objArray[defeatedEnemyIndex].worldX;
+                        int objY = gp.objArray[defeatedEnemyIndex].worldY;
+
+                        gp.objArray[defeatedEnemyIndex] = new OBJ_Clean(gp, io);
+                        gp.objArray[defeatedEnemyIndex].worldX = objX;
+                        gp.objArray[defeatedEnemyIndex].worldY = objY;
+
+                        defeatedEnemyIndex = -1; // Reset
+                    }
+                } else if (battleState == BattleState.DEFEAT) {
+                    gp.flamingoBattleTriggered = false;
+                    defeatedEnemyIndex = -1; // Reset
+                }
+                endBattle();
             }
         }
-
-
-
-
     }
 
     public void draw(Graphics2D g2) {
