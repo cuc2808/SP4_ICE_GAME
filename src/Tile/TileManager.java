@@ -167,7 +167,6 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SoundSystem.play(mapMusic);
     }
 
     public void changeMap(String mapName, String mapMusic) {
@@ -176,6 +175,7 @@
             this.mapName = mapName;
             this.mapMusic = mapMusic;
             loadMap(mapName);
+            SoundSystem.play(mapMusic);
             gp.setupLevel(mapName);
 
     }

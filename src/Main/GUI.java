@@ -8,25 +8,35 @@ import util.FileIO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+import static entity.Player.enemyCounter;
 import static entity.Player.objectsCleaned;
 
 public class GUI {
 
     GamePanel gp;
     FileIO io;
-    Font fontA40;
     boolean hasMessage = false;
     String currentMessage;
     public boolean displayingMessage;
     NPC npc;
-    BufferedImage textBox;
     Player p;
+
+    //Resources for the GUI
+    public Font fontA40;
+    public BufferedImage textBox;
+    public Font ArcadeFont;
+    public BufferedImage cleanUpIcon;
+    public BufferedImage enemyIcon;
 
     public GUI(GamePanel gp, FileIO io){
         this.gp = gp;
         this.io = io;
         fontA40 = new Font("Arial", Font.BOLD,32);
+
+        ArcadeFont = FontLoader.loadFont(32f);
 
         loadTextBox();
     }
@@ -50,7 +60,12 @@ public class GUI {
         }
 
         // PLAYER INTERFACE GUI
-        drawCounter(g2);
+        if(Player.showObjectsCleaned) {
+            drawCounter(g2);
+        }
+        if(Player.showVirusRemoved) {
+            drawEnemyCounter(g2);
+        }
     }
     public void update(){
     }
@@ -119,7 +134,53 @@ public class GUI {
     // PLAYER GUI
 
     public void drawCounter(Graphics2D g2){
-        g2.drawString(toString().valueOf(objectsCleaned), 70, 70);
 
+        g2.drawImage(cleanUpIcon, 70, 70, gp.tileSize - 20, gp.tileSize - 20, null);
+        if(p.showObjectsCleaned) {
+            g2.setFont(ArcadeFont);
+
+            g2.drawString(toString().valueOf(objectsCleaned), 70+ gp.tileSize, 50 + gp.tileSize/2 + 20);
+
+            try {
+                cleanUpIcon = io.readImage("/GUI_Images/trashbinIcon.png");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
+
+    public void drawEnemyCounter(Graphics2D g2){
+
+            try {
+                enemyIcon = io.readImage("/GUI_Images/enemyIcon.png");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        g2.drawImage(enemyIcon, 70, 70 + 150, gp.tileSize - 20, gp.tileSize - 20, null);
+
+        g2.setFont(ArcadeFont);
+
+        g2.drawString(toString().valueOf(enemyCounter), 70+ gp.tileSize, 50 + gp.tileSize/2 + 20 + 150);
+
+    }
+
+    public class FontLoader {
+
+        public static Font loadFont(float size) {
+            try {
+                InputStream is = FontLoader.class
+                        .getResourceAsStream("/Fonts/Pixel Digivolve.otf");
+
+                Font baseFont = Font.createFont(Font.TRUETYPE_FONT, is);
+                return baseFont.deriveFont(size);
+
+            } catch (FontFormatException | IOException e) {
+                e.printStackTrace();
+                return new Font("SansSerif", Font.PLAIN, (int) size);
+            }
+        }
     }
 }

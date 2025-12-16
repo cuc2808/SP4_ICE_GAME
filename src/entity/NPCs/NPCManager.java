@@ -20,7 +20,7 @@ public class NPCManager {
     public void setNPC (String mapName){
 
 
-        if(mapName == "util/maps/levelOne.txt") {
+        if(mapName == "/util/maps/levelOne.txt") {
             //Flamingo
             gp.npcArray[0] = new NPC_Flamingo(gp, io, gui);
 

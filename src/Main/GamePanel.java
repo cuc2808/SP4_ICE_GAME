@@ -3,11 +3,9 @@ package Main;
 import Tile.TileManager;
 import entity.NPCs.NPC;
 import entity.NPCs.NPCManager;
-import entity.NPCs.NPC_Flamingo;
 import object.ObjManager;
 import object.superObject;
 import util.FileIO;
-import util.SoundSystem;
 
 import entity.Player;
 
@@ -19,7 +17,9 @@ public class GamePanel extends JPanel implements Runnable {
     //BATTLE-SEQUENCE STUFF
     public GameState gameState = GameState.PLAY;
     public BattleManager battleManager;
-    boolean battleTriggered = false;
+
+    //Enemies Battled or not?!
+    boolean flamingoBattleTriggered = false;
 
 
     //SCREEN SETTINGS - includes resolution, tile size and so on:
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startUpGame(){
-        tileM.changeMap("util/maps/levelOne.txt", "Resources/musicFiles/mainTheme.wav");
+        tileM.changeMap("/util/maps/levelOne.txt", "Resources/musicFiles/mainTheme.wav");
     }
 
     public void setupLevel(String mapName){
@@ -215,18 +215,18 @@ public class GamePanel extends JPanel implements Runnable {
 
         int tileStandingOn = tileM.mapTileNum[row][col];
 
-        // BATTLETRIGGER ON TILE 22
-        if (tileStandingOn == 29 && !battleTriggered) {
-            battleTriggered = true;
+        // BATTLETRIGGER ON TILE 22 with Flamingo
+        if (tileStandingOn == 29 && !flamingoBattleTriggered) {
+            flamingoBattleTriggered = true;
             startFade(() -> {
                 battleManager.startBattle();
                 gameState = GameState.BATTLE;
             });
         }
     // BATTLETRIGGER RESET
-        if(tileStandingOn !=29){
-            battleTriggered = false;
-        }
+//        if(tileStandingOn !=29){
+//            "flamingo"battleTriggered = false;
+//        }
         if(isFading){
             fadeAlpha += fadeSpeed;
             if(fadeAlpha >= 1){
@@ -247,7 +247,6 @@ public class GamePanel extends JPanel implements Runnable {
         //We have to call the superClass, in this case JFrame.
 
         super.paintComponent(g);
-
 
         Graphics2D g2 = (Graphics2D)g;      //This method has more functions
 
