@@ -1,7 +1,9 @@
 package Main;
 
 import entity.Entity;
+import entity.NPCs.NPC;
 import entity.NPCs.NPC_Flamingo;
+import entity.Player;
 import util.FileIO;
 
 import java.awt.*;
