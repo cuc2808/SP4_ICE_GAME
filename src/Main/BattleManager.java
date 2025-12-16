@@ -18,10 +18,12 @@ public class BattleManager {
     // Battle settings
     BattleState battleState = BattleState.INTRO;
     int timer = 0;
+    int battleLevel;
 
     // Action system
     BattleAction selectedAction = BattleAction.ATTACK;
     boolean playerDefending = false;
+
 
     // UI effects
     float messageAlpha = 1.0f;
@@ -31,26 +33,44 @@ public class BattleManager {
     float monsterHpAlpha = 1.0f;
     boolean monsterHpFlashing = false;
 
+    //Backgrounds
     BufferedImage battleBackground;
+    BufferedImage levelTwoBattlebackground;
+    BufferedImage levelThreeBattlebackground;
 
     public BattleManager(GamePanel gp) {
         this.gp = gp;
         try {
-            battleBackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelTwoBackGround.png"));
+            levelTwoBattlebackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelTwoBackground.png"));
+            levelThreeBattlebackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelThreeBackground.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void startBattle() {
+    public void startBattle(int level) {
+        battleLevel = level;
+
         battleState = BattleState.INTRO;
         timer = 0;
 
         player = new BattlePlayer();
-        monster = new BattleMonster();
+        monster = new BattleMonster(level);
+
+        //Boss hp on different levels
+        if(level == 3){
+            monster.setHp(220);
+        }else {
+            monster.setHp(120);
+        }
+
+        battleBackground = (level == 3)
+                ? levelThreeBattlebackground
+                : levelTwoBattlebackground;
 
         gp.gameState = GameState.BATTLE;
     }
+
 
     public void update() {
         switch (battleState) {
@@ -128,7 +148,16 @@ public class BattleManager {
 
                 if (timer > 60) {
                     // Monster attack
-                    int enemyDmg = 5 + (int)(Math.random() * 16); // 5-20 damage
+                    int enemyDmg;
+
+                    if (battleLevel == 3) {
+                        // Level 3 boss = stronger
+                        enemyDmg = 8 + (int)(Math.random() * 16); // 10–30 damage
+                    } else {
+                        // Normal enemies
+                        enemyDmg = 5 + (int)(Math.random() * 16);  // 5–20 damage
+                    }
+
                     if (playerDefending) enemyDmg /= 2;
                     player.hp -= enemyDmg;
                     if (player.hp < 0) player.hp = 0;
@@ -195,8 +224,17 @@ public class BattleManager {
     }
 
     public void draw(Graphics2D g2) {
-        // Background
-        g2.drawImage(battleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        // Draw battle background (depends on battle level)
+        if (battleBackground != null) {
+            g2.drawImage(
+                    battleBackground,
+                    0,
+                    0,
+                    gp.screenWidth,
+                    gp.screenHeight,
+                    null
+            );
+        }
 
         // Sprites
         if (player != null) player.draw(g2);

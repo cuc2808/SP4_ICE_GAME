@@ -17,6 +17,8 @@ public class GamePanel extends JPanel implements Runnable {
     //BATTLE-SEQUENCE STUFF
     public GameState gameState = GameState.PLAY;
     public BattleManager battleManager;
+    boolean tile29BattleTriggered = false;
+    boolean tile31BattleTriggered = false;
 
     //Enemies Battled or not?!
     boolean flamingoBattleTriggered = false;
@@ -215,11 +217,19 @@ public class GamePanel extends JPanel implements Runnable {
 
         int tileStandingOn = tileM.mapTileNum[row][col];
 
-        // BATTLETRIGGER ON TILE 22 with Flamingo
-        if (tileStandingOn == 29 && !flamingoBattleTriggered) {
-            flamingoBattleTriggered = true;
+        // BATTLETRIGGER ON TILE 29 with LevelTwoMonster
+        if (tileStandingOn == 29 && !tile29BattleTriggered) {
+            tile29BattleTriggered = true;
             startFade(() -> {
-                battleManager.startBattle();
+                battleManager.startBattle(2);
+                gameState = GameState.BATTLE;
+            });
+        }
+        // BATTLETRIGGER ON TILE 31 with LevelThreeMonster
+        if (tileStandingOn == 31 && !tile31BattleTriggered) {
+            tile31BattleTriggered = true;
+            startFade(() -> {
+                battleManager.startBattle(3);
                 gameState = GameState.BATTLE;
             });
         }

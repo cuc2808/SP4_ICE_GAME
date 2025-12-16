@@ -27,7 +27,7 @@
         public TileManager(GamePanel gp){
             this.gp=gp;
 
-        tile = new Tile[31];
+        tile = new Tile[32];
         mapTileNum = new int[gp.maxWorldRow][gp.maxWorldCol];   // RIGTIG ORIENTERING
 
         getTileImage();
@@ -137,6 +137,9 @@
 
                 tile[30] = new Tile();
                 tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.jpg"));
+
+                tile[31] = new Tile();
+                tile[31].image = ImageIO.read(getClass().getResourceAsStream("/tiles/fire2-1.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
