@@ -1,5 +1,6 @@
 package Main;
 
+import battle.BattleManager;
 import Tile.TileManager;
 import entity.NPCs.NPC;
 import entity.NPCs.NPCManager;
@@ -21,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     boolean tile31BattleTriggered = false;
 
     //Enemies Battled or not?!
-    boolean flamingoBattleTriggered = false;
+  public boolean flamingoBattleTriggered = false;
 
 
     //SCREEN SETTINGS - includes resolution, tile size and so on:
@@ -49,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Cutscene variables
 
-    boolean isFading = false;
+   public boolean isFading = false;
     public float fadeAlpha = 0f;   // 0 = fully transparent, 1 = fully black
     float fadeSpeed = 0.02f; // Adjust for speed
     boolean fadeOut = true;  // true = fading to black, false = fading in
@@ -86,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startUpGame(){
-        tileM.changeMap("/util/maps/levelOne.txt", "Resources/musicFiles/mainTheme.wav");
+        tileM.changeMap("/tile/maps/levelOne.txt", "Resources/musicFiles/mainTheme.wav");
     }
 
     public void setupLevel(String mapName){

@@ -40,7 +40,7 @@ abstract class SoundSystem {
 }
 
 ' ==============================
-' Tiles Subklasser
+' Tile.Tiles Subklasser
 ' ==============================
 class TerrainTile {
     -terrainType : String

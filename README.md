@@ -40,7 +40,7 @@ Extras:
 
 Obejektanalyse:
 Terræn
-Tiles
+Tile.Tiles
 Sprites
 Animationer
 Baggrunde

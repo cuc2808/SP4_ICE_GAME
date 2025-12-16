@@ -1,4 +1,4 @@
-package Main.battle;
+package battle;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;

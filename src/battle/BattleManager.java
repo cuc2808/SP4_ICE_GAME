@@ -1,8 +1,7 @@
-package Main;
+package battle;
 
-import Main.battle.BattleMonster;
-import Main.battle.BattlePlayer;
-import Main.BattleState;
+import Main.GamePanel;
+import Main.GameState;
 import entity.Player;
 
 import java.awt.*;
@@ -41,8 +40,8 @@ public class BattleManager {
     public BattleManager(GamePanel gp) {
         this.gp = gp;
         try {
-            levelTwoBattlebackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelTwoBackground.png"));
-            levelThreeBattlebackground = ImageIO.read(getClass().getResourceAsStream("/util/BattleBackground/levelThreeBackground.png"));
+            levelTwoBattlebackground = ImageIO.read(getClass().getResourceAsStream("/battle/BattleBackground/levelTwoBackground.png"));
+            levelThreeBattlebackground = ImageIO.read(getClass().getResourceAsStream("/battle/BattleBackground/levelThreeBackground.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

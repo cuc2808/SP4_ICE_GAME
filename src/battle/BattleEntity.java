@@ -1,4 +1,4 @@
-package Main.battle;
+package battle;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

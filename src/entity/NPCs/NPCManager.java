@@ -2,7 +2,6 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
-import object.OBJ_Dust;
 import util.FileIO;
 
 public class NPCManager {
@@ -20,7 +19,7 @@ public class NPCManager {
     public void setNPC (String mapName){
 
 
-        if(mapName == "/util/maps/levelOne.txt") {
+        if(mapName == "/tile/maps/levelOne.txt") {
             //Flamingo
             gp.npcArray[0] = new NPC_Flamingo(gp, io, gui);
 

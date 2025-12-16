@@ -3,8 +3,6 @@ package object;
 import Main.GamePanel;
 import util.FileIO;
 
-import java.io.File;
-
 public class ObjManager {
 
     GamePanel gp;
@@ -18,7 +16,7 @@ public class ObjManager {
     public void setObject(String mapName){
 
         // 1st Map
-        if(mapName == "/util/maps/levelOne.txt"){
+        if(mapName == "/tile/maps/levelOne.txt"){
         gp.objArray[0] = new OBJ_Dust(gp,io);
         gp.objArray[0].worldX = 16 * gp.tileSize;
         gp.objArray[0].worldY = 15 * gp.tileSize;
