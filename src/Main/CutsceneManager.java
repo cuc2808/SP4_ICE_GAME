@@ -5,7 +5,8 @@ import java.awt.*;
 import java.util.Objects;
 
 public class CutsceneManager {
-
+    Color cutsceneTextColor = Color.WHITE;
+    String cutsceneText ="";
     GamePanel gp;
 
     boolean cutsceneActive = false;
@@ -33,6 +34,13 @@ public class CutsceneManager {
         cutsceneStep = 0;
         cutsceneTimer = 0;
 
+        if (!Objects.equals(gp.tileM.mapName, "/tile/maps/levelTwo.txt")) {
+            cutsceneText = "Entering CPU...";
+            cutsceneTextColor = new Color (0, 170, 255);
+        } else {
+            cutsceneText = "Entering Firewall...";
+            cutsceneTextColor = new Color (255, 140, 0);
+        }
         gp.player.movementSpeed = 0; // Freeze
     }
 
@@ -97,12 +105,26 @@ public class CutsceneManager {
     public void draw(Graphics2D g2) {
         if (!cutsceneActive) return;
 
+        // Fade overlay
         if (isFading) {
             Graphics2D g2d = (Graphics2D) g2.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, fadeAlpha));
             g2d.setColor(Color.BLACK);
             g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+            // 👇 TEKST
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+            g2d.setColor(cutsceneTextColor);
+            g2d.setFont(new Font("Arial", Font.BOLD, 36));
+
+            FontMetrics fm = g2d.getFontMetrics();
+            int textX = (gp.screenWidth - fm.stringWidth(cutsceneText)) / 2;
+            int textY = gp.screenHeight / 2;
+
+            g2d.drawString(cutsceneText, textX, textY);
+
             g2d.dispose();
         }
     }
+
 }
