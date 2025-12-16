@@ -27,8 +27,8 @@ public class NPC_Panda extends NPC{
 
     }
     public void setDefaultValues(){
-        worldX = gp.tileSize*15;
-        worldY = gp.tileSize*18;
+        worldX = gp.tileSize*7;
+        worldY = gp.tileSize*21;
         direction = "right";
         movementSpeed = 2;
 
