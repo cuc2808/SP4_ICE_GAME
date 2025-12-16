@@ -29,9 +29,19 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    //PLAYER INVENTORY
     public static int pickUps = 0;
 
     public static int objectsCleaned = 0;
+
+    public static int enemyCounter = 0;
+
+    public static int enemyCounterNeeded = 0;
+
+
+    //What player GUI needs to show?
+    public static boolean showObjectsCleaned = true;
+    public static boolean showVirusRemoved = false;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -207,7 +217,15 @@ public class Player extends Entity {
 //        );
 
         if (tileStandingOn == 30 && !gp.cutsceneManager.isActive()) {
-            gp.cutsceneManager.startCutscene(true);
+            if(objectsCleaned == 4 && enemyCounter == enemyCounterNeeded) {
+                gp.cutsceneManager.startCutscene(true);
+                switch(enemyCounterNeeded){
+                    case 0: enemyCounterNeeded = 1;
+                    break;
+                    case 1: enemyCounterNeeded = 4;
+                    break;
+                }
+            }
 
         }
 

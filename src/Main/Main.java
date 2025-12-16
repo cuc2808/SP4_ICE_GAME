@@ -1,27 +1,26 @@
-package Main;
+    package Main;
 
-import javax.swing.*;
+    import javax.swing.*;
 
-public class Main {
-    public static void main(String[] args) {
+    public class Main {
+        public static void main(String[] args) {
 
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Game");
+            JFrame window = new JFrame();
+            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.setResizable(false);
+            window.setTitle("Game");
 
-        // Create the Canvas-based GamePanel
-        GamePanel gamePanel = new GamePanel();
+            // Create the Canvas-based GamePanel
+            GamePanel gamePanel = new GamePanel();
 
-        window.add(gamePanel);
-        window.pack();  // Important: pack AFTER adding the panel
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
+            window.add(gamePanel);
+            window.pack();  // Important: pack AFTER adding the panel
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
 
-        gamePanel.startUpGame();
+            gamePanel.startUpGame();
+            gamePanel.startGameThread();
 
-        gamePanel.startGameThread();
-
-        // Start game loop
+            // Start game loop
+        }
     }
-}

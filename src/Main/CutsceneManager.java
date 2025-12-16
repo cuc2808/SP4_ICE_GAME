@@ -1,4 +1,6 @@
 package Main;
+import entity.Player;
+
 import java.awt.*;
 import java.util.Objects;
 
@@ -69,9 +71,11 @@ public class CutsceneManager {
                     if(gp.cutsceneManager.cutsceneDone  == true && change == true) {
                         if (!Objects.equals(gp.tileM.mapName, "/util/maps/levelTwo.txt")) {
                             gp.tileM.changeMap("/util/maps/levelTwo.txt", "Resources/musicFiles/Untitled - 13_12_2025, 13.30.wav");
+                            Player.showVirusRemoved = true;
                             change = false;
                         } else if (gp.tileM.mapName.equals("/util/maps/levelTwo.txt")) {
                             gp.tileM.changeMap("/util/maps/levelThree.txt", "Resources/musicFiles/lavaWorld_1.wav");
+                            Player.showObjectsCleaned = false;
                             change = false;
                         }
                     }

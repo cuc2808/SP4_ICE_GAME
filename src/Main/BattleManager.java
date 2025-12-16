@@ -3,6 +3,7 @@ package Main;
 import Main.battle.BattleMonster;
 import Main.battle.BattlePlayer;
 import Main.BattleState;
+import entity.Player;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -177,7 +178,14 @@ public class BattleManager {
         if (battleState == BattleState.VICTORY || battleState == BattleState.DEFEAT) {
             timer++;
             if (timer > 120) { // 2 seconds at 60 FPS
+                if(battleState == BattleState.VICTORY){
+                    Player.enemyCounter++;
+                    gp.flamingoBattleTriggered = true;
+                } else if(battleState == BattleState.DEFEAT) {
+                    gp.flamingoBattleTriggered = false;
+                }
                 endBattle();    // go back to normal play state
+
             }
         }
 
