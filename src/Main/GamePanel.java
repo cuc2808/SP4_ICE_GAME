@@ -56,10 +56,10 @@ public class GamePanel extends JPanel implements Runnable {
     public CutsceneManager cutsceneManager;
     Thread gameThread;       // This makes the game running instead of static. "A thread is a thread of execution in a program." It keeps running until the "Run" is executed. -- There is also added a method called run.
 
-    public TileManager tileM = new TileManager(this);
     public FileIO io = new FileIO(this);
     public KeyHandler keyH = new KeyHandler(); //We need to instantiate the Handler to use it.
     public GUI gui = new GUI(this, io);
+    public TileManager tileM = new TileManager(this,io);
     public CollisionChecker colCheck = new CollisionChecker(this);
     public NPCManager npcManager = new NPCManager(this,io,gui);
     public ObjManager objManager = new ObjManager(this,io);
