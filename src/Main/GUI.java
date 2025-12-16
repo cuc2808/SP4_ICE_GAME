@@ -5,14 +5,14 @@ import entity.NPCs.NPC;
 import entity.NPCs.NPC_Flamingo;
 import entity.Player;
 import util.FileIO;
+import util.SoundSystem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static entity.Player.enemyCounter;
-import static entity.Player.objectsCleaned;
+import static entity.Player.*;
 
 public class GUI {
 
@@ -24,7 +24,6 @@ public class GUI {
     NPC npc;
     Player p;
     public static int dustNeedRemoved = 9;
-    public static int enemyNeedRemoved = 1;
 
     //Resources for the GUI
     public Font fontA40;
@@ -169,12 +168,21 @@ public class GUI {
 
         g2.setFont(ArcadeFont);
 
-        if(enemyCounter != enemyNeedRemoved) {
-            g2.drawString(toString().valueOf(enemyCounter) + "/" + enemyNeedRemoved, 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20 + 150);
+        if(enemyCounter != enemyCounterNeeded) {
+            g2.drawString(toString().valueOf(enemyCounter) + "/" + enemyCounterNeeded, 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20 + 150);
 
-        } else if (enemyCounter == enemyNeedRemoved){
+        } else if (enemyCounter == enemyCounterNeeded){
             g2.drawString(toString().valueOf("COMPLETE"), 70 + gp.tileSize, 50 + gp.tileSize / 2 + 20 + 150);
         }
+    }
+
+    public void victoryScreen(Graphics2D g2){
+
+        g2.setFont(ArcadeFont);
+
+        g2.setColor(Color.YELLOW);
+
+        g2.drawString(toString().valueOf("CONGRATULATIONS YOU WON THE GAME!"), 125, 330);
     }
 
     public class FontLoader {

@@ -229,7 +229,7 @@ public class Player extends Entity {
                 switch(enemyCounterNeeded){
                     case 0: enemyCounterNeeded = 2;
                     break;
-                    case 2: enemyCounterNeeded = 4;
+                    case 2: enemyCounterNeeded = 3;
                     break;
                 }
             }
@@ -358,7 +358,13 @@ public class Player extends Entity {
 
         //gui.drawCounter((Graphics2D) g2);
 
+
+
         g2.drawImage(drawPlayerDirection(), screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        if (enemyCounter == 3){
+            gui.victoryScreen((Graphics2D) g2);
+        }
 
 
         //g2.drawImage(playerImage, screenX, screenY, gp.tileSize, gp.tileSize, null);

@@ -37,7 +37,7 @@ public class SoundSystem {
     }
 
     // ---- INTERN AFSPILNING ----
-    private static void playInternal(String location) {
+    public static void playInternal(String location) {
         byte[] buffer = new byte[4096];
 
         try {
