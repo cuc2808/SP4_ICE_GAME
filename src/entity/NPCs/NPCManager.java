@@ -2,7 +2,6 @@ package entity.NPCs;
 
 import Main.GUI;
 import Main.GamePanel;
-import object.OBJ_Dust;
 import util.FileIO;
 
 public class NPCManager {
